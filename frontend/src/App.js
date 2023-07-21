@@ -1,5 +1,6 @@
 import './App.css';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import Header from './header/Header.js'
 import { useEffect } from 'react';
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
 
   return (
     <div>
+      <Header />
       <Routes>
         <Route path='/' element={<p>placeholder</p>} />
       </Routes>
