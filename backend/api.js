@@ -10,5 +10,8 @@ const api = express()
 api.use(cors())
 api.use(express.json())
 
+api.get('/', (req,res) => {
+    res.status(200).json('Home');
+})
 
 api.listen(port, () => console.log('Backend running on port ', port))
