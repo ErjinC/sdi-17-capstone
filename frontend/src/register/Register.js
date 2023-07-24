@@ -6,6 +6,7 @@ const Register = () => {
   const [last, setLast] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [base, setBase] = useState('');
 
   return (
     <div>
@@ -54,6 +55,25 @@ const Register = () => {
               setPassword(document.getElementById('password').value)
             }}
             ></input>
+          </div>
+
+          <div>
+            <div>Base</div>
+
+            <input
+              list='baselist'
+              id='base'
+              onChange={() => {
+                setBase(document.getElementById('base').value)
+                console.log(base)
+              }}>
+            </input>
+
+            <datalist id='baselist'>
+              <option value='Beale AFB'></option>
+              <option value='Los Angeles SFB'></option>
+              <option value='Vandenburg SFB'></option>
+            </datalist>
           </div>
 
           <button

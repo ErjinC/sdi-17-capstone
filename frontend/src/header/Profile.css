@@ -4,3 +4,9 @@
 #user-edit-password-container {
   display: none;
 }
+#user-edit-info-container {
+  display: none;
+}
+.centered {
+  text-align: center;
+}

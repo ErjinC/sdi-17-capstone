@@ -1,0 +1,26 @@
+#flexcontainerregister {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 2rem;
+}
+#flexcontainerregister > * {
+  font-size: 18px
+}
+#registerfield > * {
+  margin: 10px;
+}
+#registerbutton {
+  font-size: 16px;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#registerheader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 32px;
+  font-weight: bolder;
+  margin: 2rem;
+}
