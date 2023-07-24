@@ -4,7 +4,7 @@
  */
 exports.up = function(knex) {
   return knex.schema.createTable("listings", table => {
-    table.increments("id").primary()
+    table.increments("listingId").primary()
     table.integer("user_id")
     table.foreign("user_id").references("userId").inTable("users").onDelete('cascade');
     table.integer("car_id")
