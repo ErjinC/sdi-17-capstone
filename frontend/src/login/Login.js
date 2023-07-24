@@ -22,10 +22,10 @@ const Login = ({ setAuth }) => {
     if (document.getElementById('username').value === '' || document.getElementById('password').value === '') {
       alert('Please fill in the username and password fields!')
     } else {
-      const auth = await loginUser([{
+      const auth = await loginUser({
         'username': username,
         'password': password
-      }]);
+      });
       console.log(auth)
       if (!auth.length) {
         alert('Login Unsuccessful. Please Try Again!')

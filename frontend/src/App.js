@@ -9,7 +9,7 @@ import useAuth from './useAuth.js'
 
 function App() {
   const navigate = useNavigate()
-  const { setAuth } = useAuth();
+  const { setAuth } = useAuth()
 
 
   return (
