@@ -1,0 +1,26 @@
+#flexcontainerlogin {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 2rem;
+}
+#flexcontainerlogin > * {
+  font-size: 18px;
+}
+#loginfield > * {
+  margin: 10px;
+}
+#loginbutton {
+  font-size: 16px;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+#loginheader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 32px;
+  font-weight: bolder;
+  margin: 2rem;
+}
