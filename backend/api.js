@@ -12,23 +12,24 @@ api.use(express.json())
 
 api.get('/', (req,res) => {
     knex('users').select()
-        .then(response => {
+        .then(result => {
             res.status(200).json(result)
         })
 })
 
 api.post('/login', async (req,res) => {
     console.log(req.body)
-    let pw = await knex('users').select('password').where('username',req.body.username)
-    console.log(pw)
-    res.json(pw);
-    // bcrypt.compare(req.body.password, pw, function(err, result) {
-    //     if (result) {}
-    //         // authenticate
-    //     } else {
-    //         // error
-    //     }
-    // })
+    let query = await knex('users').select('password').where({username: req.body.username})
+    let pw = query[0].password
+    bcrypt.compare(req.body.password, pw, function(err, result) {
+        if (result) {
+            // authenticate
+            res.status(200).json(pw)
+        } else {
+            // error
+            res.status(400).json('Invalid pw')
+        }
+    })
 })
 
 
