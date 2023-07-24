@@ -11,7 +11,7 @@ exports.up = function(knex) {
     table.string('model');
     table.integer('year');
     table.integer('price');
-    table.integer('milage');
+    table.integer('mileage');
     table.string('color');
     table.string('transmission');
     table.string('condition');
