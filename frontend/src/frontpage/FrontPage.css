@@ -1,0 +1,7 @@
+#flexfrontpagetop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-left: 30rem;
+  padding: 1rem;
+}

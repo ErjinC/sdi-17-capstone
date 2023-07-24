@@ -14,6 +14,7 @@ exports.up = function(knex) {
     table.integer('mileage');
     table.string('color');
     table.string('transmission');
+    table.string('image');
     table.string('condition');
     table.string('location');
     table.string('description', 500);

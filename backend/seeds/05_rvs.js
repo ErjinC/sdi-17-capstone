@@ -19,7 +19,7 @@ exports.seed = async function(knex) {
       price: 172418,
       length: 29,
       condition: "excellent",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Beale AFB",
       description: "Like new vehicle, newly refurbished interior and flooring. Equipped with solar panels, Wi-Fi antennas, and two A/C units. Slight scratching present on the exterior, but otherwise in great condition."
     },
@@ -36,7 +36,7 @@ exports.seed = async function(knex) {
       price: 148900,
       length: 32,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Edwards AFB",
       description: "Well-maintained motorhome with spacious interior. Slide-outs provide extra living space. Kitchen and bathroom in good condition. Perfect for family trips and camping adventures."
     },
@@ -53,7 +53,7 @@ exports.seed = async function(knex) {
       price: 189000,
       length: 34,
       condition: "excellent",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Hill AFB",
       description: "Luxury motorhome with modern amenities. Spacious bedroom, well-appointed kitchen, and comfortable living area. Low mileage and in excellent condition. Ideal for large families or group travel."
     },
@@ -70,7 +70,7 @@ exports.seed = async function(knex) {
       price: 89000,
       length: 25,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Langley AFB",
       description: "Reliable and easy to drive motorhome. Well-maintained with a spacious interior. Sleeps up to six people comfortably. Perfect for weekend getaways and road trips."
     },
@@ -87,7 +87,7 @@ exports.seed = async function(knex) {
       price: 210000,
       length: 36,
       condition: "excellent",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Luke AFB",
       description: "Spacious and luxurious motorhome with multiple slide-outs. Modern amenities and entertainment options. Great for full-time living or extended vacations. Immaculate condition with low mileage."
     },
@@ -104,7 +104,7 @@ exports.seed = async function(knex) {
       price: 195000,
       length: 24,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Nellis AFB",
       description: "Sleek and modern Class B motorhome. Well-maintained with a contemporary interior. Equipped with all necessary amenities for comfortable travel. Great for couples or small families."
     },
@@ -121,7 +121,7 @@ exports.seed = async function(knex) {
       price: 235000,
       length: 40,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Scott AFB",
       description: "Spacious and elegant Class A motorhome. Luxurious interior with high-quality finishes. Ideal for long trips or full-time living. Well-maintained and in good condition."
     },
@@ -138,7 +138,7 @@ exports.seed = async function(knex) {
       price: 250000,
       length: 42,
       condition: "excellent",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Travis AFB",
       description: "Luxury Class A motorhome with top-of-the-line features. Spacious and well-appointed interior. Perfect for high-end travelers seeking comfort and convenience."
     },
@@ -155,7 +155,7 @@ exports.seed = async function(knex) {
       price: 230000,
       length: 40,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Whiteman AFB",
       description: "Elegant and high-performance Class A motorhome. Well-maintained and in good condition. Perfect for travelers seeking luxury and comfort."
     },
@@ -172,7 +172,7 @@ exports.seed = async function(knex) {
       price: 120000,
       length: 31,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Vandenberg AFB",
       description: "Spacious and family-friendly Class A motorhome. Well-maintained and equipped with modern amenities. Ideal for family vacations and road trips."
     },
@@ -189,7 +189,7 @@ exports.seed = async function(knex) {
       price: 45000,
       length: 16,
       condition: "excellent",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Beale AFB",
       description: "Compact and lightweight travel trailer. Modern design with all necessary amenities. Perfect for adventurous couples seeking a cozy getaway."
     },
@@ -206,7 +206,7 @@ exports.seed = async function(knex) {
       price: 28000,
       length: 24,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Edwards AFB",
       description: "Family-friendly travel trailer. Well-maintained with a comfortable interior. Equipped with a kitchen, bathroom, and sleeping areas. Great for camping and outdoor adventures."
     },
@@ -223,7 +223,7 @@ exports.seed = async function(knex) {
       price: 35000,
       length: 29,
       condition: "excellent",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Hill AFB",
       description: "Spacious and modern fifth wheel. Well-maintained and in excellent condition. Perfect for large families or groups. Features a comfortable living area and multiple sleeping spaces."
     },
@@ -240,7 +240,7 @@ exports.seed = async function(knex) {
       price: 22000,
       length: 26,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Langley AFB",
       description: "Comfortable and versatile travel trailer. Well-suited for couples or small families. Features a fully-equipped kitchen, cozy sleeping area, and a bathroom."
     },
@@ -257,7 +257,7 @@ exports.seed = async function(knex) {
       price: 42000,
       length: 32,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Luke AFB",
       description: "Spacious and well-appointed fifth wheel. Features a luxurious interior with multiple slide-outs. Great for extended vacations or full-time living on the road."
     },
@@ -274,7 +274,7 @@ exports.seed = async function(knex) {
       price: 38000,
       length: 30,
       condition: "excellent",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Nellis AFB",
       description: "Elegant and well-maintained fifth wheel. Features a spacious living area with a fireplace and entertainment center. Ideal for couples seeking comfort and style."
     },
@@ -291,7 +291,7 @@ exports.seed = async function(knex) {
       price: 30000,
       length: 28,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Scott AFB",
       description: "Family-friendly travel trailer with a bunkhouse floorplan. Well-maintained and in good condition. Perfect for family vacations and camping trips."
     },
@@ -308,7 +308,7 @@ exports.seed = async function(knex) {
       price: 28000,
       length: 25,
       condition: "excellent",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Travis AFB",
       description: "Comfortable and versatile travel trailer. Well-suited for families and couples. Features a fully-equipped kitchen, spacious living area, and a bathroom."
     },
@@ -325,7 +325,7 @@ exports.seed = async function(knex) {
       price: 24000,
       length: 22,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Whiteman AFB",
       description: "Lightweight and compact travel trailer. Perfect for couples or small families. Features a comfortable sleeping area, kitchen, and bathroom."
     },
@@ -342,7 +342,7 @@ exports.seed = async function(knex) {
       price: 18000,
       length: 18,
       condition: "good",
-      image: "",
+      image: "https://placekitten.com/500/300",
       location: "Vandenberg AFB",
       description: "Compact and lightweight travel trailer. Perfect for solo travelers or couples. Features a cozy interior with all essential amenities for comfortable trips."
     }

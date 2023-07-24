@@ -15,6 +15,7 @@ exports.seed = async function(knex) {
       year: 2010,
       price: 40000,
       hours: 300,
+      image: "https://placekitten.com/500/300",
       condition: "good",
       location: "Beale AFB",
       description: "Bent propeller. Runs well. Needs new canopy."
@@ -28,6 +29,7 @@ exports.seed = async function(knex) {
       year: 2018,
       price: 10000,
       hours: 50,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Edwards AFB",
       description: "Excellent condition. Rarely used."
@@ -41,6 +43,7 @@ exports.seed = async function(knex) {
       year: 2015,
       price: 70000,
       hours: 200,
+      image: "https://placekitten.com/500/300",
       condition: "good",
       location: "Andrews AFB",
       description: "Some scratches on hull. Engine in good condition."
@@ -54,6 +57,7 @@ exports.seed = async function(knex) {
       year: 2020,
       price: 7000,
       hours: 30,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Barksdale AFB",
       description: "Like new, hardly used."
@@ -67,6 +71,7 @@ exports.seed = async function(knex) {
       year: 2019,
       price: 130000,
       hours: 100,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Eglin AFB",
       description: "Excellent condition. Great for wakeboarding."
@@ -80,6 +85,7 @@ exports.seed = async function(knex) {
       year: 2021,
       price: 18000,
       hours: 20,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Elmendorf AFB",
       description: "Almost new, great condition."
@@ -93,6 +99,7 @@ exports.seed = async function(knex) {
       year: 2016,
       price: 110000,
       hours: 250,
+      image: "https://placekitten.com/500/300",
       condition: "good",
       location: "Cannon AFB",
       description: "Minor wear and tear. Engine runs great."
@@ -106,6 +113,7 @@ exports.seed = async function(knex) {
       year: 2022,
       price: 15000,
       hours: 15,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Davis-Monthan AFB",
       description: "Like new, minimal use."
@@ -119,6 +127,7 @@ exports.seed = async function(knex) {
       year: 2014,
       price: 50000,
       hours: 300,
+      image: "https://placekitten.com/500/300",
       condition: "good",
       location: "Buckley AFB",
       description: "Normal wear for age, engine in good condition."
@@ -132,6 +141,7 @@ exports.seed = async function(knex) {
       year: 2021,
       price: 17000,
       hours: 30,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Dover AFB",
       description: "Excellent condition, minimal use."
@@ -145,6 +155,7 @@ exports.seed = async function(knex) {
       year: 2017,
       price: 85000,
       hours: 150,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Dyess AFB",
       description: "Excellent condition, well maintained."
@@ -158,6 +169,7 @@ exports.seed = async function(knex) {
       year: 2018,
       price: 12000,
       hours: 60,
+      image: "https://placekitten.com/500/300",
       condition: "good",
       location: "Eielson AFB",
       description: "Good condition, regularly serviced."
@@ -171,6 +183,7 @@ exports.seed = async function(knex) {
       year: 2016,
       price: 30000,
       hours: 200,
+      image: "https://placekitten.com/500/300",
       condition: "good",
       location: "F.E. Warren AFB",
       description: "Some scratches, engine in good condition."
@@ -184,6 +197,7 @@ exports.seed = async function(knex) {
       year: 2019,
       price: 10000,
       hours: 40,
+      image: "https://placekitten.com/500/300",
       condition: "good",
       location: "Fairchild AFB",
       description: "Regularly serviced, good condition."
@@ -197,6 +211,7 @@ exports.seed = async function(knex) {
       year: 2018,
       price: 150000,
       hours: 120,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Goodfellow AFB",
       description: "Excellent condition, minimal use."
@@ -210,6 +225,7 @@ exports.seed = async function(knex) {
       year: 2020,
       price: 9000,
       hours: 50,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Hanscom AFB",
       description: "Like new, minimal use."
@@ -223,6 +239,7 @@ exports.seed = async function(knex) {
       year: 2017,
       price: 85000,
       hours: 200,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Hill AFB",
       description: "Excellent condition, well maintained."
@@ -236,6 +253,7 @@ exports.seed = async function(knex) {
       year: 2022,
       price: 18000,
       hours: 20,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Holloman AFB",
       description: "Like new, minimal use."
@@ -249,6 +267,7 @@ exports.seed = async function(knex) {
       year: 2020,
       price: 140000,
       hours: 100,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Keesler AFB",
       description: "Excellent condition, great for wakeboarding."
@@ -262,6 +281,7 @@ exports.seed = async function(knex) {
       year: 2021,
       price: 9500,
       hours: 30,
+      image: "https://placekitten.com/500/300",
       condition: "excellent",
       location: "Kirtland AFB",
       description: "Like new, minimal use."

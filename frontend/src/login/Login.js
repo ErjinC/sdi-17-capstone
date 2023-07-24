@@ -13,24 +13,28 @@ async function loginUser(credentials) {
   .then(data => data.json())
 }
 
-const Login = ({ setAuth }) => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = async e => {
-    e.preventDefault();
+    // e.preventDefault();
     if (document.getElementById('username').value === '' || document.getElementById('password').value === '') {
       alert('Please fill in the username and password fields!')
     } else {
-      const auth = await loginUser({
+      // console.log('trying to fetch: ', username, password)
+      // auth will return either {object} or false
+      const res = await loginUser([{
         'username': username,
         'password': password
-      });
-      console.log(auth)
-      if (!auth.length) {
+      }]);
+
+      
+      if (!res.success) {
         alert('Login Unsuccessful. Please Try Again!')
       } else {
-        setAuth(auth);
+        sessionStorage.setItem('CurrentUser', JSON.stringify(res))
+        //Redirect to homepage
         window.location='/'
         alert('Login Successful!')
       }
@@ -73,8 +77,8 @@ const Login = ({ setAuth }) => {
   )
 }
 
-Login.propTypes = {
-  setAuth: PropTypes.func.isRequired
-}
+// Login.propTypes = {
+//   setAuth: PropTypes.func.isRequired
+// }
 
 export default Login

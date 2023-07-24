@@ -8,9 +8,27 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [base, setBase] = useState('');
 
+  const allBases = [
+    'Los Angeles SFB',
+    'Edwards AFB',
+    'Vandenberg SFB',
+    'Patrick SFB',
+    'Peterson SFB',
+    'Schriever SFB',
+    'Buckley SFB',
+    'Offutt AFB',
+    'Wright-Patterson AFB',
+    'Eglin AFB',
+    'Kirtland AFB',
+    'Lackland AFB',
+    'Langley AFB',
+    'Travis AFB',
+    'Luke AFB'
+  ];
+
   return (
     <div>
-      <div id='registerheader'>Inventory Manager Account Registration</div>
+      <div id='registerheader'>Lemon Drop User Registration</div>
       <div id='flexcontainerregister'>
         <div id='registerfield'>
           <div>
@@ -59,27 +77,21 @@ const Register = () => {
 
           <div>
             <div>Base</div>
+            <select name="base" id='base' onChange={() => setBase(document.getElementById('base').value)}>
+              <option value="" disabled> --Please choose a base -- </option>
+              {allBases.map((baseOption) => {
+                return (
+                  <option value={ baseOption }>{ baseOption }</option>
+                )
+              })}
+            </select>
 
-            <input
-              list='baselist'
-              id='base'
-              onChange={() => {
-                setBase(document.getElementById('base').value)
-                console.log(base)
-              }}>
-            </input>
-
-            <datalist id='baselist'>
-              <option value='Beale AFB'></option>
-              <option value='Los Angeles SFB'></option>
-              <option value='Vandenburg SFB'></option>
-            </datalist>
           </div>
 
           <button
           id='registerbutton'
           onClick={() => {
-            if (first === '' || last === '' || username === '' || password === '') {
+            if (document.getElementById('first').value === '' || document.getElementById('username').value === '' || document.getElementById('username').value === '' || document.getElementById('password').value === '' || document.getElementById('base').value === '') {
               alert('Please fill in ALL text boxes!')
             } else {
               fetch('http://localhost:3001/register', {
@@ -91,7 +103,8 @@ const Register = () => {
                   'first_name': first,
                   'last_name': last,
                   'username': username,
-                  'password': password
+                  'password': password,
+                  'base': base
                 }])
               })
               .then(data => data.json())

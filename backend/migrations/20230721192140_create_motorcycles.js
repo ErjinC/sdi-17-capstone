@@ -16,7 +16,7 @@ exports.up = function(knex) {
         table.string('color');
         table.string('condition');
         table.string('location');
-        table.timestamp(true, true);
+        table.timestamps(true, true);
         table.string('description', 500);
     })
   

@@ -3,10 +3,13 @@
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid black;
+  align-items: center;
+  padding-bottom: 1rem;
 }
 
 #flexcontainerheader > * {
   font-size: 48px;
+  font-weight: bolder;
 }
 
 /* Position and sizing of burger button */
@@ -20,12 +23,12 @@
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: white;
+  background: rgb(255, 132, 0);
 }
 
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
-  background: #a90000;
+  background: rgb(255, 217, 61);
 }
 
 /* Position and sizing of clickable cross button */
@@ -36,7 +39,7 @@
 
 /* Color/shape of close button cross */
 .bm-cross {
-  background: white;
+  background: rgb(79, 32, 13);
 }
 
 /*
@@ -45,12 +48,16 @@ Note: Beware of modifying this element as it can break the animations - you shou
 */
 .bm-menu-wrap {
   position: fixed;
+  margin: 0;
+  padding: 0;
+  top: 0;
   height: 100%;
 }
 
 /* General sidebar styles */
 .bm-menu {
-  background: #373a47;
+  background: linear-gradient(to right, rgb(255, 132, 0), rgb(255, 217, 61));
+  box-shadow: 1px 1px 19px 4px rgba(0,0,0,0.75);
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -64,14 +71,14 @@ Note: Beware of modifying this element as it can break the animations - you shou
   flex-direction: column;
   max-height: 100%;
   width: fit-content;
-  color: white;
+  color: rgb(79, 32, 13);
   padding-top: 0.5rem;
   padding-left: 0.5rem;
 }
 
 /* Individual item */
 .bm-item {
-  color: white;
+  color: rgb(79, 32, 13);
   text-decoration: none;
 }
 
@@ -79,7 +86,29 @@ Note: Beware of modifying this element as it can break the animations - you shou
   text-decoration: underline;
 }
 
+#register {
+  bottom: 0;
+}
+
 /* Styling of overlay */
 .bm-overlay {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 217, 61, 0.3);
+  margin: 0;
+  padding: 0;
+  top: 0;
+}
+
+#welcome {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#credits {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
 }

@@ -1,5 +1,4 @@
-// import pwHash from "../helpers.js"
-const { pwHash } = require("../helpers.js")
+const { pwHash } = require('../helpers.js')
 
 /**
  * @param { import("knex").Knex } knex
@@ -7,7 +6,6 @@ const { pwHash } = require("../helpers.js")
  */
 exports.seed = async function(knex) {
   // Deletes ALL existing entries
-  
   await knex('users').del()
   await knex('users').insert([
     {
@@ -78,7 +76,7 @@ exports.seed = async function(knex) {
       first_name: "Peter",
       last_name: "Puma",
       base: "Goodfellow AFB",
-      favorites: "7,14"
+      favorites: "7,14",
     },
     {
       userId: 8,
@@ -212,7 +210,6 @@ exports.seed = async function(knex) {
     }
     
   ]);
-  // await knex.raw('SELECT setval(\'users_userId_seq\', (SELECT MAX(userId) from "users"));')
   await knex.raw("ALTER SEQUENCE \"users_userId_seq\" RESTART WITH 20;")
 };
 
@@ -233,7 +230,7 @@ exports.seed = async function(knex) {
 //     userId: 1,
 //     admin: true,
 //     username: "kevin",
-//     password: "test",
+//     password: pwHash("test",
 //     first_name: "Kevin",
 //     last_name: "Cagle",
 //     base: "Beale AFB",
