@@ -23,9 +23,9 @@ function Profile() {
     console.log('clicked PW Handler button')
     setFlag(!flag)
     if(flag2) {
-      document.getElementById('user-edit-info-container').style.display='none';
+      document.getElementById('user-edit-password-container').style.display='none';
     } else {
-      document.getElementById('user-edit-info-container').style.display='block';
+      document.getElementById('user-edit-password-container').style.display='block';
     }
   }
 
@@ -63,7 +63,7 @@ function Profile() {
       <div className='profile-edit-option'>
         <button onClick={pwHandler}>Change Password</button>
 
-        <div id='user-edit-user-edit-password-container'>
+        <div id='user-edit-password-container'>
           <div className='user-edit-password'>
             <input type='text' onChange={console.log('hey')} ></input>
           </div>
