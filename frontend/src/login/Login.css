@@ -23,4 +23,34 @@
   font-size: 32px;
   font-weight: bolder;
   margin: 2rem;
+  margin-bottom: 0;
+}
+
+#page {
+  display: flex;
+  justify-content: center;
+}
+
+#loginsection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  background: hsla(48, 100%, 62%, 1);
+  margin-top: 2em;
+  border-radius: 10px;
+  padding-bottom: 1em;
+  box-shadow: 1px 1px 10px 1px #4F200D;
+}
+
+.loginicon {
+  padding-right: 0.5em;
+}
+
+#username {
+  display: flex;
+}
+
+#password {
+  display: flex;
 }

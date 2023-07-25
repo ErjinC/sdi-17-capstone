@@ -1,7 +1,90 @@
+#frontPageContainer{
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+}
+
 #flexfrontpagetop {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
+  align-items: center;
   padding-left: 30rem;
   padding: 1rem;
+  height: 5%;
+  border-bottom: dotted 1px black;
+}
+
+#flexfrontpagetop div{
+  width: 33%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.listContainer {
+  display: flex;
+  margin: 1rem;
+  left: 0;
+  flex-wrap: wrap;
+  width: 75%;
+  height: 90%;
+  overflow-y: scroll;
+  justify-content: space-around;
+}
+
+.listContainer button {
+  width: 100%;
+}
+
+#detailedViewContainerOverlay {
+  background: rgba(0, 0, 0, 0.3);
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+
+#detailedViewContainer {
+  background: rgb(246, 241, 233);
+  color: rgb(79, 32, 13);
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px 1px #4F200D;
+  height: 70%;
+  width: 66%;
+  align-items: center;
+  z-index: 11;
+}
+
+#returnButtonContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10%;
+  width: 100%;
+}
+
+#returnButtonContainer button{
+  height: 50%;
+  width: 80%;
+  cursor: pointer;
+}
+
+#resultsfilter{
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 }

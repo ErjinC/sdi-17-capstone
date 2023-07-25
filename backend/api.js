@@ -81,11 +81,148 @@ api.get('/listings', async (req, res) => {
         "created_at",
         "updated_at")
         .join('motorcycles', {'motorcycles.motorcycleId': 'listings.motorcycle_id'})
-    let boatListings = await knex('listings').select('listingId','user_id','sold','type','description','image','make','model','year','price','hours','condition','location',"created_at","updated_at").join('boats', 'boats.boatId','listings.boat_id')
-    let trailerListings = await knex('listings').select('listingId','user_id','sold','type','description','image','make','model','year','price','length','condition','location',"created_at","updated_at").join('trailers', 'trailers.trailerId','listings.trailer_id')
+        let boatListings = await knex('listings').select(
+            'listingId',
+            'user_id',
+            'sold',
+            'type',
+            'description',
+            'image',
+            'make',
+            'model',
+            'year',
+            'price',
+            'hours',
+            'condition',
+            'location',
+            "created_at",
+            "updated_at")
+            .join('boats', 'boats.boatId','listings.boat_id')
+        let trailerListings = await knex('listings').select(
+            'listingId',
+            'user_id',
+            'sold',
+            'type',
+            'description',
+            'image',
+            'make',
+            'model',
+            'year',
+            'price',
+            'length',
+            'condition',
+            'location',
+            "created_at",
+            "updated_at")
+            .join('trailers', 'trailers.trailerId','listings.trailer_id')
 
     let totalListings = {carListings, rvListings, motoListings, boatListings, trailerListings};
-    console.log(totalListings)
+    res.status(200).json(totalListings)
+})
+
+api.get('/listings/:userid', async (req, res) => {
+    let carListings = await knex('listings').select(
+        "listingId",
+        "user_id",
+        "car_id",
+        "sold",
+        "type",
+        "make",
+        "model",
+        "year",
+        "price",
+        "mileage",
+        "color",
+        "transmission",
+        "image",
+        "condition",
+        "location",
+        "description",
+        "created_at",
+        "updated_at")
+        .join('cars', {'cars.carId': 'listings.car_id'})
+        .where({user_id: parseInt(req.params.userid)})
+    let rvListings = await knex('listings').select(
+        "listingId",
+        "user_id",
+        "rv_id",      
+        "sold",
+        "image",
+        "type",
+        "make",
+        "model",
+        "year",
+        "price",
+        "mileage",
+        "condition",
+        "location",
+        "sleeps",
+        "weight",
+        "length",
+        "description",
+        "created_at",
+        "updated_at")
+        .join('rvs', {'rvs.rvId': 'listings.rv_id'})
+        .where({user_id: parseInt(req.params.userid)})
+    let motoListings = await knex('listings').select(
+        "listingId",
+        "user_id",
+        "motorcycle_id",
+        "sold",
+        "image",
+        "type",
+        "make",
+        "model",
+        "year",
+        "price",
+        "mileage",
+        "color",
+        "condition",
+        "location",
+        "description",
+        "created_at",
+        "created_at",
+        "updated_at")
+        .join('motorcycles', {'motorcycles.motorcycleId': 'listings.motorcycle_id'})
+        .where({user_id: parseInt(req.params.userid)})
+    let boatListings = await knex('listings').select(
+        'listingId',
+        'user_id',
+        'sold',
+        'type',
+        'description',
+        'image',
+        'make',
+        'model',
+        'year',
+        'price',
+        'hours',
+        'condition',
+        'location',
+        "created_at",
+        "updated_at")
+        .join('boats', 'boats.boatId','listings.boat_id')
+        .where({user_id: parseInt(req.params.userid)})
+    let trailerListings = await knex('listings').select(
+        'listingId',
+        'user_id',
+        'sold',
+        'type',
+        'description',
+        'image',
+        'make',
+        'model',
+        'year',
+        'price',
+        'length',
+        'condition',
+        'location',
+        "created_at",
+        "updated_at")
+        .join('trailers', 'trailers.trailerId','listings.trailer_id')
+        .where({user_id: parseInt(req.params.userid)})
+
+    let totalListings = {carListings, rvListings, motoListings, boatListings, trailerListings};
     res.status(200).json(totalListings)
 })
 
@@ -95,6 +232,8 @@ api.get('/listings', async (req, res) => {
 
 api.post('/login', async (req,res) => {     //     Allows a user to login
     // console.log('body: ', req.body[0].username)
+    console.log('request body: ', req.body[0])
+    if(req.body[0]){
     let query = await knex('users').select('password').where({username: req.body[0].username})
     // console.log('query ', query)
     let pw = query[0].password
@@ -109,9 +248,12 @@ api.post('/login', async (req,res) => {     //     Allows a user to login
             res.status(400).json({success: false})
         }
     })
+    }else{
+        res.status(400).json('Request body is empty, try again.')
+    }
 })
 
-api.post('/register', async (req, res) => {
+api.post('/register', async (req, res) => {     //     User Registration
     //first_name, last_name, username, password, base
     let userExists = await knex('users').first().where({username: req.body[0].username})
     // console.log('user exists? ', userExists)
@@ -137,8 +279,8 @@ api.post('/register', async (req, res) => {
 
 //////////        PUT REQUESTS        //////////
 
-api.put('/updateUserPassword/:userID', async (req, res) => {     //     Allows a user to update their password
-    const editUserId = req.params.userID
+api.put('/updateUserPassword/:userId', async (req, res) => {     //     Allows a user to update their password
+    const editUserId = req.params.userId
     const newPassword = req.body.newPassword;
 
     let hashedDBPasswordExists = await knex('users').select('password').where({userId: editUserId})
@@ -153,9 +295,35 @@ api.put('/updateUserPassword/:userID', async (req, res) => {     //     Allows a
     }
 })
 
+api.put('/updateUserInfo/:userId', async (req, res) => {     //     Allows a user to update their general information
+    const editUserId = req.params.userId
+    const newInfo = req.body;
+
+    const query = await knex.select('admin', 'username', 'first_name', 'last_name', 'base').from('users')
+        .where({userId: editUserId})
+        .update({
+            admin: newInfo["newAdminStatus"],
+            username: newInfo["newUsername"],
+            first_name: newInfo["newFirstName"],
+            last_name: newInfo["newLastName"],
+            base: newInfo["newBase"],
+        })
+        
+    query ? res.status(200).send({...newInfo, success: true}) : res.status(400).send({success: false});
+})
 
 //////////        DEL REQUESTS        //////////
 
+// api.delete('/listings/:listingId', (req, res) => {
+    
+// })
+
+api.delete('/deleteUser/:userId', async (req, res) => {     //     Deletes a User's account
+    const userId = req.params.userId 
+
+    let deleteOperation = await knex('users').where({userId: userId}).delete()
+    res.status(200).send({success: true})
+})
 
 
 //////////        MISC REQUESTS        //////////

@@ -1,12 +1,62 @@
 .user-info {
-
+  display: flex;
 }
+
+.info {
+  margin-left: 1em;
+  padding-top: 0.3em;
+}
+
+.ratinginfo {
+  margin-left: 1em;
+  padding-top: 1em;
+}
+
+#rating-container {
+  margin-bottom: 2rem;
+}
+
 #user-edit-password-container {
   display: none;
 }
+
 #user-edit-info-container {
   display: none;
 }
+
 .centered {
   text-align: center;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+}
+
+.profiledetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  background: hsla(48, 100%, 62%, 1);
+  margin-top: 2em;
+  border-radius: 10px;
+  padding: 1em;
+  box-shadow: 1px 1px 10px 1px #4F200D;
+}
+
+#edit-submit-button {
+  margin-bottom: 1em;
+}
+
+#passwordBtn {
+  margin-bottom: 1em;
+}
+
+#editBtn {
+  margin-bottom: 1em;
+}
+
+#passSubmit {
+  margin-bottom: 1em;
 }

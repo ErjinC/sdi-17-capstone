@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
-// import useAuth from '../useAuth.js'
+import React, { useState, useEffect } from 'react'
 import './Profile.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Profile({currentUser}) {
-  // const { currentUser, setCurrentUser } = useAuth();
+function Profile({currentUser, setCurrentUser}) {
   const [flag, setFlag] = useState(false);
   const [flag2, setFlag2] = useState(false);
+  const [flag3, setFlag3] = useState(false);
   const [editAdmin, setEditAdmin] = useState(false);
   const [editUsername, setEditUsername] = useState('');
   const [editPassword, setEditPassword] = useState('');
@@ -14,16 +15,11 @@ function Profile({currentUser}) {
   const [editLastName, setEditLastName] = useState(''); 
   const [editBase, setEditBase] = useState();
 
-//   const dummy = [{         //     call this data with auth[0].userId, auth[0].username, etc.
-//     "userId": 1,
-//     "admin": true,
-//     "username": "1234",
-//     "password": "1234",
-//     "first_name": "Larry", // auth[0].first_name
-//     "last_name": "Llama",
-//     "base": "Beale AFB",
-//     "favorites": "1,2,3,4,5"
-// }]
+  useEffect(() => {
+    if (sessionStorage.getItem('CurrentUser') === null) {
+      window.location='/'
+    }
+  }, [])
 
   function resetPwDisplayHandler() {    //  Renders user password reset field based on button toggle
     setFlag(!flag)
@@ -39,13 +35,26 @@ function Profile({currentUser}) {
     }
 
     if (editPassword === editPasswordCheck) {     //     Checks if password fields in frontend match
-      let request = await fetch(`http://localhost:3001/updateUserPassword/${3}`, putOptions);
+      let request = await fetch(`http://localhost:3001/updateUserPassword/${currentUser.userId}`, putOptions);
       let response = await request.json();
-      console.log(response);
 
-      response.success ? console.log('Password reset was a success!') : console.log('Error on Server Side')
+      if(response.success) {     //     Notifies user of their password reset status
+        toast.success('Password reset was a success!', {
+          position: toast.POSITION.BOTTOM_CENTER,
+          className: 'toast-message'
+        })
+        window.location.reload();
+      } else  {
+        toast.error('Error, please try again later', {
+          position: toast.POSITION.BOTTOM_CENTER,
+          className: 'toast-message'
+        })
+      }
     } else {
-      return console.log('These passwords don\'t match');     //     Should return an alert frontend side. Not sure how to implement this rn
+      return toast.error('Password not set. These passwords don\'t match', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-message'
+      })
     }
   }
 
@@ -56,90 +65,159 @@ function Profile({currentUser}) {
       : document.getElementById('user-edit-info-container').style.display='block'
   }
 
-  function userEditHandler() {    //  Submits user inputted fields
-    const newUserInfo = [editAdmin, editUsername, editFirstName, editLastName, editBase];
+  async function userEditHandler() {    //  Submits user inputted fields
     
     const putOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ newUserInfo: newUserInfo }),
+      body: JSON.stringify({ 
+        newAdminStatus: editAdmin,
+        newUsername: editUsername,
+        newFirstName: editFirstName,
+        newLastName: editLastName,
+        newBase: editBase,
+      }),
+    }
+
+    const request = await fetch(`http://localhost:3001/updateUserInfo/${currentUser.userId}`, putOptions);
+    const response = await request.json();
+
+    if (response.success) {
+      setCurrentUser({
+        admin: response.newAdminStatus,
+        userId: currentUser.userId,
+        username: response.newUsername,
+        first_name: response.newFirstName,
+        last_name: response.newLastName,
+        base: response.newBase
+      });
+      let oldSession = JSON.parse(sessionStorage.getItem('CurrentUser'))
+      // console.log(oldSession)
+      sessionStorage.setItem('CurrentUser', JSON.stringify({
+        admin: response.newAdminStatus,
+        userId: oldSession.userId,   
+        username: response.newUsername,
+        first_name: response.newFirstName,
+        last_name: response.newLastName,
+        base: response.newBase,
+        favorites: oldSession.favorites,  
+        success: response.success
+      }));
+      toast.success('Updated user info', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-message'
+      });
+      window.location.reload()
+    } else {
+      toast.error('Please fill in both fields', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-message'
+      });
+    }
+  }
+
+  async function deleteUserDisplayHandler() {     //     Delete user's account & navigate back to homepage
+    if (window.confirm('Are you SURE you want to delete your account??')) {
+      const delOptions = {
+        method: 'DELETE'
+      }
+
+      let deleteOperation = await fetch(`http://localhost:3001/deleteUser/${currentUser.userId}`, delOptions);
+      let response = await deleteOperation.json();
+
+      if(response.success) {
+        sessionStorage.clear();
+        window.location='/'
+      } else toast('Delete Account failed, please try again later');
     }
   }
 
   return(
     <div className='profile-container'>
-      <h1 className='centered'>Welcome to your Profile Page</h1>
-      <div className='user-info' id='userName-container'>
-        <p id='userName'>Username: USERNAME</p>
-        {/* <p id='userName'> Username: {auth[0].username}</p> */}
-      </div>
-      <div className='user-info' id='firstName-container'>
-        <p id='firstName'>First Name: FIRST NAME</p>
-        {/* <p id='userName'>First Name: {auth[0].first_name}</p> */}
-      </div>
-      <div className='user-info' id='lastName-container'>
-        <p id='lastName'>Last Name: Last NAME</p>
-        {/* <p id='userName'>Last Name: {auth[0].last_name}</p> */}
-      </div>
-      <div className='user-info' id='base-container'>
-        <p id='base'>Base: BASE</p>
-        {/* <p id='userName'>Base: {auth[0].base}</p> */}
-      </div>
-      <div className='user-info' id='rating-container'>
-        <p id='rating'>User Rating: * * * * *</p>
-      </div>
-      <div className='profile-edit-options'>
-        <button onClick={resetPwDisplayHandler}>Change Password</button>
-          <div id='user-edit-password-container'>      {/* Being conditionally rendered on line 22*/}
-            <div className='user-edit-password'>
-              <input type='text' onChange={(e) => setEditPassword(e.target.value)} ></input>
+      <div className='profiledetails'>
+        <h1 className='centered'>Welcome to your Profile Page, {currentUser.first_name}</h1>
+        <div className='user-info' id='userName-container'>
+          <h4>Username:</h4><p className='info'> {currentUser.username}</p>
+        </div>
+        <div className='user-info' id='firstName-container'>
+          <h4>First Name:</h4><p className='info'> {currentUser.first_name}</p>
+        </div>
+        <div className='user-info' id='lastName-container'>
+          <h4>Last Name:</h4><p className='info'>{currentUser.last_name}</p>
+        </div>
+        <div className='user-info' id='base-container'>
+          <h4>Base:</h4><p className='info'>{currentUser.base}</p>
+        </div>
+        <div className='user-info' id='rating-container'>
+          <h4 id='rating'>User Rating:</h4>
+          <div className='ratinginfo'>
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">star</span>
+            <span class="material-symbols-outlined">star_half</span>
+          </div>
+        </div>
+        <div className='profile-edit-options'>
+          <button id='passwordBtn' onClick={resetPwDisplayHandler}>Change Password</button>
+            <div id='user-edit-password-container'>      {/* Being conditionally rendered on line 24*/}
+              <div className='user-edit-password'>
+                <label>New Password: </label>
+                <input type='text' onChange={(e) => setEditPassword(e.target.value)} ></input>
+              </div>
+              <div className='user-edit-password'>
+                <label>Confirm New Password: </label>
+                <input type='text' onChange={(e) => setEditPasswordCheck(e.target.value)} ></input>
+              </div>
+              <div>
+                <button id='passSubmit' onClick={changePwHandler}>Submit</button>
+              </div>
             </div>
-            <div className='user-edit-password'>
-              <input type='text' onChange={(e) => setEditPasswordCheck(e.target.value)} ></input>
+        </div>
+        <div className='profile-edit-options'>
+          <button id='editBtn' onClick={userEditDisplayHandler}>Edit your information</button>
+          <div id='user-edit-info-container'>      {/* Being conditionally rendered */}
+            <div className='user-edit-info'>
+              <label>Admin Status? </label>
+              <select onChange={(e) => { 
+                let boolValue = (e.target.value === true);
+                setEditAdmin(boolValue)
+                }}>
+                <option value='false'>No</option>
+                <option value='true'>Yes</option>
+              </select>
+            </div>
+            <div className='user-edit-info'>
+              <label>New Username: </label>
+              <input type='text' onChange={(e) => setEditUsername(e.target.value)} ></input>
+            </div>
+            <div className='user-edit-info'>
+              <label>First Name: </label>
+              <input type='text' onChange={(e) => setEditFirstName(e.target.value)} ></input>
+            </div>
+            <div className='user-edit-info'>
+              <label>Last Name: </label>
+              <input type='text' onChange={(e) => setEditLastName(e.target.value)} ></input>
+            </div>
+            <div className='user-edit-info'>
+              <label>Base: </label>
+              <select onChange={(e) => setEditBase(e.target.value)}>
+                <option value=''></option>     {/* SAMPLE DATA - FILL THIS LATER */}
+                <option value='Los Angeles SFB'>Los Angeles SFB</option>     
+                <option value='Peterson SFB'>Peterson SFB</option>
+                <option value='Keesler AFB'>Keesler AFB</option>
+              </select>
             </div>
             <div>
-              <button onClick={changePwHandler}>Submit</button>
+              <button id='edit-submit-button' onClick={userEditHandler}>Submit Changes</button>
             </div>
           </div>
-      </div>
-      <div className='profile-edit-options'>
-        <button onClick={userEditDisplayHandler}>Edit your information</button>
-        <div id='user-edit-info-container'>      {/* Being conditionally rendered on line 29*/}
-          <div className='user-edit-info'>
-            <label>Admin Status? </label>
-            <select onChange={(e) => { 
-              let boolValue = (e.target.value == 'true');
-              setEditAdmin(boolValue)
-              }}>
-              <option value='false'>No</option>
-              <option value='true'>Yes</option>
-            </select>
-          </div>
-          <div className='user-edit-info'>
-            <label>New Username: </label>
-            <input type='text' onChange={(e) => setEditUsername(e.target.value)} ></input>
-          </div>
-          <div className='user-edit-info'>
-            <label>First Name: </label>
-            <input type='text' onChange={(e) => setEditFirstName(e.target.value)} ></input>
-          </div>
-          <div className='user-edit-info'>
-            <label>Last Name: </label>
-            <input type='text' onChange={(e) => setEditLastName(e.target.value)} ></input>
-          </div>
-          <div className='user-edit-info'>
-            <label>Base: </label>
-            <select>
-              <option value='sample1'>SAMPLE 1</option>
-              <option value='sample2'>SAMPLE 2</option>
-              <option value='sample3'>SAMPLE 3</option>
-            </select>
-          </div>
-          <div>
-            <button onClick={userEditHandler}>Submit Changes</button>
+          <div id='user-delete-info-container'>
+            <button id='deleteBtn' onClick={deleteUserDisplayHandler}>Delete Account</button>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   )
 }

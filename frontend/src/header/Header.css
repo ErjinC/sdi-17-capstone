@@ -5,6 +5,7 @@
   border-bottom: 1px solid black;
   align-items: center;
   padding-bottom: 1rem;
+  height: 15%;
 }
 
 #flexcontainerheader > * {
@@ -14,10 +15,9 @@
 
 /* Position and sizing of burger button */
 .bm-burger-button {
-  position: fixed;
+  position: relative;
   width: 36px;
   height: 30px;
-  top: 1rem;
   left: 1rem;
 }
 
@@ -47,11 +47,9 @@ Sidebar wrapper styles
 Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
 */
 .bm-menu-wrap {
-  position: fixed;
   margin: 0;
   padding: 0;
   top: 0;
-  height: 100%;
 }
 
 /* General sidebar styles */
@@ -101,6 +99,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 #welcome {
   font-size: 20px;
   font-weight: bold;
+  margin-right: 1em;
 }
 
 #credits {
@@ -111,4 +110,10 @@ Note: Beware of modifying this element as it can break the animations - you shou
   right: 0;
   bottom: 0;
   text-align: center;
+  z-index: 12;
+  background-color: rgba(246, 241, 233);
+}
+
+#title{
+  margin-left: 10%;
 }

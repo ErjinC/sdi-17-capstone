@@ -9,9 +9,10 @@ const Header = ({currentUser}) => {
       <div id="flexcontainerheader">
         <Menu>
           <a id="home" className="menu-item" href="/">Home</a>
-          <a id="profile" className="menu-item" href="/profile">Profile</a>
-          <a id="listings" className="menu-item" href="/listings">Listings</a>
-          {currentUser.success ? <a id="logout" className="menu-item" href="/login" onClick={sessionStorage.clear()}>Logout</a>: <a id="login" className="menu-item" href="/login">Login</a>}
+          {/* <a id="profile" className="menu-item" href="/profile">Profile</a> */}
+          {currentUser.success ? <a id="profile" className="menu-item" href="/profile">Profile</a>: <></>}
+          <a id="listings" className="menu-item" href="/listings">My Listings</a>
+          {currentUser.success ? <a id="logout" className="menu-item" href="/login" onClick={() => sessionStorage.clear()}>Logout</a>: <a id="login" className="menu-item" href="/login">Login</a>}
           {currentUser.success ? <></> : <a id="register" className="menu-item" href="/register">Register</a>}
         </Menu>
 

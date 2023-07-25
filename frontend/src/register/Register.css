@@ -1,7 +1,4 @@
 #flexcontainerregister {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   padding-top: 2rem;
 }
 #flexcontainerregister > * {
@@ -23,4 +20,35 @@
   font-size: 32px;
   font-weight: bolder;
   margin: 2rem;
+  margin-bottom: 0;
+}
+
+#page {
+  display: flex;
+  justify-content: center;
+}
+
+#registerfield {
+  margin-left: 1.5rem;
+}
+
+#registersection {
+  width: fit-content;
+  background: hsla(48, 100%, 62%, 1);
+  margin-top: 2em;
+  border-radius: 10px;
+  padding-bottom: 1em;
+  box-shadow: 1px 1px 10px 1px #4F200D;
+}
+
+#base {
+  display: flex;
+}
+
+#firstname {
+  display: flex;
+}
+
+#lastname {
+  display: flex;
 }

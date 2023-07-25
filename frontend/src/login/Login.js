@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
-import PropTypes from 'prop-types'
 import './Login.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 async function loginUser(credentials) {
   return fetch('http://localhost:3001/login', {
@@ -19,8 +20,11 @@ const Login = () => {
 
   const handleSubmit = async e => {
     // e.preventDefault();
-    if (document.getElementById('username').value === '' || document.getElementById('password').value === '') {
-      alert('Please fill in the username and password fields!')
+    if (username === '' || password === '') {
+      toast.error('Please fill in both fields', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-message'
+      });
     } else {
       // console.log('trying to fetch: ', username, password)
       // auth will return either {object} or false
@@ -29,9 +33,13 @@ const Login = () => {
         'password': password
       }]);
 
+      console.log(res.success)
       
       if (!res.success) {
-        alert('Login Unsuccessful. Please Try Again!')
+        toast.error('Invalid username or password', {
+          position: toast.POSITION.BOTTOM_CENTER,
+          className: 'toast-message'
+        });
       } else {
         sessionStorage.setItem('CurrentUser', JSON.stringify(res))
         //Redirect to homepage
@@ -41,44 +49,43 @@ const Login = () => {
     }
   }
 
+
   return (
-    <div>
-      <div id='loginheader'>Lemon Drop Login</div>
-      <div id='flexcontainerlogin'>
+    <div id='page'>
+      <div id="loginsection">
+        <div id='loginheader'>Lemon Drop Login</div>
+        <div id='flexcontainerlogin'>
+          <div id='loginfield'>
+            <div id='username'>
+              <span className="material-symbols-outlined loginicon">person</span>
+              <input
+              type='textbox'
+              placeholder='Username'
+              onChange={e => {
+                setUsername(e.target.value)
+              }}
+              ></input>
+            </div>
 
-        <div id='loginfield'>
-          <div>
-            <div>Username</div>
-            <input
-            type='textbox'
-            id='username'
-            onChange={() => {
-              setUsername(document.getElementById('username').value)
-            }}
-            ></input>
+            <div id='password'>
+              <span className="material-symbols-outlined loginicon">lock</span>
+              <input
+              type='password'
+              placeholder='Password'
+              onChange={e => {
+                setPassword(e.target.value)
+              }}
+              ></input>
+            </div>
+
+            <button id="loginbutton" onClick={handleSubmit}>Login</button>
           </div>
 
-          <div>
-            <div>Password</div>
-            <input
-            type='password'
-            id='password'
-            onChange={() => {
-              setPassword(document.getElementById('password').value)
-            }}
-            ></input>
-          </div>
-
-          <button id="loginbutton" onClick={handleSubmit}>Login</button>
         </div>
-
       </div>
+      <ToastContainer/>
     </div>
   )
 }
-
-// Login.propTypes = {
-//   setAuth: PropTypes.func.isRequired
-// }
 
 export default Login

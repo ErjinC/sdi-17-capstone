@@ -1,28 +1,22 @@
-#flexcontainervehiclecard {
-  display: flex;
-  margin: 1rem;
-}
-
 #individualcard {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
   padding: 1rem;
-  margin: 2rem;
-  border: inset rgb(79, 32, 13);
-  border-top: white;
-  border-left: white;
+  margin: 1rem;
+  margin-left: .25rem;
+  margin-right: .25rem;
+  box-shadow: 1px 1px 10px 1px rgba(79, 32, 13, .8);
+  /* box-shadow: 0px 36px 3px #444343; */
 }
-
-#individualcarddetailsoverlay {
-  background: rgba(255, 217, 61, 0.3);
-  margin: 0;
-  padding: 0;
-  top: 0;
-  left: 0;
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  display: none;
+#individualcard:hover {
+  transform: scale(1.1);
 }
-
-#individualcarddetails {
-  display: none;
+#vehiclecardimage {
+  display: block;
+  max-width:460px;
+  max-height:280px;
+  width: auto;
+  height: auto;
 }
