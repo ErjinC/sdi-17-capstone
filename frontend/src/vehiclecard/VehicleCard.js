@@ -1,32 +1,71 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import './VehicleCard.css'
 
-const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
+const VehicleCard = ({vehicle, detailedView, setDetailedView, userFavorites, setUserFavorites}) => {
   const [favorited, setFavorited] = useState(false)
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
-  console.log(linkRoute)
+  const currentUser = JSON.parse(sessionStorage.getItem('CurrentUser'))
   
+  //if userFavorites.contains(vehicle.listingId) => render the gold heart, otherwise render heart add
+
+  useEffect(() => {
+    if (sessionStorage.getItem('CurrentUser') !== null) {
+      if(userFavorites.includes(vehicle.listingId)){
+        setFavorited(true)
+      }
+      sessionStorage.setItem('CurrentUser', JSON.stringify({...currentUser, favorites:userFavorites.toString()}))
+      fetch(`http://localhost:3001/favorites`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          favorites: userFavorites.toString(), 
+          userid: currentUser.userId
+        })
+      })
+    }
+  }, [userFavorites])
+
+  const handleFavoriteAdd = (event) => {
+    setFavorited(true)
+    event.stopPropagation()
+    setUserFavorites([...userFavorites,vehicle.listingId])
+  }
+
+  const handleFavoriteRemove = (event) => {
+    setFavorited(false)
+    event.stopPropagation()
+    let index = userFavorites.indexOf(vehicle.listingId);
+    let tempArr = userFavorites.toSpliced(index, 1)
+    if (index !== -1) {
+      setUserFavorites(tempArr);
+    }
+  }
+
+  if (sessionStorage.getItem('CurrentUser') == null) {
+    return(
+      <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
+      <img id='vehiclecardimage' alt='Vehicle' src={vehicle.image}></img>
+      <div><strong>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</strong></div>
+      <div>Cost: {'$'+vehicle.price}</div>
+      <div>Location: {vehicle.location}</div>
+    </div>
+    )
+  }
 
   return (
       <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
         { linkRoute === '' ?
           //Display favorite icons toggle on home page
-          favorited ? <span id='favoritedIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {
-            setFavorited(!favorited)
-            event.stopPropagation()}}>favorite</span> 
-          : <span id='addFavoriteIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {
-            setFavorited(!favorited)
-            event.stopPropagation()}}>heart_plus</span> 
+          favorited ? <span id='favoritedIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
+          : <span id='addFavoriteIcon' className="material-symbols-outlined favoriteIcon" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span> 
         
         :
           //otherwise check if we are in profile
           linkRoute === 'profile' ? 
           //if we are in profile, display remove icons instead
-          <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {
-            setFavorited(false)
-            event.stopPropagation()}}>delete</span> 
+          <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span> 
           :
           //anywhere else we won't display favorite icons
           <></>

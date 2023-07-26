@@ -2,15 +2,17 @@ import React, {useState} from 'react'
 import './add.css'
 
 
-const AddMotorcycle = () => {
+const AddRv = ({ currentUser }) => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
     const [year, setYear] = useState('');
     const [price, setPrice] = useState('');
     const [mileage, setMileage] = useState('');
+    const [sleeps, setSleeps] = useState('');
+    const [weight, setWeight] = useState('');
+    const [length, setLength] = useState('');
     const [color, setColor] = useState('');
-    const [transmission, setTransmission] = useState('');
     const [condition , setCondition] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
@@ -18,8 +20,8 @@ const AddMotorcycle = () => {
     const [image, setImage] = useState('');
 
     return (
-        <div className='car-creation-container'>
-            <div className ='additem'>
+        <div className='rv-creation-container'>
+            <div className='additem'>
                 <div>
                     <label>Type</label>
                     <input type='textbox' id='type' onChange={(e) => setType(e.target.value)} />
@@ -43,6 +45,18 @@ const AddMotorcycle = () => {
                 <div>
                     <label>Mileage</label>
                     <input type='textbox' id='mileage' onChange={(e) => setMileage(e.target.value)} />
+                </div> 
+                <div>
+                    <label>Length</label>
+                    <input type='textbox' id='length' onChange={(e) => setLength(e.target.value)} />
+                </div>
+                <div>
+                    <label>Sleeps</label>
+                    <input type='textbox' id='sleeps' onChange={(e) => setSleeps(e.target.value)} />
+                </div>
+                <div>
+                    <label>Weight</label>
+                    <input type='textbox' id='mileage' onChange={(e) => setWeight(e.target.value)} />
                 </div>
                 <div>
                     <label>Color</label>
@@ -61,44 +75,39 @@ const AddMotorcycle = () => {
                     <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
-            
-    
 
-                <button
-                   id='addbutton'
-                    onClick={() => {
-                        fetch('http://localhost:3001/motorcycles', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify([{
-                                'type': type,
-                                'make': make,
-                                'model': model,
-                                'year': year,
-                                'price': price,
-                                'mileage': mileage,
-                                'color': color,
-                                'transmission': transmission,
-                                'condition': condition,
-                                'location,': location,
-                                'description,': description,
-                            }])
+            <button
+                className='addbutton'
+                onClick={() => {
+                    fetch(`http://localhost:3001/addListing/rvs`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'type': type,
+                            'description': description,
+                            'make': make,
+                            'model': model,
+                            'year': Number(year),
+                            'price': Number(price),
+                            'mileage': Number(mileage),
+                            'sleeps' : Number(sleeps),
+                            'weight' : Number(weight),
+                            'length' : Number(length),
+                            'condition': condition,
+                            'location': location,
+                            'userId': currentUser.userId,
                         })
-                            .then(data => data.json())
-                            .then(window.location = '/MyListing')
-                            .then(alert('Added Successful!'));
-                    } }
-                    addbutton
-                ></button></>
-                
-
-            </div>
+                    })
+                        .then(data => data.json())
+                        .then(res => console.log(res))
+                        .then(window.location = '/listings')
+                        .then(alert('Added Successful!'));
+                    }}
+            >addbutton</button>
         </div>
-
     );
-
 }
 
-export default AddMotorcycle
+export default AddRv;

@@ -17,6 +17,15 @@ api.get('/', (req,res) => {
         .then(result => {
             res.status(200).json(result)
         })
+        .catch(err=>res.send(err))
+})
+
+api.get('/users/:userid', (req, res) => {
+    knex('users').select('userId', 'username', 'first_name', 'last_name', 'base', 'favorites', 'admin').where({userId: req.params.userid})
+        .then(result => {
+            res.status(200).json({...result[0], success:true})
+        })
+        .catch(err=>res.send(err))
 })
 
 api.get('/listings', async (req, res) => {
@@ -226,8 +235,6 @@ api.get('/listings/:userid', async (req, res) => {
     res.status(200).json(totalListings)
 })
 
-api.get('/listings/individual/:listingid')
-
 //////////        POST REQUESTS        //////////
 
 // req.body = [{ object}] req.body[0].something
@@ -279,6 +286,43 @@ api.post('/register', async (req, res) => {     //     User Registration
     }
 })
 
+api.post('/addListing/:vehicleType', async (req, res) => {     //     Adds a new rv based on listing information
+	const vehicleType = req.params.vehicleType;
+	const newListing = req.body;
+	console.log(newListing);
+
+	const insertRV = await knex('rvs').insert({
+		sold: false,
+		image: 'https://placekitten.com/500/300',
+		type: newListing.type,
+		make: newListing.make,
+		model: newListing.model,
+		year: newListing.year,
+		price: newListing.price,
+		mileage: newListing.mileage,
+		condition: newListing.condition,
+		location: newListing.location,
+		sleeps: newListing.sleeps,
+		weight: newListing.weight,
+		length: newListing.length,
+		description: newListing.description,
+	});
+
+  let getNewRvId = await knex.select('rvId').from('rvs').orderBy('created_at', 'desc').limit(1)
+	console.log(getNewRvId);
+
+	const insertListing = await knex('listings').insert({
+		user_id: newListing.userId,
+		car_id: null,
+		boat_id: null,
+		rv_id: getNewRvId[0].rvId,
+		motorcycle_id: null,
+		trailer_id: null,
+	})
+
+	res.status(200).send({success: true})
+})
+
 //////////        PUT REQUESTS        //////////
 
 api.put('/updateUserPassword/:userId', async (req, res) => {     //     Allows a user to update their password
@@ -312,6 +356,14 @@ api.put('/updateUserInfo/:userId', async (req, res) => {     //     Allows a use
         })
         
     query ? res.status(200).send({...newInfo, success: true}) : res.status(400).send({success: false});
+})
+
+//////////        PATCH REQUESTS        //////////
+api.patch('/favorites', (req, res) => {
+    knex('users').where({userId: req.body.userid})
+    .update({favorites: req.body.favorites})
+    .then(res.status(200).json("Success"))
+    .catch(err => res.status(500).send(err))
 })
 
 //////////        DEL REQUESTS        //////////

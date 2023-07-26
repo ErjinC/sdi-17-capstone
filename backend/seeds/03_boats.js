@@ -289,7 +289,7 @@ exports.seed = async function(knex) {
     
   ]);
   // await knex.raw('SELECT setval(\'boats_boatId_seq\', (SELECT MAX(boatId) from "boats"));')
-  await knex.raw("ALTER SEQUENCE \"boats_boatId_seq\" RESTART WITH 20;")
+  await knex.raw("ALTER SEQUENCE \"boats_boatId_seq\" RESTART WITH 21;")
 };
 
 // In the format below, please give me a list of 20 objects in json format for a KNEX seed file. These will represent boat listings for a website. 

@@ -1,16 +1,13 @@
 import React, {useState} from 'react'
 import './add.css'
 
-
-const AddMotorcycle = () => {
+const AddTrailer = () => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
     const [year, setYear] = useState('');
     const [price, setPrice] = useState('');
-    const [mileage, setMileage] = useState('');
-    const [color, setColor] = useState('');
-    const [transmission, setTransmission] = useState('');
+    const [length, setLength] = useState('');
     const [condition , setCondition] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
@@ -41,12 +38,8 @@ const AddMotorcycle = () => {
                     <input type='textbox' id='price' onChange={(e) => setPrice(e.target.value)} />
                 </div>
                 <div>
-                    <label>Mileage</label>
-                    <input type='textbox' id='mileage' onChange={(e) => setMileage(e.target.value)} />
-                </div>
-                <div>
-                    <label>Color</label>
-                    <input type='textbox' id='color' onChange={(e) => setColor(e.target.value)} />
+                    <label>Length</label>
+                    <input type='textbox' id='length' onChange={(e) => setLength(e.target.value)} />
                 </div>
                 <div>
                     <label>Condition</label>
@@ -61,13 +54,10 @@ const AddMotorcycle = () => {
                     <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
-            
-    
-
                 <button
-                   id='addbutton'
+                    className='addbutton'
                     onClick={() => {
-                        fetch('http://localhost:3001/motorcycles', {
+                        fetch('http://localhost:3001/trailers', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -78,27 +68,24 @@ const AddMotorcycle = () => {
                                 'model': model,
                                 'year': year,
                                 'price': price,
-                                'mileage': mileage,
-                                'color': color,
-                                'transmission': transmission,
+                                'length': length,
                                 'condition': condition,
                                 'location,': location,
                                 'description,': description,
                             }])
                         })
                             .then(data => data.json())
-                            .then(window.location = '/MyListing')
+                            .then(window.location = '/login')
                             .then(alert('Added Successful!'));
                     } }
-                    addbutton
-                ></button></>
+                    >addbutton</button>
                 
 
-            </div>
         </div>
+        
 
     );
 
 }
 
-export default AddMotorcycle
+export default AddTrailer
