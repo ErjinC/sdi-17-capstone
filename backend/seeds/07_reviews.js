@@ -148,5 +148,5 @@ exports.seed = async function (knex) {
     }
   ]);
   // await knex.raw('SELECT setval(\'reviews_reviewId_seq\', (SELECT MAX(reviewId) from "reviews"));')
-  await knex.raw("ALTER SEQUENCE \"reviews_reviewId_seq\" RESTART WITH 20;")
+  await knex.raw("ALTER SEQUENCE \"reviews_reviewId_seq\" RESTART WITH 21;")
 };

@@ -13,6 +13,7 @@ const FrontPage = ({currentUser}) => {
   const [detailedView, setDetailedView] = useState({active:false, vehicle:{}});
   const [filterText, setFilterText] = useState('')
   const [listings, setListings] = useState();
+  const [userFavorites, setUserFavorites] = useState();
 
   // function vehicleFilterStorage(name, value) {
   //   if (sessionStorage.getItem(name)) {
@@ -24,16 +25,27 @@ const FrontPage = ({currentUser}) => {
 
   function vehicleFilterRetrieve(name) {
     if (!sessionStorage.getItem(name)) {
-      return ''
+      return 'all'
     } else {
       return sessionStorage.getItem(name)
     }
   }
   
   useEffect(() => {
+    if (!sessionStorage.getItem('vehiclefilter')) {
+      sessionStorage.setItem('vehiclefilter', 'all')
+      setFilterText('all')
+    }
+
     fetch('http://localhost:3001/listings')
     .then(res => res.json())
     .then(data => setListings(data))
+
+    if (sessionStorage.getItem('CurrentUser') !== null) {
+      setUserFavorites(JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item)))
+    }
+
+    console.log(userFavorites)
   }, [])
 
   return (
@@ -44,7 +56,7 @@ const FrontPage = ({currentUser}) => {
           </div>
           <div>
             {currentUser.success ? <>Home Base: {currentUser.base}</> : <>Log in to see your base!</>}
-          </div>3px 3px 3px rgba(79, 32, 13, .8)
+          </div>
         </div>
 
         <div id='resultsfilter'>
@@ -55,22 +67,22 @@ const FrontPage = ({currentUser}) => {
           <>
             <div id='detailedViewContainerOverlay'>
               <div id='detailedViewContainer'>
-                {(detailedView.vehicle?.type === 'car'||detailedView.vehicle?.type === 'coupe'||detailedView.vehicle?.type === 'truck')?<CarDetail vehicle={detailedView.vehicle}/>:<></>}
-                {(detailedView.vehicle.type === 'boat'||detailedView.vehicle?.type === 'jet ski')?<BoatDetail vehicle={detailedView.vehicle}/>:<></>}
-                {(detailedView.vehicle.type === 'Street Bike'||detailedView.vehicle?.type === 'Dirt Bike'||detailedView.vehicle?.type === 'Cruiser'||detailedView.vehicle?.type === "Sport Bike"||detailedView.vehicle?.type === "Touring Bike"||detailedView.vehicle?.type === "Adventure Bike"||detailedView.vehicle?.type === "Dual Sport")?<MotoDetail vehicle={detailedView.vehicle}/>:<></>}
-                {(detailedView.vehicle.type === 'motorized'||detailedView.vehicle.type === 'towable')?<RvDetail vehicle={detailedView.vehicle}/>:<></>}
-                {(detailedView.vehicle.type === 'flatbed'||detailedView.vehicle.type === 'enclosed')?<TrailerDetail vehicle={detailedView.vehicle}/>:<></>}
+                {(detailedView.vehicle?.type === 'car'||detailedView.vehicle?.type === 'coupe'||detailedView.vehicle?.type === 'truck')?<CarDetail vehicle={detailedView.vehicle} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>:<></>}
+                {(detailedView.vehicle.type === 'boat'||detailedView.vehicle?.type === 'jet ski')?<BoatDetail vehicle={detailedView.vehicle} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>:<></>}
+                {(detailedView.vehicle.type === 'Street Bike'||detailedView.vehicle?.type === 'Dirt Bike'||detailedView.vehicle?.type === 'Cruiser'||detailedView.vehicle?.type === "Sport Bike"||detailedView.vehicle?.type === "Touring Bike"||detailedView.vehicle?.type === "Adventure Bike"||detailedView.vehicle?.type === "Dual Sport")?<MotoDetail vehicle={detailedView.vehicle} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>:<></>}
+                {(detailedView.vehicle.type === 'motorized'||detailedView.vehicle.type === 'towable')?<RvDetail vehicle={detailedView.vehicle} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>:<></>}
+                {(detailedView.vehicle.type === 'flatbed'||detailedView.vehicle.type === 'enclosed')?<TrailerDetail vehicle={detailedView.vehicle} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>:<></>}
                 <div id='returnButtonContainer'> 
                   <button onClick={() => { setDetailedView({ active: false, vehicle: {} }) }}>Go Back</button>
                 </div>
               </div>
             </div>
           </> : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'car' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'boat' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'rv' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'motorcycle' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'trailer' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'car' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'boat' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'rv' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'motorcycle' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'trailer' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView} userFavorites={userFavorites} setUserFavorites = {setUserFavorites}/>) : <></>}
           </>
       </div>
 

@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const MyListings = () => {
     const [myListings, setMyListings] = useState();
     const [detailedView, setDetailedView] = useState({active:false,vehicle:{}});
+    const [ userFavorites, setUserFavorites ] = useState([]);
     const user = JSON.parse(sessionStorage.getItem('CurrentUser'))
     const navigate = useNavigate();
     
@@ -58,11 +59,11 @@ const MyListings = () => {
                     </div>
                     </div>
                 </> : <></>}
-                    {myListings?.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    {myListings?.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    {myListings?.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    {myListings?.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    {myListings?.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
                     <div id='addcard' onClick={() => navigate('/createListing')}><p id='addsymbol'>+</p></div>
                 </>
             </div>

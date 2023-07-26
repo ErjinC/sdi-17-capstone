@@ -348,5 +348,5 @@ exports.seed = async function(knex) {
     }
   ]);
   // await knex.raw('SELECT setval(\'rvs_rvId_seq\', (SELECT MAX(rvId) from "rvs"));')
-  await knex.raw("ALTER SEQUENCE \"rvs_rvId_seq\" RESTART WITH 20;")
+  await knex.raw("ALTER SEQUENCE \"rvs_rvId_seq\" RESTART WITH 21;")
 };

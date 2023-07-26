@@ -210,7 +210,7 @@ exports.seed = async function(knex) {
     }
     
   ]);
-  await knex.raw("ALTER SEQUENCE \"users_userId_seq\" RESTART WITH 20;")
+  await knex.raw("ALTER SEQUENCE \"users_userId_seq\" RESTART WITH 21;")
 };
 
 

@@ -11,8 +11,8 @@ const FavoritesDisplay = () => {
     const [listings, setListings] = useState()
     const [favoritesDisplayList, setFavoritesDisplayList] = useState()
     const [detailedView, setDetailedView] = useState({ active: false, vehicle: {} });
-    const userFavorites = JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item));
     const favoritesList = [];
+    const [userFavorites, setUserFavorites] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item)));
 
     useEffect(() => {
         fetch('http://localhost:3001/listings')
@@ -118,8 +118,7 @@ const FavoritesDisplay = () => {
                                     </div>
                                 </div>
                             </> : <></>}
-                        <VehicleCard vehicle={vehicle} detailedView={detailedView} setDetailedView={setDetailedView} />
-                        <VehicleCard vehicle={vehicle} detailedView={detailedView} setDetailedView={setDetailedView} />
+                        <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={vehicle} detailedView={detailedView} setDetailedView={setDetailedView} />
                     </>
                 )
             })}
