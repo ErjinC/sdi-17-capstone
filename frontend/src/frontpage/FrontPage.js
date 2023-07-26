@@ -36,7 +36,6 @@ const FrontPage = ({currentUser}) => {
       sessionStorage.setItem('vehiclefilter', 'all')
       setFilterText('all')
     }
-
     fetch('http://localhost:3001/listings')
     .then(res => res.json())
     .then(data => setListings(data))
