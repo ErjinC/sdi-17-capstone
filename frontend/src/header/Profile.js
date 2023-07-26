@@ -20,6 +20,7 @@ function Profile({currentUser, setCurrentUser}) {
     if (sessionStorage.getItem('CurrentUser') === null) {
       window.location='/'
     }
+
   }, [])
 
   function resetPwDisplayHandler() {    //  Renders user password reset field based on button toggle
@@ -222,7 +223,7 @@ function Profile({currentUser, setCurrentUser}) {
       <div id='favoriteListContainer'>
         <div id='favoriteTitle'>Your Favorites:</div>
         <div id='favoriteList'>
-          <FavoritesDisplay /> 
+          <FavoritesDisplay/> 
         </div>
       </div>
     </div>

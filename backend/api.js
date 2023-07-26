@@ -17,6 +17,15 @@ api.get('/', (req,res) => {
         .then(result => {
             res.status(200).json(result)
         })
+        .catch(err=>res.send(err))
+})
+
+api.get('/users/:userid', (req, res) => {
+    knex('users').select('userId', 'username', 'first_name', 'last_name', 'base', 'favorites', 'admin').where({userId: req.params.userid})
+        .then(result => {
+            res.status(200).json({...result[0], success:true})
+        })
+        .catch(err=>res.send(err))
 })
 
 api.get('/listings', async (req, res) => {
@@ -226,8 +235,6 @@ api.get('/listings/:userid', async (req, res) => {
     res.status(200).json(totalListings)
 })
 
-api.get('/listings/individual/:listingid')
-
 //////////        POST REQUESTS        //////////
 
 // req.body = [{ object}] req.body[0].something
@@ -312,6 +319,14 @@ api.put('/updateUserInfo/:userId', async (req, res) => {     //     Allows a use
         })
         
     query ? res.status(200).send({...newInfo, success: true}) : res.status(400).send({success: false});
+})
+
+//////////        PATCH REQUESTS        //////////
+api.patch('/favorites', (req, res) => {
+    knex('users').where({userId: req.body.userid})
+    .update({favorites: req.body.favorites})
+    .then(res.status(200).json("Success"))
+    .catch(err => res.status(500).send(err))
 })
 
 //////////        DEL REQUESTS        //////////
