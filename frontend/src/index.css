@@ -15,6 +15,6 @@ body {
   color: rgb(79, 32, 13);
 }
 
-html, body, #root, #root>div {
+html, body, #root {
   height: 100%;
 }

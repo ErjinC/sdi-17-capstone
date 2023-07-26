@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './Profile.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FavoritesDisplay from '../favorites/FavoritesDisplay';
 
 function Profile({currentUser, setCurrentUser}) {
   const [flag, setFlag] = useState(false);
@@ -151,11 +152,11 @@ function Profile({currentUser, setCurrentUser}) {
         <div className='user-info' id='rating-container'>
           <h4 id='rating'>User Rating:</h4>
           <div className='ratinginfo'>
-            <span class="material-symbols-outlined">star</span>
-            <span class="material-symbols-outlined">star</span>
-            <span class="material-symbols-outlined">star</span>
-            <span class="material-symbols-outlined">star</span>
-            <span class="material-symbols-outlined">star_half</span>
+            <span className="material-symbols-outlined">star</span>
+            <span className="material-symbols-outlined">star</span>
+            <span className="material-symbols-outlined">star</span>
+            <span className="material-symbols-outlined">star</span>
+            <span className="material-symbols-outlined">star_half</span>
           </div>
         </div>
         <div className='profile-edit-options'>
@@ -218,6 +219,12 @@ function Profile({currentUser, setCurrentUser}) {
         </div>
       </div>
       <ToastContainer />
+      <div id='favoriteListContainer'>
+        <div id='favoriteTitle'>Your Favorites:</div>
+        <div id='favoriteList'>
+          <FavoritesDisplay /> 
+        </div>
+      </div>
     </div>
   )
 }
