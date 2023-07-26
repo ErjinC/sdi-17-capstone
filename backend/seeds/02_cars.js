@@ -329,7 +329,7 @@ exports.seed = async function (knex) {
 
     ]);
     //   await knex.raw('SELECT setval(\'cars_carId_seq\', (SELECT MAX(carId) from "cars"));')
-    await knex.raw("ALTER SEQUENCE \"cars_carId_seq\" RESTART WITH 20;")
+    await knex.raw("ALTER SEQUENCE \"cars_carId_seq\" RESTART WITH 21;")
 };
 
 

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import './add.css'
 
 
-const AddCar = () => {
+const AddMotorcycle = () => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -11,7 +11,7 @@ const AddCar = () => {
     const [mileage, setMileage] = useState('');
     const [color, setColor] = useState('');
     const [transmission, setTransmission] = useState('');
-    const [condition, setCondition] = useState('');
+    const [condition , setCondition] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [sold, setSold] = useState('');
@@ -19,7 +19,7 @@ const AddCar = () => {
 
     return (
         <div className='car-creation-container'>
-            <div id='additem'>
+            <div className ='additem'>
                 <div>
                     <label>Type</label>
                     <input type='textbox' id='type' onChange={(e) => setType(e.target.value)} />
@@ -49,10 +49,6 @@ const AddCar = () => {
                     <input type='textbox' id='color' onChange={(e) => setColor(e.target.value)} />
                 </div>
                 <div>
-                    <label>Transmission</label>
-                    <input type='textbox' id='transmission' onChange={(e) => setTransmission(e.target.value)} />
-                </div>
-                <div>
                     <label>Condition</label>
                     <input type='textbox' id='condition' onChange={(e) => setCondition(e.target.value)} />
                 </div>
@@ -66,10 +62,12 @@ const AddCar = () => {
                 </div>
             </div>
             
-            <button
-                    id='addbutton'
+    
+
+                <button
+                    className ='addbutton'
                     onClick={() => {
-                        fetch('http://localhost:3001/cars', {
+                        fetch('http://localhost:3001/motorcycles', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -91,10 +89,16 @@ const AddCar = () => {
                             .then(data => data.json())
                             .then(window.location = '/MyListing')
                             .then(alert('Added Successful!'));
-                    }}
-                >addbutton</button>
-        </div>
+                    } }
+                    >addbutton</button>
+                
+                
+
+            </div>
+        
+
     );
+
 }
 
-export default AddCar;
+export default AddMotorcycle

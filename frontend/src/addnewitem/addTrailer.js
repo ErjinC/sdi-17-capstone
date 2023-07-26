@@ -15,89 +15,47 @@ const AddTrailer = () => {
     const [image, setImage] = useState('');
 
     return (
-        <div>
-            <div id='additem'>
+        <div className='car-creation-container'>
+            <div className ='additem'>
                 <div>
-                    <div>Type</div>
-                    <input
-                        type='textbox'
-                        id='type'
-                        onChange={() => {
-                            setType(document.getElementById('type').value);
-                        } }
-                    ></input>
+                    <label>Type</label>
+                    <input type='textbox' id='type' onChange={(e) => setType(e.target.value)} />
                 </div>
+                <div>
+                    <label>Make</label>
+                    <input type='textbox' id='make' onChange={(e) => setMake(e.target.value)} />
+                </div>
+                <div>
+                    <label>Model</label>
+                    <input type='textbox' id='model' onChange={(e) => setModel(e.target.value)} />
+                </div>
+                <div>
+                    <label>Year</label>
+                    <input type='textbox' id='year' onChange={(e) => setYear(e.target.value)} />
+                </div>
+                <div>
+                    <label>Price</label>
+                    <input type='textbox' id='price' onChange={(e) => setPrice(e.target.value)} />
+                </div>
+                <div>
+                    <label>Length</label>
+                    <input type='textbox' id='length' onChange={(e) => setLength(e.target.value)} />
+                </div>
+                <div>
+                    <label>Condition</label>
+                    <input type='textbox' id='condition' onChange={(e) => setCondition(e.target.value)} />
+                </div>
+                <div>
+                    <label>Location</label>
+                    <input type='textbox' id='loction' onChange={(e) => setLocation(e.target.value)} />
+                </div>
+                <div>
+                    <label>Description</label>
+                    <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
+                </div>
+            </div>
 
-                <div>Make</div>
-                <input
-                    type='textbox'
-                    id='make'
-                    onChange={() => {
-                        setMake(document.getElementById('make').value);
-                    } }
-                ></input>
-
-                <div>Model</div>
-                <input
-                    type='textbox'
-                    id='model'
-                    onChange={() => {
-                        setModel(document.getElementById('model').value);
-                    } }
-                ></input>
-
-                <div>Year</div>
-                <input
-                    type='textbox'
-                    id='year'
-                    onChange={() => {
-                        setYear(document.getElementById('year').value);
-                    } }
-                ></input>
-
-                <div>Price</div>
-                <input
-                    type='textbox'
-                    id='price'
-                    onChange={() => {
-                        setPrice(document.getElementById('price').value);
-                    } }
-                ></input>
-               
-                <div>Length</div>
-                <input
-                    type='textbox'
-                    id='length'
-                    onChange={() => {
-                        setLength(document.getElementById('length').value);
-                    } }
-                ></input>
-            
-                <div>Condition</div>
-                    <input
-                    type='textbox'
-                    id='condition'
-                    onChange={() => {
-                        setCondition(document.getElementById('condition').value);
-                    } }
-                ></input>
-
-                <div>Location</div>
-                    <input
-                    type='textbox'
-                    id='location'
-                    onChange={() => {
-                        setLocation(document.getElementById('location').value);
-                    } }
-                ></input>
-
-                <div>Description</div>
-                    <textarea
-                    id='description'
-                    onChange={() => {
-                        setDescription(document.getElementById('description').value);
-                    } }
-                ></textarea>
+   
 
                 <button
                     id='addbutton'
@@ -134,4 +92,4 @@ const AddTrailer = () => {
 
 }
 
-export default addTrailer
+export default AddTrailer

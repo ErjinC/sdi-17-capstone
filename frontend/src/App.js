@@ -34,7 +34,7 @@ function App() {
           <Route path='/register' element={<Register currentUser = {currentUser} />} />
           <Route path='/test' element={<BoatDetail currentUser = {currentUser} />} />
           <Route path='/listings' element={<MyListings />} />
-           <Route path='/createListing' element={<CreateListing />} />
+           <Route path='/createListing' element={<CreateListing currentUser = {currentUser} />} />
         </Routes>
       </div>
       <div id='credits'>Created by SDI-17 Group 6 - Andrew Galbraith | Anthony Gravante | Ben Lesko | Erjin Choi | Kevin Cagle | Moses Jackson</div>

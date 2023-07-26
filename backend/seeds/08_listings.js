@@ -114,5 +114,5 @@ exports.seed = async function(knex) {
   
   ]);
   // await knex.raw('SELECT setval(\'listings_listingId_seq\', (SELECT MAX(listingId) from "listings"));')
-  await knex.raw("ALTER SEQUENCE \"listings_listingId_seq\" RESTART WITH 100;")
+  await knex.raw("ALTER SEQUENCE \"listings_listingId_seq\" RESTART WITH 101;")
 };
