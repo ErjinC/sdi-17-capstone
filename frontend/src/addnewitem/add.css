@@ -1,4 +1,4 @@
-#additem {
+.additem {
         width: fit-content;
         background: hsla(48, 100%, 62%, 1);
         margin-top: 2em;
@@ -7,7 +7,7 @@
         box-shadow: 1px 1px 10px 1px #4F200D;
       }
 
-#addbutton {
+.addbutton {
     font-size: 16px;
     padding: 2px;
     padding-left: 10px;

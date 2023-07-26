@@ -1,33 +1,50 @@
 import React, { useEffect, useState } from 'react'
 import './CreateListing.css'
-import AddCar from '../addnewitem/addCar';
+import AddCar from '../addnewitem/AddCar';
+import AddBoat from '../addnewitem/AddBoat';
+import AddMotorcycle from '../addnewitem/AddMotocycle';
+import AddRv from '../addnewitem/AddRv';
+import AddTrailer from '../addnewitem/AddTrailer';
+import { useNavigate } from 'react-router-dom';
 
-const CreateListing = () => {
+const CreateListing = ({currentUser}) => {
   const [vehicleSelected, setVehicleSelected] = useState(false);
   const [vehicleType, setVehicleType] = useState('');
+  const navigate = useNavigate();
 
   function assignVehicleHandler(event) {
     setVehicleSelected(true);
     setVehicleType(event.target.value);
   }
 
+  function renderComponent() {
+    switch(vehicleType){
+        case 'car': return <AddCar currentUser= {currentUser} />;
+        case 'motorcycles': return <AddMotorcycle currentUser= {currentUser} />;
+        case 'rvs': return <AddRv currentUser= {currentUser} />;
+        case 'boats': return <AddBoat currentUser= {currentUser} />;
+        case 'trailers': return <AddTrailer currentUser= {currentUser} />;
+    }
+  }
 
   const vehicleTypeSelect = (
     <div id='descriptionTextContainer'>
       <h1 id='detailheader'></h1>
       <h3>What vehicle would you like to list?</h3>
-      <button value='car' onClick={assignVehicleHandler}>Cars</button>
-      <button value='motorcycles' onClick={assignVehicleHandler}>Motorcycles</button>
-      <button value='rvs' onClick={assignVehicleHandler}>RVs</button>
-      <button value='boats' onClick={assignVehicleHandler}>Boats</button>
-      <button value='trailers' onClick={assignVehicleHandler}>Trailers</button>
+      <button value='car' onClick={assignVehicleHandler}>Car</button>
+      <button value='motorcycles' onClick={assignVehicleHandler}>Motorcycle</button>
+      <button value='rvs' onClick={assignVehicleHandler}>RV</button>
+      <button value='boats' onClick={assignVehicleHandler}>Boat</button>
+      <button value='trailers' onClick={assignVehicleHandler}>Trailer</button>
+      <p className='centered'> Or go back to...</p>
+      <button onClick={() => navigate('/listings')}>Your Listings</button>
     </div>
   )
 
   return (
     <>
       <div id='flexcontainerdetail'>
-        {vehicleSelected ? <AddCar /> : vehicleTypeSelect}
+        {vehicleSelected ? renderComponent() : vehicleTypeSelect}
       </div>
     </>
   )
@@ -46,4 +63,4 @@ const CreateListing = () => {
 // location: "Beale AFB", !!
 // description: "Bent propeller. Runs well. Needs new canopy." !
 
-export default CreateListing
+export default CreateListing;

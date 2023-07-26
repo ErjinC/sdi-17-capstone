@@ -286,6 +286,43 @@ api.post('/register', async (req, res) => {     //     User Registration
     }
 })
 
+api.post('/addListing/:vehicleType', async (req, res) => {     //     Adds a new rv based on listing information
+	const vehicleType = req.params.vehicleType;
+	const newListing = req.body;
+	console.log(newListing);
+
+	const insertRV = await knex('rvs').insert({
+		sold: false,
+		image: 'https://placekitten.com/500/300',
+		type: newListing.type,
+		make: newListing.make,
+		model: newListing.model,
+		year: newListing.year,
+		price: newListing.price,
+		mileage: newListing.mileage,
+		condition: newListing.condition,
+		location: newListing.location,
+		sleeps: newListing.sleeps,
+		weight: newListing.weight,
+		length: newListing.length,
+		description: newListing.description,
+	});
+
+  let getNewRvId = await knex.select('rvId').from('rvs').orderBy('created_at', 'desc').limit(1)
+	console.log(getNewRvId);
+
+	const insertListing = await knex('listings').insert({
+		user_id: newListing.userId,
+		car_id: null,
+		boat_id: null,
+		rv_id: getNewRvId[0].rvId,
+		motorcycle_id: null,
+		trailer_id: null,
+	})
+
+	res.status(200).send({success: true})
+})
+
 //////////        PUT REQUESTS        //////////
 
 api.put('/updateUserPassword/:userId', async (req, res) => {     //     Allows a user to update their password

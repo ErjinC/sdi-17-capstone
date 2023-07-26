@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './add.css'
 
 
-const AddMotorcycle = () => {
+const AddCar = () => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -11,7 +11,7 @@ const AddMotorcycle = () => {
     const [mileage, setMileage] = useState('');
     const [color, setColor] = useState('');
     const [transmission, setTransmission] = useState('');
-    const [condition , setCondition] = useState('');
+    const [condition, setCondition] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [sold, setSold] = useState('');
@@ -19,7 +19,7 @@ const AddMotorcycle = () => {
 
     return (
         <div className='car-creation-container'>
-            <div className ='additem'>
+            <div className='additem'>
                 <div>
                     <label>Type</label>
                     <input type='textbox' id='type' onChange={(e) => setType(e.target.value)} />
@@ -49,6 +49,10 @@ const AddMotorcycle = () => {
                     <input type='textbox' id='color' onChange={(e) => setColor(e.target.value)} />
                 </div>
                 <div>
+                    <label>Transmission</label>
+                    <input type='textbox' id='transmission' onChange={(e) => setTransmission(e.target.value)} />
+                </div>
+                <div>
                     <label>Condition</label>
                     <input type='textbox' id='condition' onChange={(e) => setCondition(e.target.value)} />
                 </div>
@@ -61,44 +65,36 @@ const AddMotorcycle = () => {
                     <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
-            
-    
 
-                <button
-                   id='addbutton'
-                    onClick={() => {
-                        fetch('http://localhost:3001/motorcycles', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify([{
-                                'type': type,
-                                'make': make,
-                                'model': model,
-                                'year': year,
-                                'price': price,
-                                'mileage': mileage,
-                                'color': color,
-                                'transmission': transmission,
-                                'condition': condition,
-                                'location,': location,
-                                'description,': description,
-                            }])
-                        })
-                            .then(data => data.json())
-                            .then(window.location = '/MyListing')
-                            .then(alert('Added Successful!'));
-                    } }
-                    addbutton
-                ></button></>
-                
-
-            </div>
+            <button
+                className='addbutton'
+                onClick={() => {
+                    fetch('http://localhost:3001/cars', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify([{
+                            'type': type,
+                            'make': make,
+                            'model': model,
+                            'year': year,
+                            'price': price,
+                            'mileage': mileage,
+                            'color': color,
+                            'transmission': transmission,
+                            'condition': condition,
+                            'location,': location,
+                            'description,': description,
+                        }])
+                    })
+                        .then(data => data.json())
+                        .then(window.location = '/MyListing')
+                        .then(alert('Added Successful!'));
+                }}
+            >addbutton</button>
         </div>
-
     );
-
 }
 
-export default AddMotorcycle
+export default AddCar;
