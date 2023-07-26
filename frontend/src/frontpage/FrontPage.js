@@ -9,9 +9,10 @@ import TrailerDetail from '../vehiclecarddetail/Trailerdetail'
 import Filters from '../filters/Filters'
 
 const FrontPage = ({currentUser}) => {
-  const [listings, setListings] = useState();
-  const [detailedView, setDetailedView] = useState({active:false,vehicle:{}});
+  
+  const [detailedView, setDetailedView] = useState({active:false, vehicle:{}});
   const [filterText, setFilterText] = useState('')
+  const [listings, setListings] = useState();
 
   // function vehicleFilterStorage(name, value) {
   //   if (sessionStorage.getItem(name)) {
@@ -28,24 +29,25 @@ const FrontPage = ({currentUser}) => {
       return sessionStorage.getItem(name)
     }
   }
+  
   useEffect(() => {
     fetch('http://localhost:3001/listings')
-      .then(res => res.json())
-      .then(data => setListings(data))
+    .then(res => res.json())
+    .then(data => setListings(data))
   }, [])
 
   return (
-    <div id='frontPageContainer'>
-      <div id='flexfrontpagetop'>
-        <div>
-          <input type='search' placeholder='Search...' />
+      <div id='frontPageContainer'>
+        <div id='flexfrontpagetop'>
+          <div>
+            <input type='search' placeholder='Search...' />
+          </div>
+          <div>
+            {currentUser.success ? <>Home Base: {currentUser.base}</> : <>Log in to see your base!</>}
+          </div>3px 3px 3px rgba(79, 32, 13, .8)
         </div>
-        <div>
-          {currentUser.success ? <>Home Base: {currentUser.base}</> : <>Log in to see your base!</>}
-        </div>3px 3px 3px rgba(79, 32, 13, .8)
-      </div>
 
-      <div id='resultsfilter'>
+        <div id='resultsfilter'>
 
       <div className='listContainer'>
           <>
@@ -197,8 +199,8 @@ const FrontPage = ({currentUser}) => {
         </div>
       </div>
 
+        </div>
       </div>
-    </div>
   )
 }
 

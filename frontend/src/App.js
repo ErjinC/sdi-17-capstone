@@ -8,6 +8,7 @@ import MyListings from './myListings/MyListings';
 import Register from './register/Register.js'
 import FrontPage from './frontpage/FrontPage.js'
 import BoatDetail from './vehiclecarddetail/BoatDetail.js'
+import CreateListing from './myListings/CreateListing';
 // import useAuth from './useAuth.js';
 
 function App() {
@@ -23,17 +24,21 @@ function App() {
   },[])
 
   return (
-    <div id='fullpage'>
+    <>
       <Header currentUser = {currentUser}/>
-      <Routes>
-        <Route path='/' element={<FrontPage currentUser = {currentUser}/>} />
-        <Route path='/login' element={<Login currentUser = {currentUser} setCurrentUser={setCurrentUser} />} />
-        <Route path='/profile' element={<Profile currentUser = {currentUser} setCurrentUser={setCurrentUser} />} />
-        <Route path='/register' element={<Register currentUser = {currentUser} />} />
-        <Route path='/test' element={<BoatDetail currentUser = {currentUser} />} />
-        <Route path='/listings' element={<MyListings />} />
-      </Routes>
-    </div>
+      <div id='fullpage'>
+        <Routes>
+          <Route path='/' element={<FrontPage currentUser = {currentUser}/>} />
+          <Route path='/login' element={<Login currentUser = {currentUser} setCurrentUser={setCurrentUser}/>} />
+          <Route path='/profile' element={<Profile currentUser = {currentUser} setCurrentUser={setCurrentUser} />} />
+          <Route path='/register' element={<Register currentUser = {currentUser} />} />
+          <Route path='/test' element={<BoatDetail currentUser = {currentUser} />} />
+          <Route path='/listings' element={<MyListings />} />
+           <Route path='/createListing' element={<CreateListing />} />
+        </Routes>
+      </div>
+      <div id='credits'>Created by SDI-17 Group 6 - Andrew Galbraith | Anthony Gravante | Ben Lesko | Erjin Choi | Kevin Cagle | Moses Jackson</div>
+    </>
   );
 }
 
