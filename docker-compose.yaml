@@ -24,7 +24,7 @@ services:
     volumes:
       - ./backend:/app
     environment:
-      DB_CONNECTION_STRING: postgres://postgres:docker@host.docker.internal/capstonedb
+      DB_CONNECTION_STRING: postgres://postgres:docker@host.docker.internal:5432/capstonedb
     depends_on:
       - db
 

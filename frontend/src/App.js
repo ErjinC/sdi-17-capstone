@@ -8,6 +8,7 @@ import MyListings from './myListings/MyListings';
 import Register from './register/Register.js'
 import FrontPage from './frontpage/FrontPage.js'
 import BoatDetail from './vehiclecarddetail/BoatDetail.js'
+import CreateListing from './myListings/CreateListing';
 // import useAuth from './useAuth.js';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path='/register' element={<Register currentUser = {currentUser} />} />
         <Route path='/test' element={<BoatDetail currentUser = {currentUser} />} />
         <Route path='/listings' element={<MyListings />} />
+        <Route path='/createListing' element={<CreateListing />} />
       </Routes>
     </div>
   );

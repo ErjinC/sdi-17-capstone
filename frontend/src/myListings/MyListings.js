@@ -6,11 +6,14 @@ import CarDetail from '../vehiclecarddetail/CarDetail'
 import MotoDetail from '../vehiclecarddetail/MotoDetail'
 import RvDetail from '../vehiclecarddetail/RvDetail'
 import TrailerDetail from '../vehiclecarddetail/Trailerdetail'
+import CreateListing from './CreateListing'
+import { useNavigate } from 'react-router-dom';
 
 const MyListings = () => {
     const [myListings, setMyListings] = useState();
     const [detailedView, setDetailedView] = useState({active:false,vehicle:{}});
     const user = JSON.parse(sessionStorage.getItem('CurrentUser'))
+    const navigate = useNavigate();
     
 
     useEffect(() => {
@@ -60,7 +63,7 @@ const MyListings = () => {
                     {myListings?.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
                     {myListings?.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
                     {myListings?.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    <div id='addcard'><p id='addsymbol'>+</p></div>
+                    <div id='addcard' onClick={() => navigate('/createListing')}><p id='addsymbol'>+</p></div>
                 </>
             </div>
 
