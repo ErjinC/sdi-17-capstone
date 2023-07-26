@@ -30,6 +30,7 @@
   flex-wrap: wrap;
   width: 75%;
   height: 90%;
+  max-height: 73vh;
   overflow-y: scroll;
   justify-content: space-around;
 }
