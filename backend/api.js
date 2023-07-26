@@ -226,6 +226,8 @@ api.get('/listings/:userid', async (req, res) => {
     res.status(200).json(totalListings)
 })
 
+api.get('/listings/individual/:listingid')
+
 //////////        POST REQUESTS        //////////
 
 // req.body = [{ object}] req.body[0].something
