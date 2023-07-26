@@ -6,6 +6,7 @@ import CarDetail from '../vehiclecarddetail/CarDetail'
 import MotoDetail from '../vehiclecarddetail/MotoDetail'
 import RvDetail from '../vehiclecarddetail/RvDetail'
 import TrailerDetail from '../vehiclecarddetail/Trailerdetail'
+import Filters from '../filters/Filters'
 
 const FrontPage = ({currentUser}) => {
   const [listings, setListings] = useState();
@@ -63,11 +64,11 @@ const FrontPage = ({currentUser}) => {
               </div>
             </div>
           </> : <></>}
-            {listings?.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-            {listings?.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-            {listings?.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-            {listings?.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-            {listings?.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'car' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'boat' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'rv' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'motorcycle' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'trailer' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>) : <></>}
           </>
       </div>
 
@@ -81,6 +82,10 @@ const FrontPage = ({currentUser}) => {
           onChange={(e) => {
             sessionStorage.setItem('vehiclefilter', e.target.value)
             switch(e.target.value) {
+              case 'all':
+                setFilterText('all')
+                sessionStorage.setItem('vehiclefilter', e.target.value)
+                break;
               case 'car':
                 setFilterText('car')
                 sessionStorage.setItem('vehiclefilter', e.target.value)
@@ -106,7 +111,8 @@ const FrontPage = ({currentUser}) => {
             }
           }}
           > 
-          <option value='' default disabled>Please select an option</option>
+          <option value='' disabled>Please select an option</option>
+          <option value="all" default>All</option>
           <option value="car">Car</option>
           <option value="boat">Boat</option>
           <option value="motorcycle">Motorcycle</option>
@@ -115,7 +121,7 @@ const FrontPage = ({currentUser}) => {
         </select>
 
         <div>
-          {vehicleFilterRetrieve('vehiclefilter') === 'car' ?
+          {/* {vehicleFilterRetrieve('vehiclefilter') === 'car' ?
           <>Car Selected
             <div>Make</div>
             <div>Model</div>
@@ -129,8 +135,9 @@ const FrontPage = ({currentUser}) => {
             <div>Color</div>
             <div>For Sale</div>
           </>
-          :<></>}
-          {vehicleFilterRetrieve('vehiclefilter') === 'boat' ?
+          :<></>} */}
+          {listings ? <Filters filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> : <></> }
+          {/* {vehicleFilterRetrieve('vehiclefilter') === 'boat' ?
           <>Boat Selected
             <div>Make</div>
             <div>Model</div>
@@ -186,7 +193,7 @@ const FrontPage = ({currentUser}) => {
             <div>Condition</div>
             <div>For Sale</div>
           </>
-          :<></>}
+          :<></>} */}
         </div>
       </div>
 
