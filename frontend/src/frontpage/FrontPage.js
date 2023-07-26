@@ -24,13 +24,17 @@ const FrontPage = ({currentUser}) => {
 
   function vehicleFilterRetrieve(name) {
     if (!sessionStorage.getItem(name)) {
-      return ''
+      return 'all'
     } else {
       return sessionStorage.getItem(name)
     }
   }
   
   useEffect(() => {
+    if (!sessionStorage.getItem('vehiclefilter')) {
+      sessionStorage.setItem('vehiclefilter', 'all')
+      setFilterText('all')
+    }
     fetch('http://localhost:3001/listings')
     .then(res => res.json())
     .then(data => setListings(data))
