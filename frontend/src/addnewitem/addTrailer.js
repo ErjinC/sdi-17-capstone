@@ -54,11 +54,8 @@ const AddTrailer = () => {
                     <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
-
-   
-
                 <button
-                    id='addbutton'
+                    className='addbutton'
                     onClick={() => {
                         fetch('http://localhost:3001/trailers', {
                             method: 'POST',
@@ -81,12 +78,11 @@ const AddTrailer = () => {
                             .then(window.location = '/login')
                             .then(alert('Added Successful!'));
                     } }
-                    addbutton
-                ></button>
+                    >addbutton</button>
                 
 
-        
         </div>
+        
 
     );
 
