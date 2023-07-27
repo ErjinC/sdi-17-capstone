@@ -67,7 +67,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
         
         :
           //otherwise check if we are in profile
-          linkRoute === 'profile' ? 
+          linkRoute === ('profile') ? 
           //if we are in profile, display remove icons instead
           <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span> 
           :
