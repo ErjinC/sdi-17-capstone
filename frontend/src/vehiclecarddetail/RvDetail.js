@@ -2,7 +2,7 @@ import React from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 
-const RvDetail = ({vehicle, favorited}) => {
+const RvDetail = ({vehicle, favorited, setDetailedView}) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [favorite, setFavorite] = React.useState(favorited)
   let link = window.location.href
@@ -58,6 +58,9 @@ const RvDetail = ({vehicle, favorited}) => {
       </div>
     <div>
       <img id='detailimage' alt='placeholder' src='http://placekitten.com/400/300'></img>
+    </div>
+    <div id='returnButtonContainer'> 
+      <button onClick={() => { setDetailedView({ active: false, vehicle: {} }) }}>Go Back</button>
     </div>
     </>
   )

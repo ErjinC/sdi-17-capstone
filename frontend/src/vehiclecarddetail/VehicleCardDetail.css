@@ -1,7 +1,13 @@
+#detailFlexContainer{
+  display:flex;
+  min-width: 100%;
+  min-height: 100%;
+}
 
 #detailheader {
-  margin-top: 0;
+  padding-top: 1.5em;
 }
+
 #detailimage {
   /* margin: 2rem; */
   /* display: block;
@@ -13,30 +19,18 @@
   object-fit: contain;
 }
 
-#flexcontainerdetail{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex-wrap: wrap;
-  width:96%;
-}
-
-#descriptionTextContainer{
-  position: relative;
-  display:flex;
-  flex-direction:column;
-  text-align: center;
-  width: 100%;
-  height: 40%;
-}
-
 #detailimagecontainer{
   width: 100%;
-  height: 50%;
-  margin-top: 10px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#detailsContainer {
+  display: flex;
+  width: 30%;
+  flex-direction: column;
 }
 
 .favoriteIconDetail{
@@ -60,4 +54,35 @@
 
 #favoritedIconDetail{
   color: #FF8400;
+}
+
+#returnButtonContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10%;
+  width: 100%;
+  bottom: 0;
+}
+
+#returnButtonContainer button{
+  height: 50%;
+  width: 80%;
+  cursor: pointer;
+}
+
+#mileage {
+  display: inline-block;
+  margin-right: 0.25em;
+}
+
+.detailItem {
+  display: flex;
+  margin: 0.5em;
+  align-items: center;
+}
+
+.detailDescriptionItem {
+  margin: 0.5em;
+  align-items: center;
 }

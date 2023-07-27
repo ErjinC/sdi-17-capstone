@@ -2,7 +2,7 @@ import React from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 
-const CarDetail = ({vehicle, favorited}) => {
+const CarDetail = ({vehicle, favorited, setDetailedView}) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [favorite, setFavorite] = React.useState(favorited)
   let link = window.location.href
@@ -27,8 +27,7 @@ const CarDetail = ({vehicle, favorited}) => {
 
   return (
     <>
-    <div id='flexcontainerdetail'>
-      <div id='descriptionTextContainer'>
+      <div id='detailFlexContainer'>
         { linkRoute === '' ?
           //Display favorite icons toggle on home page
           favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
@@ -43,20 +42,25 @@ const CarDetail = ({vehicle, favorited}) => {
           //anywhere else we won't display favorite icons
           <></>
         }
-        <h1 id='detailheader'>{vehicle.year} {vehicle.make} {vehicle.model}</h1>
-        <div>Condition: {vehicle.condition.charAt(0).toUpperCase()+ vehicle.condition.slice(1)}</div>
-        <div>Type: {vehicle.type}</div>
-        <div>Price: ${vehicle.price}</div>
-        <div>Mileage: {vehicle.mileage}</div>
-        <div>Transmission: {vehicle.transmission.charAt(0).toUpperCase()+ vehicle.transmission.slice(1)}</div>
-        <div>Color: {vehicle.color.charAt(0).toUpperCase()+ vehicle.color.slice(1)}</div>
-        <div>Location: {vehicle.location}</div>
-        <div>Description: {vehicle.description}</div>
-      </div>
+        <div id='detailimagecontainer'>
+          <img id='detailimage' alt='placeholder' src={vehicle.image}></img>
+        </div>
+        <div id="detailsContainer">
+          <h1 id='detailheader'>{vehicle.year} {vehicle.make} {vehicle.model}</h1>
+          <div className='detailItem'><strong>Condition:</strong> {vehicle.condition.charAt(0).toUpperCase()+ vehicle.condition.slice(1)}</div>
+          <div className='detailItem'><strong>Type:</strong> {vehicle.type}</div>
+          <div className='detailItem'><strong>Price:</strong> ${vehicle.price}</div>
+          <div className='detailItem'><span id="mileage" class="material-symbols-outlined">speed</span><p>{vehicle.mileage}</p></div>
+          <div className='detailItem'><strong>Transmission:</strong>{vehicle.transmission.charAt(0).toUpperCase()+ vehicle.transmission.slice(1)}</div>
+          <div className='detailItem'><strong>Color:</strong> {vehicle.color.charAt(0).toUpperCase()+ vehicle.color.slice(1)}</div>
+          <div className='detailItem'><strong>Location:</strong> {vehicle.location}</div>
+          <div className='detailDescriptionItem'><p><strong>Description:</strong></p> {vehicle.description}</div>
+          <div id='returnButtonContainer'> 
+            <button onClick={() => { setDetailedView({ active: false, vehicle: {} }) }}>Go Back</button>
+          </div>
+        </div>
     </div>
-    <div id='detailimagecontainer'>
-      <img id='detailimage' alt='placeholder' src={vehicle.image}></img>
-    </div>
+    
     </>
   )
 }
