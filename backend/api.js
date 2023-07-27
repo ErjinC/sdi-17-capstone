@@ -236,6 +236,31 @@ api.get('/listings/:userid', async (req, res) => {
     res.status(200).json(totalListings)
 })
 
+api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique locations in the DB & sends them back
+    let carLocations = await knex('cars').select("location");
+    let rvLocations = await knex('rvs').select("location")   ; 
+    let motoLocations = await knex('motorcycles').select("location");
+    let boatLocations = await knex('boats').select("location");
+    let trailerLocations = await knex('trailers').select("location");
+            
+    let totalLocations = [carLocations, rvLocations, motoLocations, boatLocations, trailerLocations];
+    let uniqueLocations = [];
+    
+    totalLocations.forEach((vehicleType) => {
+        vehicleType.forEach((vehicleLocation) => {
+            if (!uniqueLocations.includes(vehicleLocation.location)) {
+                uniqueLocations.push(vehicleLocation.location);
+            }
+        });
+    })
+
+    res.status(200).send({
+        locations: uniqueLocations,
+        success: true
+    })
+})
+
+
 //////////        POST REQUESTS        //////////
 
 // req.body = [{ object}] req.body[0].something
@@ -289,7 +314,6 @@ api.post('/register', async (req, res) => {     //     User Registration
 
 api.post('/addListing/rvs', async (req, res) => {     //     Adds a new rv based on listing information
 	const newListing = req.body;
-	console.log(newListing);
 
 	const insertRV = await knex('rvs').insert({
 		sold: false,
@@ -309,7 +333,6 @@ api.post('/addListing/rvs', async (req, res) => {     //     Adds a new rv based
 	});
 
 	let getNewRvId = await knex.select('rvId').from('rvs').orderBy('created_at', 'desc').limit(1)
-	console.log(getNewRvId);
 
 	const insertListing = await knex('listings').insert({
 		user_id: newListing.userId,
@@ -325,7 +348,6 @@ api.post('/addListing/rvs', async (req, res) => {     //     Adds a new rv based
 
 api.post('/addListing/boats', async (req, res) => {     //     Adds a new boat based on listing information
 	const newListing = req.body;
-	console.log(newListing);
 
 	const insertBoat = await knex('boats').insert({
 		sold: false,
@@ -342,7 +364,6 @@ api.post('/addListing/boats', async (req, res) => {     //     Adds a new boat b
 	});
 
 	let getNewBoatId = await knex.select('boatId').from('boats').orderBy('created_at', 'desc').limit(1)
-	console.log(getNewBoatId);
 
 	const insertListing = await knex('listings').insert({
 		user_id: newListing.userId,
@@ -358,7 +379,6 @@ api.post('/addListing/boats', async (req, res) => {     //     Adds a new boat b
 
 api.post('/addListing/trailers', async (req, res) => {     //     Adds a new trailers based on listing information
 	const newListing = req.body;
-	console.log(newListing);
 
 	const insertTrailer = await knex('trailers').insert({
 		sold: false,
@@ -375,7 +395,6 @@ api.post('/addListing/trailers', async (req, res) => {     //     Adds a new tra
 	});
 
 	let getNewTrailerId = await knex.select('trailerId').from('trailers').orderBy('created_at', 'desc').limit(1)
-	console.log(getNewTrailerId);
 
 	const insertListing = await knex('listings').insert({
 		user_id: newListing.userId,
@@ -391,7 +410,6 @@ api.post('/addListing/trailers', async (req, res) => {     //     Adds a new tra
 
 api.post('/addListing/cars', async (req, res) => {     //     Adds a new car based on listing information
 	const newListing = req.body;
-	console.log(newListing);
 
 	const insertCar = await knex('cars').insert({
 		sold: false,
@@ -410,7 +428,6 @@ api.post('/addListing/cars', async (req, res) => {     //     Adds a new car bas
 	});
 
 	let getNewCarId = await knex.select('carId').from('cars').orderBy('created_at', 'desc').limit(1)
-	console.log(getNewCarId);
 
 	const insertListing = await knex('listings').insert({
 		user_id: newListing.userId,
@@ -426,7 +443,6 @@ api.post('/addListing/cars', async (req, res) => {     //     Adds a new car bas
 
 api.post('/addListing/motorcycles', async (req, res) => {     //     Adds a new motorcycle based on listing information
 	const newListing = req.body;
-	console.log(newListing);
 
 	const insertMotorcycle= await knex('motorcycles').insert({
 		sold: false,
@@ -444,7 +460,6 @@ api.post('/addListing/motorcycles', async (req, res) => {     //     Adds a new 
 	});
 
 	let getNewMotorcycleId = await knex.select('motorcycleId').from('motorcycles').orderBy('created_at', 'desc').limit(1)
-	console.log(getNewMotorcycleId);
 
 	const insertListing = await knex('listings').insert({
 		user_id: newListing.userId,
