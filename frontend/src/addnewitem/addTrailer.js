@@ -85,7 +85,7 @@ const AddTrailer = () => {
                 ></button>
                 
 
-            </div>
+        
         </div>
 
     );

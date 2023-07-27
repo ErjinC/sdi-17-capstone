@@ -91,10 +91,10 @@ const AddMotorcycle = () => {
                             .then(alert('Added Successful!'));
                     } }
                     addbutton
-                ></button></>
+                ></button>
                 
 
-            </div>
+           
         </div>
 
     );

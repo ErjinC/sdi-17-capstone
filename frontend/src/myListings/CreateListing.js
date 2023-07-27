@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './CreateListing.css'
 import AddCar from '../addnewitem/AddCar';
 import AddBoat from '../addnewitem/AddBoat';
-import AddMotorcycle from '../addnewitem/AddMotocycle';
+import AddMotorcycle from '../addnewitem/AddMotocycle.js';
 import AddRv from '../addnewitem/AddRv';
-import AddTrailer from '../addnewitem/AddTrailer';
+import AddTrailer from '../addnewitem/AddTrailer.js';
 import { useNavigate } from 'react-router-dom';
 
 const CreateListing = ({currentUser}) => {

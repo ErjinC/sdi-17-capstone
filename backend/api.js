@@ -10,6 +10,7 @@ const api = express()
 api.use(cors())
 api.use(express.json())
 
+
 //////////        GET REQUESTS        //////////
 
 api.get('/', (req,res) => {
