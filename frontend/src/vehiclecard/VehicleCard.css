@@ -21,6 +21,7 @@
   max-width:460px;
   max-height:280px;
   width: auto;
+  min-width: 100%;
   height: auto;
 }
 
