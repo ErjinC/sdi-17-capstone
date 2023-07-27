@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import './add.css'
 
-const AddTrailer = () => {
+
+const AddTrailer = ({ currentUser, setVehicleType }) => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -54,36 +55,35 @@ const AddTrailer = () => {
                     <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
-                <button
-                    className='addbutton'
-                    onClick={() => {
-                        fetch('http://localhost:3001/trailers', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify([{
-                                'type': type,
-                                'make': make,
-                                'model': model,
-                                'year': year,
-                                'price': price,
-                                'length': length,
-                                'condition': condition,
-                                'location,': location,
-                                'description,': description,
-                            }])
+            <button
+                className='addbutton'
+                onClick={() => {
+                    fetch(`http://localhost:3001/addListing/trailers`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'type': type,
+                            'description': description,
+                            'make': make,
+                            'model': model,
+                            'year': Number(year),
+                            'price': Number(price),
+                            'length': Number(length),
+                            'condition': condition,
+                            'location': location,
+                            'userId': currentUser.userId,
                         })
-                            .then(data => data.json())
-                            .then(window.location = '/login')
-                            .then(alert('Added Successful!'));
-                    } }
-                    >addbutton</button>
-                
-
+                    })
+                        .then(data => data.json())
+                        .then(res => console.log(res))
+                        .then(window.location = '/listings')
+                        .then(alert('Added Successful!'));
+                    }}
+            >addbutton</button>
+            <button onClick={() => setVehicleType('')}>Go Back</button>
         </div>
-        
-
     );
 
 }

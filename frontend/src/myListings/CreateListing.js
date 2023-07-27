@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './CreateListing.css'
 import AddCar from '../addnewitem/AddCar';
 import AddBoat from '../addnewitem/AddBoat';
-import AddMotorcycle from '../addnewitem/AddMotocycle';
+import AddMotorcycle from '../addnewitem/AddMotorcycle';
 import AddRv from '../addnewitem/AddRv';
 import AddTrailer from '../addnewitem/AddTrailer';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +19,12 @@ const CreateListing = ({currentUser}) => {
 
   function renderComponent() {
     switch(vehicleType){
-        case 'car': return <AddCar currentUser= {currentUser} />;
-        case 'motorcycles': return <AddMotorcycle currentUser= {currentUser} />;
-        case 'rvs': return <AddRv currentUser= {currentUser} />;
-        case 'boats': return <AddBoat currentUser= {currentUser} />;
-        case 'trailers': return <AddTrailer currentUser= {currentUser} />;
+        case 'car': return <AddCar currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'motorcycles': return <AddMotorcycle currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'rvs': return <AddRv currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'boats': return <AddBoat currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'trailers': return <AddTrailer currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        default: return <CreateListing />;
     }
   }
 

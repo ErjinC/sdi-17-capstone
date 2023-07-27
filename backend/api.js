@@ -286,8 +286,7 @@ api.post('/register', async (req, res) => {     //     User Registration
     }
 })
 
-api.post('/addListing/:vehicleType', async (req, res) => {     //     Adds a new rv based on listing information
-	const vehicleType = req.params.vehicleType;
+api.post('/addListing/rvs', async (req, res) => {     //     Adds a new rv based on listing information
 	const newListing = req.body;
 	console.log(newListing);
 
@@ -308,7 +307,7 @@ api.post('/addListing/:vehicleType', async (req, res) => {     //     Adds a new
 		description: newListing.description,
 	});
 
-  let getNewRvId = await knex.select('rvId').from('rvs').orderBy('created_at', 'desc').limit(1)
+	let getNewRvId = await knex.select('rvId').from('rvs').orderBy('created_at', 'desc').limit(1)
 	console.log(getNewRvId);
 
 	const insertListing = await knex('listings').insert({
@@ -320,7 +319,142 @@ api.post('/addListing/:vehicleType', async (req, res) => {     //     Adds a new
 		trailer_id: null,
 	})
 
-	res.status(200).send({success: true})
+	res.status(200).send({ success: true })
+})
+
+api.post('/addListing/boats', async (req, res) => {     //     Adds a new boat based on listing information
+	const newListing = req.body;
+	console.log(newListing);
+
+	const insertBoat = await knex('boats').insert({
+		sold: false,
+		image: 'https://placekitten.com/500/300',
+		type: newListing.type,
+		make: newListing.make,
+		model: newListing.model,
+		year: newListing.year,
+		price: newListing.price,
+		hours: newListing.hours,
+		condition: newListing.condition,
+		location: newListing.location,
+		description: newListing.description,
+	});
+
+	let getNewBoatId = await knex.select('boatId').from('boats').orderBy('created_at', 'desc').limit(1)
+	console.log(getNewBoatId);
+
+	const insertListing = await knex('listings').insert({
+		user_id: newListing.userId,
+		car_id: null,
+		boat_id: getNewBoatId[0].boatId,
+		rv_id: null,
+		motorcycle_id: null,
+		trailer_id: null,
+	})
+
+	res.status(200).send({ success: true })
+})
+
+api.post('/addListing/trailers', async (req, res) => {     //     Adds a new trailers based on listing information
+	const newListing = req.body;
+	console.log(newListing);
+
+	const insertTrailer = await knex('trailers').insert({
+		sold: false,
+		image: 'https://placekitten.com/500/300',
+		type: newListing.type,
+		make: newListing.make,
+		model: newListing.model,
+		year: newListing.year,
+		price: newListing.price,
+		length: newListing.length,
+		condition: newListing.condition,
+		location: newListing.location,
+		description: newListing.description,
+	});
+
+	let getNewTrailerId = await knex.select('trailerId').from('trailers').orderBy('created_at', 'desc').limit(1)
+	console.log(getNewTrailerId);
+
+	const insertListing = await knex('listings').insert({
+		user_id: newListing.userId,
+		car_id: null,
+		boat_id: null,
+		rv_id: null,
+		motorcycle_id: null,
+		trailer_id: getNewTrailerId[0].trailerId,
+	})
+    
+    res.status(200).send({ success: true })
+})
+
+api.post('/addListing/cars', async (req, res) => {     //     Adds a new car based on listing information
+	const newListing = req.body;
+	console.log(newListing);
+
+	const insertCar = await knex('cars').insert({
+		sold: false,
+		image: 'https://placekitten.com/500/300',
+		type: newListing.type,
+		make: newListing.make,
+		model: newListing.model,
+		year: newListing.year,
+		price: newListing.price,
+		mileage: newListing.mileage,
+		color: newListing.color,
+		transmission: newListing.transmission,
+		condition: newListing.condition,
+		location: newListing.location,
+		description: newListing.description,
+	});
+
+	let getNewCarId = await knex.select('carId').from('cars').orderBy('created_at', 'desc').limit(1)
+	console.log(getNewCarId);
+
+	const insertListing = await knex('listings').insert({
+		user_id: newListing.userId,
+		car_id: getNewCarId[0].carId,
+		boat_id: null,
+		rv_id: null,
+		motorcycle_id: null,
+		trailer_id: null,
+	})
+
+	res.status(200).send({ success: true })
+})
+
+api.post('/addListing/motorcycles', async (req, res) => {     //     Adds a new motorcycle based on listing information
+	const newListing = req.body;
+	console.log(newListing);
+
+	const insertMotorcycle= await knex('motorcycles').insert({
+		sold: false,
+		image: 'https://placekitten.com/500/300',
+		type: newListing.type,
+		make: newListing.make,
+		model: newListing.model,
+		year: newListing.year,
+		price: newListing.price,
+		mileage: newListing.mileage,
+		color: newListing.color,
+		condition: newListing.condition,
+		location: newListing.location,
+		description: newListing.description,
+	});
+
+	let getNewMotorcycleId = await knex.select('motorcycleId').from('motorcycles').orderBy('created_at', 'desc').limit(1)
+	console.log(getNewMotorcycleId);
+
+	const insertListing = await knex('listings').insert({
+		user_id: newListing.userId,
+		car_id: null,
+		boat_id: null,
+		rv_id: null,
+		motorcycle_id: getNewMotorcycleId[0].motorcycleId,
+		trailer_id: null,
+	})
+
+	res.status(200).send({ success: true })
 })
 
 //////////        PUT REQUESTS        //////////

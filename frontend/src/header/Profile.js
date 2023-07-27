@@ -7,7 +7,6 @@ import FavoritesDisplay from '../favorites/FavoritesDisplay';
 function Profile({currentUser, setCurrentUser}) {
   const [flag, setFlag] = useState(false);
   const [flag2, setFlag2] = useState(false);
-  const [flag3, setFlag3] = useState(false);
   const [editAdmin, setEditAdmin] = useState(false);
   const [editUsername, setEditUsername] = useState('');
   const [editPassword, setEditPassword] = useState('');

@@ -6,7 +6,6 @@ import CarDetail from '../vehiclecarddetail/CarDetail'
 import MotoDetail from '../vehiclecarddetail/MotoDetail'
 import RvDetail from '../vehiclecarddetail/RvDetail'
 import TrailerDetail from '../vehiclecarddetail/Trailerdetail'
-import CreateListing from './CreateListing'
 import { useNavigate } from 'react-router-dom';
 
 const MyListings = () => {
