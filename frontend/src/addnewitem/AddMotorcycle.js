@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import './add.css'
-
+// DELTE THIS
 
 const AddMotorcycle = ({ currentUser, setVehicleType }) => {
     const [type, setType] = useState('');
