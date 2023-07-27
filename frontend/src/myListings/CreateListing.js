@@ -4,10 +4,12 @@ import AddCar from '../addnewitem/AddCar';
 import AddBoat from '../addnewitem/AddBoat';
 import AddMotorcycle from '../addnewitem/AddMotorcycle';
 import AddRv from '../addnewitem/AddRv';
-import AddTrailer from '../addnewitem/AddTrailer';
+import AddTrailer from '../addnewitem/AddTrailer.js';
 import { useNavigate } from 'react-router-dom';
+import { ParentContext } from '../App';
 
-const CreateListing = ({currentUser}) => {
+const CreateListing = () => {
+  const {currentUser} = React.useContext(ParentContext)
   const [vehicleSelected, setVehicleSelected] = useState(false);
   const [vehicleType, setVehicleType] = useState('');
   const navigate = useNavigate();

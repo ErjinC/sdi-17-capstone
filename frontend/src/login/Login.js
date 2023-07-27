@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import './Login.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ParentContext } from '../App';
 
 async function loginUser(credentials) {
   return fetch('http://localhost:3001/login', {
@@ -15,6 +16,7 @@ async function loginUser(credentials) {
 }
 
 const Login = () => {
+  const {currentUser, setCurrentUser} = React.useContext(ParentContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
