@@ -7,6 +7,7 @@
   /* display: block;
   max-width:460px;
   max-height:280px;*/
+  position: relative;
   width: 96%;
   height: 100%;
   object-fit: contain;
@@ -21,6 +22,7 @@
 }
 
 #descriptionTextContainer{
+  position: relative;
   display:flex;
   flex-direction:column;
   text-align: center;
@@ -35,4 +37,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.favoriteIconDetail{
+  position: absolute;
+  top: 0;
+  right: 0;
+  max-width: 25px;
+  max-height: 24px;
+  background: #F6F1E9;
+  border-radius: 5px;
+}
+
+.favoriteIconDetail:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+#addFavoriteIconDetail {
+  color: rgb(201, 1, 1);
+}
+
+#favoritedIconDetail{
+  color: #FF8400;
 }

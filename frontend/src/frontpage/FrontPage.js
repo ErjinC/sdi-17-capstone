@@ -13,7 +13,7 @@ const FrontPage = () => {
 
   const {currentUser,setCurrentUser, userFavorites, setUserFavorites} = React.useContext(ParentContext)
   
-  const [detailedView, setDetailedView] = useState({active:false, vehicle:{}});
+  const [detailedView, setDetailedView] = useState({active:false, vehicle:{}, favorited:false});
   const [filterText, setFilterText] = useState('')
   const [listings, setListings] = useState();
 
@@ -68,11 +68,11 @@ const FrontPage = () => {
           <>
             <div id='detailedViewContainerOverlay'>
               <div id='detailedViewContainer'>
-                {(detailedView.vehicle?.type === 'car'||detailedView.vehicle?.type === 'coupe'||detailedView.vehicle?.type === 'truck')?<CarDetail vehicle={detailedView.vehicle}/>:<></>}
-                {(detailedView.vehicle.type === 'boat'||detailedView.vehicle?.type === 'jet ski')?<BoatDetail vehicle={detailedView.vehicle}/>:<></>}
-                {(detailedView.vehicle.type === 'Street Bike'||detailedView.vehicle?.type === 'Dirt Bike'||detailedView.vehicle?.type === 'Cruiser'||detailedView.vehicle?.type === "Sport Bike"||detailedView.vehicle?.type === "Touring Bike"||detailedView.vehicle?.type === "Adventure Bike"||detailedView.vehicle?.type === "Dual Sport")?<MotoDetail vehicle={detailedView.vehicle} />:<></>}
-                {(detailedView.vehicle.type === 'motorized'||detailedView.vehicle.type === 'towable')?<RvDetail vehicle={detailedView.vehicle} />:<></>}
-                {(detailedView.vehicle.type === 'flatbed'||detailedView.vehicle.type === 'enclosed')?<TrailerDetail vehicle={detailedView.vehicle} />:<></>}
+                {(detailedView.vehicle?.type === 'car'||detailedView.vehicle?.type === 'coupe'||detailedView.vehicle?.type === 'truck')?<CarDetail vehicle={detailedView.vehicle} favorited={detailedView.favorited}/>:<></>}
+                {(detailedView.vehicle.type === 'boat'||detailedView.vehicle?.type === 'jet ski')?<BoatDetail vehicle={detailedView.vehicle} favorited={detailedView.favorited}/>:<></>}
+                {(detailedView.vehicle.type === 'Street Bike'||detailedView.vehicle?.type === 'Dirt Bike'||detailedView.vehicle?.type === 'Cruiser'||detailedView.vehicle?.type === "Sport Bike"||detailedView.vehicle?.type === "Touring Bike"||detailedView.vehicle?.type === "Adventure Bike"||detailedView.vehicle?.type === "Dual Sport")?<MotoDetail vehicle={detailedView.vehicle} favorited={detailedView.favorited} />:<></>}
+                {(detailedView.vehicle.type === 'motorized'||detailedView.vehicle.type === 'towable')?<RvDetail vehicle={detailedView.vehicle} favorited={detailedView.favorited}/>:<></>}
+                {(detailedView.vehicle.type === 'flatbed'||detailedView.vehicle.type === 'enclosed')?<TrailerDetail vehicle={detailedView.vehicle} favorited={detailedView.favorited} />:<></>}
                 <div id='returnButtonContainer'> 
                   <button onClick={() => { setDetailedView({ active: false, vehicle: {} }) }}>Go Back</button>
                 </div>

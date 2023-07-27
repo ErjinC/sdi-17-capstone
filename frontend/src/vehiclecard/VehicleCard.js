@@ -16,6 +16,8 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
     if (sessionStorage.getItem('CurrentUser') !== null) {
       if(userFavorites.includes(vehicle.listingId)){
         setFavorited(true)
+      }else{
+        setFavorited(false)
       }
       sessionStorage.setItem('CurrentUser', JSON.stringify({...currentUser, favorites:userFavorites.toString()}))
       fetch(`http://localhost:3001/favorites`, {
@@ -57,7 +59,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   }
 
   return (
-      <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
+      <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle,favorited:favorited})}}>
         { linkRoute === '' ?
           //Display favorite icons toggle on home page
           favorited ? <span id='favoritedIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 

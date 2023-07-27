@@ -32,6 +32,7 @@
   max-height: 24px;
   background: #F6F1E9;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .favoriteIcon:hover {
