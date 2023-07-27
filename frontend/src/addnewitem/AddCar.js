@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './add.css'
 
 
-const AddCar = () => {
+const AddCar = ({ currentUser, setVehicleType }) => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -14,7 +14,6 @@ const AddCar = () => {
     const [condition, setCondition] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
-    const [sold, setSold] = useState('');
     const [image, setImage] = useState('');
 
     return (
@@ -65,34 +64,36 @@ const AddCar = () => {
                     <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
-
             <button
                 className='addbutton'
                 onClick={() => {
-                    fetch('http://localhost:3001/cars', {
+                    fetch(`http://localhost:3001/addListing/cars`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify([{
+                        body: JSON.stringify({
                             'type': type,
+                            'description': description,
                             'make': make,
                             'model': model,
-                            'year': year,
-                            'price': price,
-                            'mileage': mileage,
+                            'year': Number(year),
+                            'price': Number(price),
+                            'mileage': Number(mileage),
                             'color': color,
                             'transmission': transmission,
                             'condition': condition,
-                            'location,': location,
-                            'description,': description,
-                        }])
+                            'location': location,
+                            'userId': currentUser.userId,
+                        })
                     })
                         .then(data => data.json())
-                        .then(window.location = '/MyListing')
+                        .then(res => console.log(res))
+                        .then(window.location = '/listings')
                         .then(alert('Added Successful!'));
-                }}
+                    }}
             >addbutton</button>
+            <button onClick={() => setVehicleType('')}>Go Back</button>
         </div>
     );
 }

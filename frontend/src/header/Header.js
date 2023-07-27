@@ -1,8 +1,11 @@
 import React from 'react'
 import './Header.css'
 import { stack as Menu } from 'react-burger-menu'
+import { ParentContext } from '../App'
 
-const Header = ({currentUser}) => {
+const Header = () => {
+
+  const {currentUser} = React.useContext(ParentContext)
 
   return (
     <div id="flexcontainerheader">

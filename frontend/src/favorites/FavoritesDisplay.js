@@ -6,13 +6,15 @@ import CarDetail from '../vehiclecarddetail/CarDetail'
 import MotoDetail from '../vehiclecarddetail/MotoDetail'
 import RvDetail from '../vehiclecarddetail/RvDetail'
 import TrailerDetail from '../vehiclecarddetail/Trailerdetail'
+import { ParentContext } from '../App'
 
 const FavoritesDisplay = () => {
     const [listings, setListings] = useState()
     const [favoritesDisplayList, setFavoritesDisplayList] = useState()
     const [detailedView, setDetailedView] = useState({ active: false, vehicle: {} });
     const favoritesList = [];
-    const [userFavorites, setUserFavorites] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item)));
+    const {userFavorites, setUserFavorites} = React.useContext(ParentContext);
+    // const [userFavorites, setUserFavorites] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item)));
 
     useEffect(() => {
         fetch('http://localhost:3001/listings')
@@ -20,6 +22,7 @@ const FavoritesDisplay = () => {
             .then((data) => {
                 findFavorites(data)
                 setListings(data)
+                console.log(userFavorites);
             })
     }, [])
 
@@ -107,18 +110,15 @@ const FavoritesDisplay = () => {
                             <>
                                 <div id='detailedViewContainerOverlay'>
                                     <div id='detailedViewContainer'>
-                                        {(detailedView.vehicle?.type === 'car' || detailedView.vehicle?.type === 'coupe' || detailedView.vehicle?.type === 'truck') ? <CarDetail vehicle={detailedView.vehicle} /> : <></>}
-                                        {(detailedView.vehicle.type === 'boat' || detailedView.vehicle?.type === 'jet ski') ? <BoatDetail vehicle={detailedView.vehicle} /> : <></>}
-                                        {(detailedView.vehicle.type === 'Street Bike' || detailedView.vehicle?.type === 'Dirt Bike' || detailedView.vehicle?.type === 'Cruiser' || detailedView.vehicle?.type === "Sport Bike" || detailedView.vehicle?.type === "Touring Bike" || detailedView.vehicle?.type === "Adventure Bike" || detailedView.vehicle?.type === "Dual Sport") ? <MotoDetail vehicle={detailedView.vehicle} /> : <></>}
-                                        {(detailedView.vehicle.type === 'motorized' || detailedView.vehicle.type === 'towable') ? <RvDetail vehicle={detailedView.vehicle} /> : <></>}
-                                        {(detailedView.vehicle.type === 'flatbed' || detailedView.vehicle.type === 'enclosed') ? <TrailerDetail vehicle={detailedView.vehicle} /> : <></>}
-                                        <div id='returnButtonContainer'>
-                                            <button onClick={() => { setDetailedView({ active: false, vehicle: {} }) }}>Go Back</button>
-                                        </div>
+                                        {(detailedView.vehicle?.type === 'car' || detailedView.vehicle?.type === 'coupe' || detailedView.vehicle?.type === 'truck') ? <CarDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle} /> : <></>}
+                                        {(detailedView.vehicle.type === 'boat' || detailedView.vehicle?.type === 'jet ski') ? <BoatDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle} /> : <></>}
+                                        {(detailedView.vehicle.type === 'Street Bike' || detailedView.vehicle?.type === 'Dirt Bike' || detailedView.vehicle?.type === 'Cruiser' || detailedView.vehicle?.type === "Sport Bike" || detailedView.vehicle?.type === "Touring Bike" || detailedView.vehicle?.type === "Adventure Bike" || detailedView.vehicle?.type === "Dual Sport") ? <MotoDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle} /> : <></>}
+                                        {(detailedView.vehicle.type === 'motorized' || detailedView.vehicle.type === 'towable') ? <RvDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle} /> : <></>}
+                                        {(detailedView.vehicle.type === 'flatbed' || detailedView.vehicle.type === 'enclosed') ? <TrailerDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle} /> : <></>}
                                     </div>
                                 </div>
                             </> : <></>}
-                        <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={vehicle} detailedView={detailedView} setDetailedView={setDetailedView} />
+                        <VehicleCard vehicle={vehicle} detailedView={detailedView} setDetailedView={setDetailedView} />
                     </>
                 )
             })}

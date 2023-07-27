@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import './VehicleCard.css'
+import { ParentContext } from '../App'
 
-const VehicleCard = ({vehicle, detailedView, setDetailedView, userFavorites, setUserFavorites}) => {
+const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   const [favorited, setFavorited] = useState(false)
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
   const currentUser = JSON.parse(sessionStorage.getItem('CurrentUser'))
+  const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   
   //if userFavorites.contains(vehicle.listingId) => render the gold heart, otherwise render heart add
 
@@ -14,6 +16,8 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView, userFavorites, set
     if (sessionStorage.getItem('CurrentUser') !== null) {
       if(userFavorites.includes(vehicle.listingId)){
         setFavorited(true)
+      }else{
+        setFavorited(false)
       }
       sessionStorage.setItem('CurrentUser', JSON.stringify({...currentUser, favorites:userFavorites.toString()}))
       fetch(`http://localhost:3001/favorites`, {
@@ -55,7 +59,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView, userFavorites, set
   }
 
   return (
-      <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
+      <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle,favorited:favorited})}}>
         { linkRoute === '' ?
           //Display favorite icons toggle on home page
           favorited ? <span id='favoritedIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
@@ -63,7 +67,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView, userFavorites, set
         
         :
           //otherwise check if we are in profile
-          linkRoute === 'profile' ? 
+          linkRoute === ('profile') ? 
           //if we are in profile, display remove icons instead
           <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span> 
           :
