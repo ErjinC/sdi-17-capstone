@@ -16,7 +16,9 @@ exports.seed = async function(knex) {
       first_name: "Larry",
       last_name: "Llama",
       base: "Beale AFB",
-      favorites: "1,2,3,4,5"
+      favorites: "1,2,3,4,5",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 2,
@@ -26,7 +28,9 @@ exports.seed = async function(knex) {
       first_name: "Charlie",
       last_name: "Chicken",
       base: "Edwards AFB",
-      favorites: "2,5,8,11,14"
+      favorites: "2,5,8,11,14",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 3,
@@ -36,7 +40,9 @@ exports.seed = async function(knex) {
       first_name: "Bobby",
       last_name: "Bear",
       base: "Andrews AFB",
-      favorites: "3,6,9,12,15"
+      favorites: "3,6,9,12,15",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 4,
@@ -46,7 +52,9 @@ exports.seed = async function(knex) {
       first_name: "Jerry",
       last_name: "Jaguar",
       base: "Dover AFB",
-      favorites: "4,8,12,16,20"
+      favorites: "4,8,12,16,20",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 5,
@@ -56,7 +64,9 @@ exports.seed = async function(knex) {
       first_name: "Zachary",
       last_name: "Zebra",
       base: "Ellsworth AFB",
-      favorites: "5,10,15,20"
+      favorites: "5,10,15,20",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 6,
@@ -66,7 +76,9 @@ exports.seed = async function(knex) {
       first_name: "Quincy",
       last_name: "Quokka",
       base: "F. E. Warren AFB",
-      favorites: "6,12,18"
+      favorites: "6,12,18",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 7,
@@ -77,6 +89,8 @@ exports.seed = async function(knex) {
       last_name: "Puma",
       base: "Goodfellow AFB",
       favorites: "7,14",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 8,
@@ -86,7 +100,9 @@ exports.seed = async function(knex) {
       first_name: "Kyle",
       last_name: "Kangaroo",
       base: "Hanscom AFB",
-      favorites: "1,8,9,10,11"
+      favorites: "1,8,9,10,11",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 9,
@@ -96,7 +112,9 @@ exports.seed = async function(knex) {
       first_name: "Igor",
       last_name: "Iguana",
       base: "Hill AFB",
-      favorites: "2,5,7,9,11"
+      favorites: "2,5,7,9,11",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 10,
@@ -106,7 +124,9 @@ exports.seed = async function(knex) {
       first_name: "Henry",
       last_name: "Hippopotamus",
       base: "Joint Base Andrews",
-      favorites: "3,6,9,12,15"
+      favorites: "3,6,9,12,15",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 11,
@@ -116,7 +136,9 @@ exports.seed = async function(knex) {
       first_name: "Gary",
       last_name: "Gorilla",
       base: "Joint Base Anacostia-Bolling",
-      favorites: "4,8,12,16,20"
+      favorites: "4,8,12,16,20",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 12,
@@ -126,7 +148,9 @@ exports.seed = async function(knex) {
       first_name: "Frank",
       last_name: "Ferret",
       base: "Joint Base Charleston",
-      favorites: "5,10,15,20"
+      favorites: "5,10,15,20",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 13,
@@ -136,7 +160,9 @@ exports.seed = async function(knex) {
       first_name: "Edward",
       last_name: "Elephant",
       base: "Joint Base Langley-Eustis",
-      favorites: "6,12,18"
+      favorites: "6,12,18",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 14,
@@ -146,7 +172,9 @@ exports.seed = async function(knex) {
       first_name: "Dennis",
       last_name: "Dingo",
       base: "Joint Base Lewis-McChord",
-      favorites: "7,14"
+      favorites: "7,14",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 15,
@@ -156,7 +184,9 @@ exports.seed = async function(knex) {
       first_name: "Clarence",
       last_name: "Coyote",
       base: "Joint Base McGuire-Dix-Lakehurst",
-      favorites: "1,8,9,10,11"
+      favorites: "1,8,9,10,11",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 16,
@@ -166,7 +196,9 @@ exports.seed = async function(knex) {
       first_name: "Bernard",
       last_name: "Bison",
       base: "Joint Base Pearl Harbor-Hickam",
-      favorites: "2,5,7,9,11"
+      favorites: "2,5,7,9,11",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 17,
@@ -176,7 +208,9 @@ exports.seed = async function(knex) {
       first_name: "Albert",
       last_name: "Aardvark",
       base: "Joint Base San Antonio",
-      favorites: "3,6,9,12,15"
+      favorites: "3,6,9,12,15",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 18,
@@ -186,7 +220,9 @@ exports.seed = async function(knex) {
       first_name: "Walter",
       last_name: "Walrus",
       base: "Keesler AFB",
-      favorites: "4,8,12,16,20"
+      favorites: "4,8,12,16,20",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 19,
@@ -196,7 +232,9 @@ exports.seed = async function(knex) {
       first_name: "Victor",
       last_name: "Vulture",
       base: "Kirtland AFB",
-      favorites: "5,10,15,20"
+      favorites: "5,10,15,20",
+      phone: "000-000-0000",
+      email: "username@example.com"
     },
     {
       userId: 20,
@@ -206,7 +244,9 @@ exports.seed = async function(knex) {
       first_name: "Ulysses",
       last_name: "Unicorn",
       base: "Lackland AFB",
-      favorites: "6,12,18"
+      favorites: "6,12,18",
+      phone: "000-000-0000",
+      email: "username@example.com"
     }
     
   ]);

@@ -14,7 +14,7 @@ exports.up = function(knex) {
         table.string('model');
         table.integer('year');
         table.integer('price');
-        table.string('length');
+        table.integer('length');
         table.string('condition');
         table.string('location');
         table.timestamps(true,true);
