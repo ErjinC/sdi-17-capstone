@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './add.css'
 
 
-const AddMotorcycle = () => {
+const AddMotorcycle = ({ currentUser, setVehicleType }) => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -62,43 +62,37 @@ const AddMotorcycle = () => {
                 </div>
             </div>
             
-    
-
-                <button
-                    className ='addbutton'
-                    onClick={() => {
-                        fetch('http://localhost:3001/motorcycles', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify([{
-                                'type': type,
-                                'make': make,
-                                'model': model,
-                                'year': year,
-                                'price': price,
-                                'mileage': mileage,
-                                'color': color,
-                                'transmission': transmission,
-                                'condition': condition,
-                                'location,': location,
-                                'description,': description,
-                            }])
+            <button
+                className='addbutton'
+                onClick={() => {
+                    fetch(`http://localhost:3001/addListing/motorcycles`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'type': type,
+                            'description': description,
+                            'make': make,
+                            'model': model,
+                            'year': Number(year),
+                            'price': Number(price),
+                            'mileage': Number(mileage),
+                            'color': color,
+                            'condition': condition,
+                            'location': location,
+                            'userId': currentUser.userId,
                         })
-                            .then(data => data.json())
-                            .then(window.location = '/MyListing')
-                            .then(alert('Added Successful!'));
-                    } }
-                    >addbutton</button>
-                
-                
-
-            </div>
-        
-
+                    })
+                        .then(data => data.json())
+                        .then(res => console.log(res))
+                        .then(window.location = '/listings')
+                        .then(alert('Added Successful!'));
+                    }}
+            >addbutton</button>
+            <button onClick={() => setVehicleType('')}>Go Back</button>
+        </div>
     );
-
 }
 
-export default AddMotorcycle
+export default AddMotorcycle;

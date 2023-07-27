@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
 import './add.css'
 
-const AddBoat = () => {
+const AddBoat = ({ currentUser, setVehicleType }) => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
     const [year, setYear] = useState('');
     const [price, setPrice] = useState('');
-    const [color, setColor] = useState('');
     const [hours, setHours] = useState('');
     const [condition, setCondition] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
-    const [sold, setSold] = useState('');
     const [image, setImage] = useState('');
 
     return (
@@ -39,10 +37,6 @@ const AddBoat = () => {
                     <input type='textbox' id='price' onChange={(e) => setPrice(e.target.value)} />
                 </div>
                 <div>
-                    <label>Color</label>
-                    <input type='textbox' id='color' onChange={(e) => setColor(e.target.value)} />
-                </div>
-                <div>
                     <label>Hours</label>
                     <input type='textbox' id='hours' onChange={(e) => setHours(e.target.value)} />
                 </div>
@@ -63,29 +57,31 @@ const AddBoat = () => {
             <button
                 className='addbutton'
                 onClick={() => {
-                    fetch('http://localhost:3001/boats', {
+                    fetch(`http://localhost:3001/addListing/boats`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify([{
+                        body: JSON.stringify({
                             'type': type,
+                            'description': description,
                             'make': make,
                             'model': model,
-                            'year': year,
-                            'price': price,
-                            'hour': hours,
-                            'color': color,
+                            'year': Number(year),
+                            'price': Number(price),
+                            'hours': Number(hours),
                             'condition': condition,
-                            'location,': location,
-                            'description,': description,
-                        }])
+                            'location': location,
+                            'userId': currentUser.userId,
+                        })
                     })
                         .then(data => data.json())
-                        .then(window.location = '/login')
+                        .then(res => console.log(res))
+                        .then(window.location = '/listings')
                         .then(alert('Added Successful!'));
-                }}
+                    }}
             >addbutton</button>
+            <button onClick={() => setVehicleType('')}>Go Back</button>
         </div>
     );
 }

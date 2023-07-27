@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './add.css'
 
 
-const AddRv = ({ currentUser }) => {
+const AddRv = ({ currentUser, setVehicleType }) => {
     const [type, setType] = useState('');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -12,11 +12,9 @@ const AddRv = ({ currentUser }) => {
     const [sleeps, setSleeps] = useState('');
     const [weight, setWeight] = useState('');
     const [length, setLength] = useState('');
-    const [color, setColor] = useState('');
     const [condition , setCondition] = useState('');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
-    const [sold, setSold] = useState('');
     const [image, setImage] = useState('');
 
     return (
@@ -57,10 +55,6 @@ const AddRv = ({ currentUser }) => {
                 <div>
                     <label>Weight</label>
                     <input type='textbox' id='mileage' onChange={(e) => setWeight(e.target.value)} />
-                </div>
-                <div>
-                    <label>Color</label>
-                    <input type='textbox' id='color' onChange={(e) => setColor(e.target.value)} />
                 </div>
                 <div>
                     <label>Condition</label>
@@ -106,6 +100,7 @@ const AddRv = ({ currentUser }) => {
                         .then(alert('Added Successful!'));
                     }}
             >addbutton</button>
+            <button onClick={() => setVehicleType('')}>Go Back</button>
         </div>
     );
 }
