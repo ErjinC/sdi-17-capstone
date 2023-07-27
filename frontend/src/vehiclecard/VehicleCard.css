@@ -30,6 +30,8 @@
   right: 20px;
   max-width: 25px;
   max-height: 24px;
+  background: #F6F1E9;
+  border-radius: 5px;
 }
 
 .favoriteIcon:hover {
@@ -41,5 +43,5 @@
 }
 
 #favoritedIcon{
-  color: #FFD93D;
+  color: #FF8400;
 }

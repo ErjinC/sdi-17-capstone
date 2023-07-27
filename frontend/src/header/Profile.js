@@ -3,8 +3,9 @@ import './Profile.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FavoritesDisplay from '../favorites/FavoritesDisplay';
+import { ParentContext } from '../App';
 
-function Profile({currentUser, setCurrentUser}) {
+function Profile() {
   const [flag, setFlag] = useState(false);
   const [flag2, setFlag2] = useState(false);
   const [flag3, setFlag3] = useState(false);
@@ -15,6 +16,7 @@ function Profile({currentUser, setCurrentUser}) {
   const [editFirstName, setEditFirstName] = useState('');
   const [editLastName, setEditLastName] = useState(''); 
   const [editBase, setEditBase] = useState();
+  const {currentUser, setCurrentUser} = React.useContext(ParentContext);
 
   useEffect(() => {
     if (sessionStorage.getItem('CurrentUser') === null) {
@@ -223,7 +225,7 @@ function Profile({currentUser, setCurrentUser}) {
       <div id='favoriteListContainer'>
         <div id='favoriteTitle'>Your Favorites:</div>
         <div id='favoriteList'>
-          <FavoritesDisplay/> 
+          <FavoritesDisplay /> 
         </div>
       </div>
     </div>

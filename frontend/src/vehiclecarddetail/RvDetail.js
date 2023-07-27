@@ -1,7 +1,9 @@
 import React from 'react'
 import './VehicleCardDetail.css'
+import { ParentContext } from '../App'
 
 const RvDetail = ({vehicle}) => {
+  const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
 
   return (
     <>

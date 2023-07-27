@@ -1,8 +1,9 @@
 import React from 'react'
 import './VehicleCardDetail.css'
+import { ParentContext } from '../App'
 
 const CarDetail = ({vehicle}) => {
-
+  const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   return (
     <>
     <div id='flexcontainerdetail'>

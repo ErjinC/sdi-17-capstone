@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import './VehicleCard.css'
+import { ParentContext } from '../App'
 
-const VehicleCard = ({vehicle, detailedView, setDetailedView, userFavorites, setUserFavorites}) => {
+const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   const [favorited, setFavorited] = useState(false)
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
   const currentUser = JSON.parse(sessionStorage.getItem('CurrentUser'))
+  const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   
   //if userFavorites.contains(vehicle.listingId) => render the gold heart, otherwise render heart add
 
