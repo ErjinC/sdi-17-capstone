@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext}  from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
+import { Modal } from '@mui/material'
 
 const CarDetail = ({vehicle, favorited, setDetailedView}) => {
   const {userFavorites, setUserFavorites} = useContext(ParentContext)
@@ -35,11 +36,39 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
     }
   }
 
+  const handleListingRemove = () => {
+
+    // fetch(`/deleteListing/${vehicle.car_id}`)
+
+    return (
+    //   <Modal
+    //     // open={open}
+    //     // onClose={handleClose}
+    //     aria-labelledby="modal-modal-title"
+    //     aria-describedby="modal-modal-description"
+    //   >
+    //     <Box sx={style}>
+    //       <Typography id="modal-modal-title" variant="h6" component="h2">
+    //         Text in a modal
+    //       </Typography>
+    //       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+    //         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+    //       </Typography>
+    //     </Box>
+    // </Modal>
+      
+      <div id='confirm-delete-box'>
+        <h3>Are you sure you want to delete your listing?</h3>
+      </div>
+    )
+  }
+
   return (
     <>
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
       <div id='detailFlexContainer'>
         {/* <div class='detailHeader'>
-         
+        
         </div> */}
         <div id='detailimagecontainer'>
           <img id='detailimage' alt='placeholder' src={vehicle.image}></img>
@@ -54,14 +83,20 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
               favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
               : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span> 
             
-            :
+              :
               //otherwise check if we are in profile
-              linkRoute === 'profile' ? 
+              linkRoute === ('profile') ? 
               //if we are in profile, display remove icons instead
               <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span> 
-              :
-              //anywhere else we won't display favorite icons
-              <></>
+              : 
+                linkRoute === ('listings') ? 
+                // else if not in profile, check if we're in listings
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => { 
+                  document.getElementById('id01').style.display='block'
+                  handleListingRemove() }}>delete</span> 
+                :
+                //anywhere else we won't display favorite icons
+                <></>
             }
           </div>
           <h1 id='detailheader'>{vehicle.year} {vehicle.make} {vehicle.model}</h1>
