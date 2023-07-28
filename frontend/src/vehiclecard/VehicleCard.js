@@ -87,12 +87,8 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
           //if we are in profile, display remove icons instead
           <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span> 
           : 
-            linkRoute === ('listings') ? 
-            // else if not in profile, check if we're in listings
-            <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => { handleVehicleIdType(event) }}>delete</span> 
-            :
-            //anywhere else we won't display favorite icons
-            <></>
+          //anywhere else we won't display favorite icons
+          <></> 
         }
         <img id='vehiclecardimage' alt='Vehicle' src={vehicle.image}></img>
         <div><strong>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</strong></div>
@@ -102,4 +98,4 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   )
 }
 
-export default VehicleCard
+export default VehicleCard;

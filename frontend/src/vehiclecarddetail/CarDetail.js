@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext}  from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 import { Modal } from '@mui/material'
+import { ToastContainer, toast } from 'react-toastify';
 
 const CarDetail = ({vehicle, favorited, setDetailedView}) => {
   const {userFavorites, setUserFavorites} = useContext(ParentContext)
@@ -62,32 +63,35 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
         sold: false
       })
     })
+  }
 
   const handleListingRemove = () => {
-
-    // fetch(`/deleteListing/${vehicle.car_id}`)
-
-    return (
-    //   <Modal
-    //     // open={open}
-    //     // onClose={handleClose}
-    //     aria-labelledby="modal-modal-title"
-    //     aria-describedby="modal-modal-description"
-    //   >
-    //     <Box sx={style}>
-    //       <Typography id="modal-modal-title" variant="h6" component="h2">
-    //         Text in a modal
-    //       </Typography>
-    //       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-    //         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-    //       </Typography>
-    //     </Box>
-    // </Modal>
-      
-      <div id='confirm-delete-box'>
-        <h3>Are you sure you want to delete your listing?</h3>
-      </div>
-    )
+    // console.log('vehicle: ', vehicle)
+    if (window.confirm('Are you sure you want to delete your listing?')) {
+      fetch(`http://localhost:3001/listings`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(vehicle)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            toast.success('Successfully deleted!', {
+              position: toast.POSITION.BOTTOM_CENTER
+            })
+            setTimeout(() => {
+              window.location='/listings'
+            }, 2000);  
+          } else if (!data.success) {
+            toast.error('Failed to delete!', {
+              position: toast.POSITION.BOTTOM_CENTER
+            })
+            setTimeout(() => {
+              window.location='/listings'
+            }, 2000);  
+          }
+        })
+    }
   }
 
   return (
@@ -122,7 +126,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
               {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
               :
               <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
-              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail">delete</span>
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={() => handleListingRemove()}>delete</span>
               </>
             :
               //otherwise display nothing
@@ -148,7 +152,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
           <textarea disabled id="description">{vehicle.description}</textarea>
         </div>
     </div>
-    
+    <ToastContainer autoClose={1500}/>
     </>
   )
 }
@@ -168,4 +172,4 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
 // location: "Beale AFB", !
 // description: "No AC. Runs well. Needs new tires" !
 
-export default CarDetail
+export default CarDetail;

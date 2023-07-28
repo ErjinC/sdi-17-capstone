@@ -30,15 +30,6 @@ const MyListings = () => {
 
     return (
         <div id='frontPageContainer'>
-            <div id='flexfrontpagetop'>
-                <div>
-                <input type='search' placeholder='Search...' />
-                </div>
-                <div>
-                {user.success ? <>Home Base: {user.base}</> : <>Log in to see your base!</>}
-                </div>
-            </div>
-
             <div id='resultsfilter'>
 
             <div className='listContainer'>
@@ -64,7 +55,7 @@ const MyListings = () => {
                 </>
             </div>
 
-            <div>
+            {/* <div>
                 <div>Filters</div>
                 <label for="vehicle" id='vehiclefilter'>Vehicle: </label>
                 <select
@@ -84,17 +75,17 @@ const MyListings = () => {
                 </select>
 
                 <div>
-                {/* {document.getElementById('vehicleSelect').value === 'car' ? <>Car selected</>:<></>}
+                {document.getElementById('vehicleSelect').value === 'car' ? <>Car selected</>:<></>}
                 {document.getElementById('vehicleSelect').value === 'boat' ? <>Boat selected</>:<></>}
                 {document.getElementById('vehicleSelect').value === 'motorcycle' ? <>Motorcycle selected</>:<></>}
                 {document.getElementById('vehicleSelect').value === 'rv' ? <>RV selected</>:<></>}
-                {document.getElementById('vehicleSelect').value === 'trailer' ? <>Trailer selected</>:<></>} */}
+                {document.getElementById('vehicleSelect').value === 'trailer' ? <>Trailer selected</>:<></>}
                 </div>
-            </div>
+            </div> */}
 
             </div>
         </div>
     )
 }
 
-export default MyListings
+export default MyListings;
