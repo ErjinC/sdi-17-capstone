@@ -47,21 +47,12 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
       setUserFavorites(tempArr);
     }
   }
-  
+
   const handleVehicleIdType = (event) => {
     setVehicleIdType(event.target.value)
     console.log(event);
     console.log(vehicleIdType);
   }
-
-  // const handleListingRemove = (event) => {
-  //   console.log(vehicle.listingId);
-  //   console.log(vehicle);
-  //   if (vehicle.car_id) {
-  //   } else if (vehicle.motorcycle_id) {
-
-  //   } else if (vehicle.rv_Id)
-  // }
 
   if (sessionStorage.getItem('CurrentUser') == null) {
     return(
@@ -86,9 +77,9 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
           linkRoute === ('profile') ? 
           //if we are in profile, display remove icons instead
           <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span> 
-          : 
+          :
           //anywhere else we won't display favorite icons
-          <></> 
+          <></>
         }
         <img id='vehiclecardimage' alt='Vehicle' src={vehicle.image}></img>
         <div><strong>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</strong></div>

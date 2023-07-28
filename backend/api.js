@@ -527,8 +527,6 @@ api.patch('/favorites', (req, res) => {
 api.patch('/sold/:vehicleid', (req, res) => {
     let tableName = `${req.body.type}s`
     let vehicleID = `${req.body.type}Id`
-    // console.log(tableName);
-    // res.send('done')
     knex(tableName).where(vehicleID, req.params.vehicleid)
     .update({sold: req.body.sold})
     .then(res.status(200).json("Success"))

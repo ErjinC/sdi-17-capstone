@@ -42,11 +42,11 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
   const handleSell = () => {
     console.log('Sold')
     setSoldStatus(true);
-    fetch(`http://localhost:3001/sold/${vehicle.carId}`, {
+    fetch(`http://localhost:3001/sold/${vehicle.car_id}`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        listingId: vehicle.listingId,
+        type: 'car',
         sold: true
       })
     })
@@ -55,7 +55,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
   const handleRelist = () => {
     console.log('Relisting')
     setSoldStatus(false);
-    fetch(`http://localhost:3001/sold/${vehicle.carId}`, {
+    fetch(`http://localhost:3001/sold/${vehicle.car_id}`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -96,7 +96,6 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
 
   return (
     <>
-      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
       <div id='detailFlexContainer'>
         {/* <div class='detailHeader'>
         
@@ -107,23 +106,29 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
         <div id="detailsContainer">
           <div class='detailButtons'>
             <div id='returnButtonContainer'> 
-              <span onClick={() => { setDetailedView({ active: false, vehicle: {} }) }} class="material-symbols-outlined">arrow_back</span>
+              {linkRoute === 'listings' ? <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>:
+              <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>}
             </div>
-            { linkRoute === '' ?
-              //Display favorite icons toggle on home page
-              favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
-              : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span> 
-            
+            { 
+                linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
+                //Display favorite icons toggle on home page
+                favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
+                : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span> 
+              
+                :
+                //otherwise check if we are in profile
+                linkRoute === ('profile') ? 
+                //if we are in profile, display remove icons instead
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>delete</span>
               :
-              //otherwise check if we are in profile
-              linkRoute === ('profile') ? 
-              //if we are in profile, display remove icons instead
-              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span>
-            :
-              linkRoute === 'listings' ? 
-              //if we are not in profile, check if we're in listings
-              <>
-              {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
+                linkRoute === 'listings' ? 
+                //if we are not in profile, check if we're in listings
+                <>
+                {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
+                :
+                <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail">delete</span>
+                </>
               :
               <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
               <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={() => handleListingRemove()}>delete</span>

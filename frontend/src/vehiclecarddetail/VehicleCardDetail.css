@@ -96,6 +96,7 @@
   display: inline-block;
   margin-right: 0.25em;
   border-radius: 50px;
+  background-color: black;
 }
 
 .detailItem {
