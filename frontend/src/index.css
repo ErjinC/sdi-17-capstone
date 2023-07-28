@@ -9,12 +9,21 @@ body {
 }
 
 #root {
-  background: rgb(246, 241, 233);
+  /* background: #023047; */
+  --background: #023047;
+  --background-accent: #219ebc;
+  --container-color: #8ecae6;
+  --accent-light: #ffb703;
+  --accent-dark: #fb8500;
+  background: var(--background);
   background-size: cover;
   overflow: scroll;
   color: rgb(79, 32, 13);
+  color: white;
 }
 
 html, body, #root {
   height: 100%;
+  
 }
+

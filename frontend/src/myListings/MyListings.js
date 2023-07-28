@@ -44,14 +44,14 @@ const MyListings = () => {
     }
 
     return (
-        <div id='frontPageContainer'>
+        <div id='frontPageContainer' class='frontPageContainerListings'>
             <div id='flexfrontpagetop'>
                 <input class="tgl tgl-skewed" id="cb3" type="checkbox" checked={!soldView} onClick={() => setSoldView(!soldView)}/>
                 <label class="tgl-btn" data-tg-off="Sold Listings" data-tg-on="Open Listings" for="cb3"></label>
             </div>
-            <div id='resultsfilter'>
+            
 
-            <div className='listContainer'>
+            <div className='listContainer' id='listingsPageListContainer'>
                 <>
                     {
                         detailedView.active ?
@@ -122,7 +122,6 @@ const MyListings = () => {
                 </div>
             </div> */}
 
-            </div>
         </div>
     )
 }

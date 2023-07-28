@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom';
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#4F200D',
-      main: '#4F200D',
-      dark: '#4F200D',
-      contrastText: '#4F200D'
+      light: '#ffb703',
+      main: '#ffb703',
+      dark: '#ffb703',
+      contrastText: '#fb8500'
     },
 },
 });
@@ -587,9 +587,10 @@ const handleSubmit = (e) => {
                 <label htmlFor='excellent'>Excellent</label>
               </div>
           </fieldset>
-
-          <button id='filterbutton' type='submit'>Submit</button>
-          <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset Filters</button>
+          <div id='flexcontainerbuttons'>
+            <button id='filterbutton' type='submit'>Submit</button>
+            <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset</button>
+          </div>
         </> : <></>}
       </form>
       
@@ -756,8 +757,10 @@ const handleSubmit = (e) => {
               </div>
           </fieldset>
 
-          <button id='filterbutton' type='submit'>Submit</button>
-          <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset Filters</button>
+          <div id='flexcontainerbuttons'>
+            <button id='filterbutton' type='submit'>Submit</button>
+            <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset</button>
+          </div>
         </> : <></>}
       </form>
 {/* ---------------------------------RV---------------------------------------- */}
@@ -905,9 +908,10 @@ const handleSubmit = (e) => {
                 <label htmlFor='excellent'>Excellent</label>
               </div>
           </fieldset>
-
-          <button id='filterbutton' type='submit'>Submit</button>
-          <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset Filters</button>
+          <div id='flexcontainerbuttons'>
+            <button id='filterbutton' type='submit'>Submit</button>
+            <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset</button>
+          </div>
         </> : <></>}
       </form>
       
@@ -1055,9 +1059,10 @@ const handleSubmit = (e) => {
                 <label htmlFor='excellent'>Excellent</label>
               </div>
           </fieldset>
-
-          <button id='filterbutton' type='submit'>Submit</button>
-          <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset Filters</button>
+          <div id='flexcontainerbuttons'>
+            <button id='filterbutton' type='submit'>Submit</button>
+            <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset</button>
+          </div>
         </> : <></>}
       </form>
       </fieldset>
