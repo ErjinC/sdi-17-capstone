@@ -11,21 +11,39 @@ const AddCar = ({ currentUser, setVehicleType }) => {
     const [price, setPrice] = useState('');
     const [mileage, setMileage] = useState('');
     const [color, setColor] = useState('');
-    const [transmission, setTransmission] = useState('');
+    const [transmission, setTransmission] = useState('automatic');
     const [condition, setCondition] = useState('poor');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-    const [uniqueLocations, setUniqueLocations] = useState();
+    // const [uniqueLocations, setUniqueLocations] = useState();
 
-    const getUniqueLocations = async () => {
-        let request = await fetch('http://localhost:3001/allUniqueLocations');
-        let response = await request.json();
-        setUniqueLocations(response);
-    }
+    const allBases = [
+        'Los Angeles SFB',
+        'Edwards AFB',
+        'Vandenberg SFB',
+        'Patrick SFB',
+        'Peterson SFB',
+        'Schriever SFB',
+        'Buckley SFB',
+        'Offutt AFB',
+        'Wright-Patterson AFB',
+        'Eglin AFB',
+        'Kirtland AFB',
+        'Lackland AFB',
+        'Langley AFB',
+        'Travis AFB',
+        'Luke AFB'
+    ];
+
+    // const getUniqueLocations = async () => {
+    //     let request = await fetch('http://localhost:3001/allUniqueLocations');
+    //     let response = await request.json();
+    //     setUniqueLocations(response);
+    // }
 
     useEffect(() => {
-        getUniqueLocations();
+        // getUniqueLocations();
     }, [])
 
     return (
@@ -65,7 +83,10 @@ const AddCar = ({ currentUser, setVehicleType }) => {
                 </div>
                 <div>
                     <label>Transmission</label>
-                    <input type='textbox' id='transmission' onChange={(e) => setTransmission(e.target.value)} />
+                    <select id='type' onChange={(e) => setTransmission(e.target.value)}>
+                        <option value='automatic'>Automatic</option>
+                        <option value='manual'>Manual</option>
+                    </select>
                 </div>
                 <div>
                 <label>Condition</label>
@@ -76,17 +97,20 @@ const AddCar = ({ currentUser, setVehicleType }) => {
                     </select>
                 </div>
                 <div>
-                <label>Location</label>
+                    <label>Location</label>
                     <select type='textbox' id='loction' onChange={(e) => setLocation(e.target.value)}>
                         <option value=''>Please select a location</option>
-                        {uniqueLocations?.locations.map((location) => {
+                        {/* {uniqueLocations?.locations.map((location) => {
+                            return <option value={location}>{location}</option>
+                        })} */}
+                        {allBases.map((location) => {
                             return <option value={location}>{location}</option>
                         })}
                     </select>
                 </div>
                 <div>
                     <label>Description</label>
-                    <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
+                    <textarea type='textbox' className='description-input' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
 
@@ -107,8 +131,8 @@ const AddCar = ({ currentUser, setVehicleType }) => {
                                 'year': Number(year),
                                 'price': Number(price),
                                 'mileage': Number(mileage),
-                                'color': Number(color),
-                                'transmission': Number(transmission),
+                                'color': (color),
+                                'transmission': (transmission),
                                 'condition': condition,
                                 'location': location,
                                 'userId': currentUser.userId,

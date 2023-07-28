@@ -14,16 +14,35 @@ const AddTrailer = ({ currentUser, setVehicleType }) => {
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
-    const [uniqueLocations, setUniqueLocations] = useState();
+    // const [uniqueLocations, setUniqueLocations] = useState();
 
-    const getUniqueLocations = async () => {
-        let request = await fetch('http://localhost:3001/allUniqueLocations');
-        let response = await request.json();
-        setUniqueLocations(response);
-    }
+    const allBases = [
+        'Los Angeles SFB',
+        'Edwards AFB',
+        'Vandenberg SFB',
+        'Patrick SFB',
+        'Peterson SFB',
+        'Schriever SFB',
+        'Buckley SFB',
+        'Offutt AFB',
+        'Wright-Patterson AFB',
+        'Eglin AFB',
+        'Kirtland AFB',
+        'Lackland AFB',
+        'Langley AFB',
+        'Travis AFB',
+        'Luke AFB'
+    ];
+
+
+    // const getUniqueLocations = async () => {
+    //     let request = await fetch('http://localhost:3001/allUniqueLocations');
+    //     let response = await request.json();
+    //     setUniqueLocations(response);
+    // }
 
     useEffect(() => {
-        getUniqueLocations();
+        // getUniqueLocations();
     }, [])
 
     return (
@@ -67,15 +86,18 @@ const AddTrailer = ({ currentUser, setVehicleType }) => {
                 <div>
                     <label>Location</label>
                     <select type='textbox' id='loction' onChange={(e) => setLocation(e.target.value)}>
-                        <option value=''>Please select a location</option>
+                        {/* <option value=''>Please select a location</option>
                         {uniqueLocations?.locations.map((location) => {
-                            return <option value={location}>{location}</option>
-                        })}
+                            return <option value={location}>{location}</option> */}
+                            {allBases.map((location) => {
+                                return <option value={location}>{location}</option>
+                            })}   
+                        
                     </select>
                 </div>
                 <div>
                     <label>Description</label>
-                    <textarea type='textbox' id='description' onChange={(e) => setDescription(e.target.value)} />
+                    <textarea type='textbox' className='description-input' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
 
