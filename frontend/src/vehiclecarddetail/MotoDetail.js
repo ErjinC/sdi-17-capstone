@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
+import { ToastContainer, toast } from 'react-toastify';
 
 const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
@@ -19,6 +20,34 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
     })
   },[])
 
+  const handleListingRemove = () => {
+    // console.log('vehicle: ', vehicle)
+    if (window.confirm('Are you sure you want to delete your listing?')) {
+      fetch(`http://localhost:3001/listings`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(vehicle)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            toast.success('Successfully deleted!', {
+              position: toast.POSITION.BOTTOM_CENTER
+            })
+            setTimeout(() => {
+              window.location='/listings'
+            }, 2000);  
+          } else if (!data.success) {
+            toast.error('Failed to delete!', {
+              position: toast.POSITION.BOTTOM_CENTER
+            })
+            setTimeout(() => {
+              window.location='/listings'
+            }, 2000);  
+          }
+        })
+    }
+  }
 
   const handleFavoriteAdd = (event) => {
     setFavorite(true)
@@ -49,9 +78,10 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
 
   return (
     <>
+      <ToastContainer autoClose={1500}/>
       <div id='detailFlexContainer'>
         {/* <div class='detailHeader'>
-         
+
         </div> */}
         <div id='detailimagecontainer'>
           <img id='detailimage' alt='placeholder' src={vehicle.image}></img>
@@ -78,7 +108,7 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
               {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
               :
               <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
-              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail">delete</span>
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={() => handleListingRemove()}>delete</span>
               </>
             :
               //otherwise display nothing
