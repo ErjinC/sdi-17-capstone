@@ -51,16 +51,8 @@ const FrontPage = () => {
 
   return (
       <div id='frontPageContainer'>
-        <div id='flexfrontpagetop'>
-          <div>
-            <input type='search' placeholder='Search...' />
-          </div>
-          <div>
-            {currentUser.success ? <>Home Base: {currentUser.base}</> : <>Log in to see your base!</>}
-          </div>
-        </div>
 
-        <div id='resultsfilter'>
+      <div id='resultsfilter'>
 
       <div className='listContainer'>
           <>
@@ -85,56 +77,57 @@ const FrontPage = () => {
       </div>
 
       <div id="filterbar">
-        <label for="vehicle" id='vehiclefilter'>Vehicle: </label>
-        <select
-          name="vehicle"
-          id="vehicleSelect"
-          defaultValue={vehicleFilterRetrieve('vehiclefilter')}
-          onChange={(e) => {
-            sessionStorage.setItem('vehiclefilter', e.target.value)
-            setListings(originalListings)
-            switch(e.target.value) {
-              case 'all':
-                setFilterText('all')
-                sessionStorage.setItem('vehiclefilter', e.target.value)
-                break;
-              case 'car':
-                setFilterText('car')
-                sessionStorage.setItem('vehiclefilter', e.target.value)
-                break;
-              case 'boat':
-                setFilterText('boat')
-                sessionStorage.setItem('vehiclefilter', e.target.value)
-                break;
-              case 'motorcycle':
-                setFilterText('motorcycle')
-                sessionStorage.setItem('vehiclefilter', e.target.value)
-                break;
-              case 'rv':
-                setFilterText('rv')
-                sessionStorage.setItem('vehiclefilter', e.target.value)
-                break;
-              case 'trailer':
-                setFilterText('trailer')
-                sessionStorage.setItem('vehiclefilter', e.target.value)
-                break;
-              default:
-                setFilterText('')
-            }
-          }}
-          > 
-          <option value='' disabled>Please select an option</option>
-          <option value="all" default>All</option>
-          <option value="car">Car</option>
-          <option value="boat">Boat</option>
-          <option value="motorcycle">Motorcycle</option>
-          <option value="rv">RV</option>
-          <option value="trailer">Trailer</option>
-        </select>
-
+        <fieldset>
+          <legend for="vehicle" id='vehiclefilter'>Choose a Vehicle</legend>
+          <select
+            name="vehicle"
+            id="vehicleSelect"
+            defaultValue={vehicleFilterRetrieve('vehiclefilter')}
+            onChange={(e) => {
+              sessionStorage.setItem('vehiclefilter', e.target.value)
+              setListings(originalListings)
+              switch(e.target.value) {
+                case 'all':
+                  setFilterText('all')
+                  sessionStorage.setItem('vehiclefilter', e.target.value)
+                  break;
+                case 'car':
+                  setFilterText('car')
+                  sessionStorage.setItem('vehiclefilter', e.target.value)
+                  break;
+                case 'boat':
+                  setFilterText('boat')
+                  sessionStorage.setItem('vehiclefilter', e.target.value)
+                  break;
+                case 'motorcycle':
+                  setFilterText('motorcycle')
+                  sessionStorage.setItem('vehiclefilter', e.target.value)
+                  break;
+                case 'rv':
+                  setFilterText('rv')
+                  sessionStorage.setItem('vehiclefilter', e.target.value)
+                  break;
+                case 'trailer':
+                  setFilterText('trailer')
+                  sessionStorage.setItem('vehiclefilter', e.target.value)
+                  break;
+                default:
+                  setFilterText('')
+              }
+            }}
+            > 
+            <option value='' disabled>Please select an option</option>
+            <option value="all" default>All</option>
+            <option value="car">Cars</option>
+            <option value="boat">Boats</option>
+            <option value="motorcycle">Motorcycles</option>
+            <option value="rv">RVs</option>
+            <option value="trailer">Trailers</option>
+          </select>
+        </fieldset>
         <div>
 
-          {listings && originalListings && filterText? <Filters originalListings={originalListings} filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> : <></> }
+          {listings && originalListings && filterText !== 'all'? <Filters originalListings={originalListings} filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> : <>Select a vehicle to start filtering!</> }
           {/* <Filters originalListings={originalListings} filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> */}
 
         </div>

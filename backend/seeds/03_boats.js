@@ -129,7 +129,7 @@ exports.seed = async function(knex) {
       hours: 300,
       image: "https://placekitten.com/500/300",
       condition: "good",
-      location: "Buckley AFB",
+      location: "Buckley SFB",
       description: "Normal wear for age, engine in good condition."
     },
     {

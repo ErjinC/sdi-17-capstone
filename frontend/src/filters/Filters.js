@@ -3,6 +3,7 @@ import Slider from '@mui/material/Slider'
 import '../frontpage/FrontPage.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -22,11 +23,57 @@ let beforeChange = null;
 const Filters = ({filterText, listings, setListings, detailedView, setDetailedView, originalListings}) => {
   const [makeDropDown, setMakeDropDown] = useState('test')
   const [maxValue, setMaxValue] = useState('')
+  const [update, setUpdate] = useState(false)
 
   const [value, setValue] = useState([0, 200000]);
 
   const [yearRange, setYearRange] = useState([1950, new Date().getFullYear()+1])
   const [yearRangeMax, setYearRangeMax] = useState('')
+
+  // useEffect(() => {
+
+  // }, [])
+
+  const handleReset =() => {
+    setListings(originalListings)
+    setValue([0, 200000])
+    setYearRange([1950, new Date().getFullYear()+1])
+    document.getElementById('make').value = 'all'
+    document.getElementById('model').value = 'all'
+    document.getElementById('location').value = sessionStorage.getItem('CurrentUser') ? JSON.parse(sessionStorage.getItem('CurrentUser')).base : 'all'
+
+    document.getElementById('poorcheck').checked = false
+    document.getElementById('goodcheck').checked = false
+    document.getElementById('excellentcheck').checked = false
+
+    if (filterText === 'car') {
+      // iterator = originalListings.carListings
+      document.getElementById('carcheck').checked = false
+      document.getElementById('coupecheck').checked = false
+      document.getElementById('truckcheck').checked = false
+    } else if (filterText === 'boat') {
+      // iterator = originalListings.boatListings
+      document.getElementById('boatcheck').checked = false
+      document.getElementById('jetskicheck').checked = false
+    } else if (filterText === 'motorcycle') {
+      // iterator = originalListings.motoListings
+      document.getElementById('streetbikecheck').checked = false
+      document.getElementById('dirtbikecheck').checked = false
+      document.getElementById('cruisercheck').checked = false
+      document.getElementById('sportbikecheck').checked = false
+      document.getElementById('dualsportcheck').checked = false
+      document.getElementById('touringbikecheck').checked = false
+      document.getElementById('adventurebikecheck').checked = false
+    } else if (filterText === 'rv') {
+      // iterator = originalListings.rvListings
+      document.getElementById('motorized').checked = false
+      document.getElementById('towable').checked = false
+    } else if (filterText === 'trailer') {
+      // iterator = originalListings.trailerListings
+      document.getElementById('flatbedcheck').checked = false
+      document.getElementById('enclosedcheck').checked = false
+    }
+  }
 
   const handleChangePrice = (event, newValue) => {
     if (!beforeChange) {
@@ -236,10 +283,11 @@ const handleSubmit = (e) => {
 {/* ---------------------------------CAR---------------------------------------- */}
       <fieldset>
       <legend>Filters</legend>
-      <form className='carFilterForm' onSubmit={handleSubmit}>
+      <form className='carFilterForm' onSubmit={handleSubmit} >
         {filterText === 'car' ?
         <>
           <fieldset>
+
             <legend>Year</legend>
             <Typography id="typography" gutterBottom>
               {/* Show vehicles from:<br></br> */}
@@ -263,7 +311,7 @@ const handleSubmit = (e) => {
             <legend>Make</legend>
             <select
               name='make'
-              id='carmake'
+              id='make'
               defaultValue={'all'} 
               onChange={(e) => {
                 setMakeDropDown(e.target.value)
@@ -283,10 +331,11 @@ const handleSubmit = (e) => {
             <legend>Model</legend>
             <select
               name='model'
+              id='model'
               defaultValue={''}
               onChange={() => {
                 console.log(type)
-                document.getElementById('carcheck').checked = !document.getElementById('carcheck').checked
+                // document.getElementById('carcheck').checked = !document.getElementById('carcheck').checked
               }}
               >
               <option value='all'>All</option>
@@ -307,8 +356,8 @@ const handleSubmit = (e) => {
             <legend>Location</legend>
             <select
               name='location'
-              id='carLocation'
-              defaultValue={'all'} 
+              id='location'
+              defaultValue={sessionStorage.getItem('CurrentUser') ? JSON.parse(sessionStorage.getItem('CurrentUser')).base : 'all'} 
               // onChange={(e) => {
               //   setLocationDropDown(e.target.value)
               // }}
@@ -353,14 +402,14 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
-            <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
+            <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
               } else {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -386,8 +435,10 @@ const handleSubmit = (e) => {
                 <label htmlFor='excellent'>Excellent</label>
               </div>
           </fieldset>
-
-          <button type='submit'>Submit</button>
+          <div id='flexcontainerbuttons'>
+            <button id='filterbutton' type='submit'>Submit</button>
+            <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset</button>
+          </div>
         </> : <></>}
       </form>
           
@@ -418,7 +469,7 @@ const handleSubmit = (e) => {
             <legend>Make</legend>
             <select
               name='make'
-              id='carmake'
+              id='make'
               defaultValue={'all'} 
               onChange={(e) => {
                 setMakeDropDown(e.target.value)
@@ -437,10 +488,11 @@ const handleSubmit = (e) => {
             <legend>Model</legend>
             <select
               name='model'
+              id='model'
               defaultValue={''}
               onChange={() => {
                 console.log(type)
-                document.getElementById('boatcheck').checked = !document.getElementById('boatcheck').checked
+                // document.getElementById('boatcheck').checked = !document.getElementById('boatcheck').checked
               }}
               >
               <option value='all'>All</option>
@@ -460,8 +512,8 @@ const handleSubmit = (e) => {
             <legend>Location</legend>
             <select
               name='location'
-              id='boatLocation'
-              defaultValue={'all'} 
+              id='location'
+              defaultValue={sessionStorage.getItem('CurrentUser') ? JSON.parse(sessionStorage.getItem('CurrentUser')).base : 'all'} 
               // onChange={(e) => {
               //   setLocationDropDown(e.target.value)
               // }}
@@ -502,14 +554,14 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
-            <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
+            <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
               } else {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -536,7 +588,8 @@ const handleSubmit = (e) => {
               </div>
           </fieldset>
 
-          <button type='submit'>Submit</button>
+          <button id='filterbutton' type='submit'>Submit</button>
+          <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset Filters</button>
         </> : <></>}
       </form>
       
@@ -567,7 +620,7 @@ const handleSubmit = (e) => {
             <legend>Make</legend>
             <select
               name='make'
-              id='motomake'
+              id='make'
               defaultValue={'all'} 
               onChange={(e) => {
                 setMakeDropDown(e.target.value)
@@ -586,10 +639,11 @@ const handleSubmit = (e) => {
             <legend>Model</legend>
             <select
               name='model'
+              id='model'
               defaultValue={''}
               onChange={() => {
                 console.log(type)
-                document.getElementById('motocheck').checked = !document.getElementById('motocheck').checked
+                // document.getElementById('motocheck').checked = !document.getElementById('motocheck').checked
               }}
               >
               <option value='all'>All</option>
@@ -609,8 +663,8 @@ const handleSubmit = (e) => {
             <legend>Location</legend>
             <select
               name='location'
-              id='motoLocation'
-              defaultValue={'all'} 
+              id='location'
+              defaultValue={sessionStorage.getItem('CurrentUser') ? JSON.parse(sessionStorage.getItem('CurrentUser')).base : 'all'} 
               >
               <option value='all'>All</option>
               {originalListings.motoListings.map(e => {
@@ -668,14 +722,14 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
-            <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
+            <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
               } else {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -702,7 +756,8 @@ const handleSubmit = (e) => {
               </div>
           </fieldset>
 
-          <button type='submit'>Submit</button>
+          <button id='filterbutton' type='submit'>Submit</button>
+          <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset Filters</button>
         </> : <></>}
       </form>
 {/* ---------------------------------RV---------------------------------------- */}
@@ -729,13 +784,33 @@ const handleSubmit = (e) => {
             </ThemeProvider>
           </fieldset>
           <fieldset>
+            <legend>Make</legend>
+            <select
+              name='make'
+              id='make'
+              defaultValue={'all'} 
+              onChange={(e) => {
+                setMakeDropDown(e.target.value)
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.rvListings.map(e => {
+                if (!make.includes(e.make)) {
+                  make.push(e.make)
+                  return <option value={e.make}>{e.make}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
             <legend>Model</legend>
             <select
               name='model'
+              id='model'
               defaultValue={''}
               onChange={() => {
                 console.log(type)
-                document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
+                // document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
               }}
               >
               <option value='all'>All</option>
@@ -756,8 +831,8 @@ const handleSubmit = (e) => {
             <legend>Location</legend>
             <select
               name='location'
-              id='rvLocation'
-              defaultValue={'all'} 
+              id='location'
+              defaultValue={sessionStorage.getItem('CurrentUser') ? JSON.parse(sessionStorage.getItem('CurrentUser')).base : 'all'} 
               // onChange={(e) => {
               //   setLocationDropDown(e.target.value)
               // }}
@@ -797,14 +872,14 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
-            <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
+            <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
               } else {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -831,7 +906,8 @@ const handleSubmit = (e) => {
               </div>
           </fieldset>
 
-          <button type='submit'>Submit</button>
+          <button id='filterbutton' type='submit'>Submit</button>
+          <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset Filters</button>
         </> : <></>}
       </form>
       
@@ -859,13 +935,33 @@ const handleSubmit = (e) => {
             </ThemeProvider>
           </fieldset>
           <fieldset>
+            <legend>Make</legend>
+            <select
+              name='make'
+              id='make'
+              defaultValue={'all'} 
+              onChange={(e) => {
+                setMakeDropDown(e.target.value)
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.trailerListings.map(e => {
+                if (!make.includes(e.make)) {
+                  make.push(e.make)
+                  return <option value={e.make}>{e.make}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
             <legend>Model</legend>
             <select
               name='model'
+              id='model'
               defaultValue={''}
               onChange={() => {
                 console.log(type)
-                document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
+                // document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
               }}
               >
               <option value='all'>All</option>
@@ -885,8 +981,8 @@ const handleSubmit = (e) => {
             <legend>Location</legend>
             <select
               name='location'
-              id='trailerLocation'
-              defaultValue={'all'} 
+              id='location'
+              defaultValue={sessionStorage.getItem('CurrentUser') ? JSON.parse(sessionStorage.getItem('CurrentUser')).base : 'all'} 
               // onChange={(e) => {
               //   setLocationDropDown(e.target.value)
               // }}
@@ -926,14 +1022,14 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
-            <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
+            <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
               } else {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -960,7 +1056,8 @@ const handleSubmit = (e) => {
               </div>
           </fieldset>
 
-          <button id='filtersubmit' type='submit'>Submit</button>
+          <button id='filterbutton' type='submit'>Submit</button>
+          <button id='filterbutton' type='button' onClick={() => handleReset()}>Reset Filters</button>
         </> : <></>}
       </form>
       </fieldset>

@@ -34,6 +34,6 @@ exports.down = function(knex) {
         table.dropForeign('trailer_id')
       })
       .then(function() {
-         return knex.schema.dropTableIfExists('listings')
+        return knex.schema.dropTableIfExists('listings')
       });
 };

@@ -22,7 +22,12 @@ const Header = () => {
       </div>
 
       <div>
-        {currentUser.success ? <div id='welcome'>Welcome, {currentUser.first_name}</div> : <div id='welcome'>You are currently<br></br>logged out!</div>}
+        <div>
+          {currentUser.success ? <div id='welcome'>Welcome, {currentUser.first_name}</div> : <div id='welcome'>You are currently logged out!</div>}
+        </div>
+        <div>
+          {currentUser.success ? <div id='welcome'>Home Base - {currentUser.base}</div> : <div id='welcome'>Log in to see your base!</div>}
+        </div>
       </div>
     </div>
   )
