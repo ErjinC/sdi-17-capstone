@@ -17,8 +17,8 @@ exports.up = function(knex) {
         table.string('condition');
         table.string('location');
         table.string('sleeps')
-        table.string('weight')
-        table.string('length')
+        table.integer('weight')
+        table.integer('length')
         table.string('description', 500);
         table.timestamps(true, true)
     })

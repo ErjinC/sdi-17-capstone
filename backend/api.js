@@ -11,7 +11,7 @@ api.use(cors())
 api.use(express.json())
 
 
-//////////        GET REQUESTS        //////////
+//////////        GET REQUESTS        ///////////
 
 api.get('/', (req,res) => {
     knex('users').select().orderBy('userId', 'asc')
@@ -22,7 +22,7 @@ api.get('/', (req,res) => {
 })
 
 api.get('/users/:userid', (req, res) => {
-    knex('users').select('userId', 'username', 'first_name', 'last_name', 'base', 'favorites', 'admin').where({userId: req.params.userid})
+    knex('users').select('userId', 'username', 'first_name', 'last_name', 'base', 'favorites', 'admin','phone','email').where({userId: req.params.userid})
         .then(result => {
             res.status(200).json({...result[0], success:true})
         })

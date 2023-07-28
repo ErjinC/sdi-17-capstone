@@ -2,45 +2,76 @@
   display:flex;
   min-width: 100%;
   min-height: 100%;
+  position: relative;
 }
 
-#detailheader {
-  padding-top: 1.5em;
-}
 
 #detailimage {
-  /* margin: 2rem; */
-  /* display: block;
-  max-width:460px;
-  max-height:280px;*/
-  position: relative;
-  width: 96%;
-  height: 100%;
-  object-fit: contain;
+  display: block;
+  width: 85%;
+  height: 75%;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px 1px #4F200D;
 }
 
 #detailimagecontainer{
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
+  margin-top: 3.5%;
+  margin-bottom: 2%;
   align-items: center;
   justify-content: center;
 }
 
 #detailsContainer {
   display: flex;
-  width: 30%;
+  width: 40%;
   flex-direction: column;
+  background: white;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  margin-right: 1vw;
+  border-radius: 10px;
+  padding-left: 1vw;
+  overflow: scroll;
+  box-shadow: 1px 1px 10px 1px #4F200D;
+}
+
+.detailButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1vh;
 }
 
 .favoriteIconDetail{
-  position: absolute;
-  top: 0;
-  right: 0;
-  max-width: 25px;
-  max-height: 24px;
-  background: #F6F1E9;
-  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
+  font-size: clamp(25px, 5vh, 100px);
+  margin-right: 1vw;
+}
+
+#returnButtonContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: fit-content;
+  width: fit-content;
+}
+
+#returnButtonContainer:hover {
+  color: #FF8400;
+  transform: scale(1.2);
+}
+
+
+#returnButtonContainer span{
+  height: 100%;
+  width: 100%;
+  font-size: clamp(25px, 5vh, 100px);
+  cursor: pointer;
 }
 
 .favoriteIconDetail:hover {
@@ -56,24 +87,15 @@
   color: #FF8400;
 }
 
-#returnButtonContainer{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 10%;
-  width: 100%;
-  bottom: 0;
-}
-
-#returnButtonContainer button{
-  height: 50%;
-  width: 80%;
-  cursor: pointer;
-}
-
-#mileage {
+#icon {
   display: inline-block;
   margin-right: 0.25em;
+}
+
+#colorIcon {
+  display: inline-block;
+  margin-right: 0.25em;
+  border-radius: 50px;
 }
 
 .detailItem {
@@ -82,7 +104,43 @@
   align-items: center;
 }
 
-.detailDescriptionItem {
+.detailHeader {
+  display: flex;
   margin: 0.5em;
+  margin-left: 0;
   align-items: center;
+}
+
+.detailDescriptionItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 0.25em;
+}
+/* 
+.detailDescriptionText{
+  min-height: 20%;
+  max-height: 20%;
+  max-width: 95%;
+  min-width: 95%;
+  border: 2px solid rgb(43, 255, 0);
+} */
+
+#description {
+  min-height: 20%;
+  max-height: 20%;
+  max-width: 95%;
+  min-width: 95%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #4F200D;
+  border-style: none;
+  background: none;
+  overflow: auto;
+  outline: none;
+  resize: none;
+  margin-bottom: 1vh;
 }

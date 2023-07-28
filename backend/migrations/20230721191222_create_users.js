@@ -13,6 +13,8 @@ exports.up = function(knex) {
         table.string('last_name');
         table.string('base');
         table.string('favorites');
+        table.string('phone');
+        table.string('email');
         table.timestamps(true,true);
     })
 };
