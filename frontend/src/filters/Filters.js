@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import Slider from '@mui/material/Slider'
 import '../frontpage/FrontPage.css'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#4F200D',
+      main: '#4F200D',
+      dark: '#4F200D',
+      contrastText: '#4F200D'
+    },
+},
+});
+
+
 
 let beforeChange = null;
 
-const Filters = ({filterText, listings, setListings, detailedView, setDetailedView}) => {
-  const [originalListings, setOriginalListings] = useState(listings)
+const Filters = ({filterText, listings, setListings, detailedView, setDetailedView, originalListings}) => {
   const [makeDropDown, setMakeDropDown] = useState('test')
   const [maxValue, setMaxValue] = useState('')
-  const [locationDropDown, setLocationDropDown] = useState('test')
 
   const [value, setValue] = useState([0, 200000]);
 
-  const handleChange = (event, newValue) => {
+  const [yearRange, setYearRange] = useState([1950, 2023])
+  const [yearRangeMax, setYearRangeMax] = useState('')
+
+  const handleChangePrice = (event, newValue) => {
     if (!beforeChange) {
         beforeChange = [...value];
     }
@@ -24,6 +40,18 @@ const Filters = ({filterText, listings, setListings, detailedView, setDetailedVi
     setValue(newValue);
 };
 
+const handleChangeYear = (event, newValue) => {
+  if (!beforeChange) {
+      beforeChange = [...yearRange];
+  }
+
+  if (beforeChange[0] !== newValue[0] && beforeChange[1] !== newValue[1]) {
+      return;
+  }
+  setYearRangeMax(newValue[1]);
+  setYearRange(newValue);
+};
+
 const handleChangeCommitted = () => {
     beforeChange = null;
 };
@@ -33,7 +61,8 @@ const handleSubmit = (e) => {
   // console.log(listings)
   console.log('originals: ', originalListings)
   
-  let year = Number(e.target.year.value)
+  let minYear = yearRange[0]
+  let maxYear = yearRange[1]
   let make = e.target.make.value
   let model = e.target.model.value
   let location = e.target.location.value
@@ -53,12 +82,11 @@ const handleSubmit = (e) => {
   } else if (filterText === 'trailer') {
     iterator = originalListings.trailerListings
   }
+  
   let filtered = iterator.filter(item => {
-    if (e.target.year.value !== 'all') {
-      if (item.year !== year) {
-        console.log(`Year don't match`)
-        return false
-      }
+    if (item.year < yearRange[0] || item.year > yearRange[1]) {
+      console.log(`Year don't match`)
+      return false
     }
     if (make !== 'all') {
       if (item.make !== make) {
@@ -147,6 +175,17 @@ const handleSubmit = (e) => {
           return false
         }
       }
+    } else if (filterText === 'trailer') {
+      if (e.target.flatbed.checked || e.target.enclosed.checked) {
+        if (!e.target.flatbed.checked && (item.type === e.target.flatbed.value)) {
+          console.log(`Flatbed checked, but not a Flatbed Trailer`)
+          return false
+        }
+        if (!e.target.enclosed.checked && (item.type === e.target.enclosed.value)) {
+          console.log(`Enclosed checked, but not a Enclosed Trailer`)
+          return false
+        }
+      }
     }
 
     if (item.price < value[0] || item.price > value[1]) {
@@ -172,7 +211,7 @@ const handleSubmit = (e) => {
     
     return true
   })
-  console.log(filtered) // Im going to push this to our branch
+  console.log(filtered) 
   if (filterText === 'car') {
     setListings({carListings: filtered})
   } else if (filterText === 'boat') {
@@ -185,10 +224,6 @@ const handleSubmit = (e) => {
     setListings({trailerListings: filtered})
   }
 }
-
-const handleReset = () => {
-  setListings(originalListings) 
-}
   
   var make = [];
   var model = []
@@ -199,109 +234,125 @@ const handleReset = () => {
   return (
     <div>
 {/* ---------------------------------CAR---------------------------------------- */}
+      <fieldset>
+      <legend>Filters</legend>
       <form className='carFilterForm' onSubmit={handleSubmit}>
         {filterText === 'car' ?
         <>
-          <label htmlFor='year'>Year: </label>
-          <select
-            name='year'
-            id='caryear'
-            defaultValue={'all'} 
-            >
-            <option value='all'>All</option>
-            {originalListings.carListings.map(e => {
-              if (!year.includes(e.year)) {
-                year.push(e.year)
-                return <option value={e.year}>{e.year}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='make'>Make: </label>
-          <select
-            name='make'
-            id='carmake'
-            defaultValue={'all'} 
-            onChange={(e) => {
-              setMakeDropDown(e.target.value)
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.carListings.map(e => {
-              if (!make.includes(e.make)) {
-                make.push(e.make)
-                return <option value={e.make}>{e.make}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='model'>Model: </label>
-          <select
-            name='model'
-            defaultValue={''}
-            onChange={() => {
-              console.log(type)
-              document.getElementById('carcheck').checked = !document.getElementById('carcheck').checked
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.carListings.map(e => {
-              if (e.make === makeDropDown) {
-                model.push(e.model)
-                type.push({
-                  model: e.model,
-                  type: e.type
-                })
-                return <option value={e.model}>{e.model}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='location'>Location: </label>
-          <select
-            name='location'
-            id='carLocation'
-            defaultValue={'all'} 
-            onChange={(e) => {
-              setLocationDropDown(e.target.value)
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.carListings.map(e => {
-              if (!location.includes(e.location)) {
-                location.push(e.location)
-                return <option value={e.location}>{e.location}</option>
-              }
-            })}
-          </select>
+          <fieldset>
+            <legend>Year</legend>
+            <Typography id="typography" gutterBottom>
+              {/* Show vehicles from:<br></br> */}
+              <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
+            </Typography>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={yearRange} // Math.min(array)
+                onChange={handleChangeYear}
+                valueLabelDisplay="off"
+                color='primary'
+                step={1}
+                min={1950}
+                max={2023}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
+          </fieldset>
 
           <fieldset>
-            <legend>Type:</legend>
+            <legend>Make</legend>
+            <select
+              name='make'
+              id='carmake'
+              defaultValue={'all'} 
+              onChange={(e) => {
+                setMakeDropDown(e.target.value)
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.carListings.map(e => {
+                if (!make.includes(e.make)) {
+                  make.push(e.make)
+                  return <option value={e.make}>{e.make}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          
+          <fieldset>
+            <legend>Model</legend>
+            <select
+              name='model'
+              defaultValue={''}
+              onChange={() => {
+                console.log(type)
+                document.getElementById('carcheck').checked = !document.getElementById('carcheck').checked
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.carListings.map(e => {
+                if (e.make === makeDropDown) {
+                  model.push(e.model)
+                  type.push({
+                    model: e.model,
+                    type: e.type
+                  })
+                  return <option value={e.model}>{e.model}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Location</legend>
+            <select
+              name='location'
+              id='carLocation'
+              defaultValue={'all'} 
+              // onChange={(e) => {
+              //   setLocationDropDown(e.target.value)
+              // }}
+              >
+              <option value='all'>All</option>
+              {originalListings.carListings.map(e => {
+                if (!location.includes(e.location)) {
+                  location.push(e.location)
+                  return <option value={e.location}>{e.location}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+
+          <fieldset>
+            <legend>Type</legend>
               <div>
-                <input type='checkbox' name='car' value='car' id='carcheck'></input>
+                <input className='checkinput' type='checkbox' name='car' value='car' id='carcheck'></input>
                 <label htmlFor='car'>Car</label>
               </div>
               <div>
-                <input type='checkbox' name='coupe' value='coupe' id='coupecheck'></input>
+                <input className='checkinput' type='checkbox' name='coupe' value='coupe' id='coupecheck'></input>
                 <label htmlFor='coupe'>Coupe</label>
               </div>
               <div>
-                <input type='checkbox' name='truck' value='truck' id='truckcheck'></input>
+                <input className='checkinput' type='checkbox' name='truck' value='truck' id='truckcheck'></input>
                 <label htmlFor='truck'>Truck</label>
               </div>
           </fieldset>
 
           <fieldset>
-            <legend>Price:</legend>
-            <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              step={1000}
-              min={0}
-              max={200000}
-              onChangeCommitted={handleChangeCommitted}
-            />
+            <legend>Price</legend>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={value}
+                onChange={handleChangePrice}
+                valueLabelDisplay="auto"
+                color='primary'
+                step={1000}
+                min={0}
+                max={200000}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
             <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -321,17 +372,17 @@ const handleReset = () => {
           </fieldset>
 
           <fieldset>
-            <legend>Condition:</legend>
+            <legend>Condition</legend>
               <div>
-                <input type='checkbox' name='poor' value='poor' id='poorcheck'></input>
+                <input className='checkinput' type='checkbox' name='poor' value='poor' id='poorcheck'></input>
                 <label htmlFor='poor'>Poor</label>
               </div>
               <div>
-                <input type='checkbox' name='good' value='good' id='goodcheck'></input>
+                <input className='checkinput' type='checkbox' name='good' value='good' id='goodcheck'></input>
                 <label htmlFor='good'>Good</label>
               </div>
               <div>
-                <input type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
+                <input className='checkinput' type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
                 <label htmlFor='excellent'>Excellent</label>
               </div>
           </fieldset>
@@ -344,102 +395,113 @@ const handleReset = () => {
       <form className='boatFilterForm' onSubmit={handleSubmit}>
         {filterText === 'boat' ?
         <>
-          <label htmlFor='year'>Year: </label>
-          <select
-            name='year'
-            id='boatyear'
-            defaultValue={'all'} 
-            >
-            <option value='all'>All</option>
-            {originalListings.boatListings.map(e => {
-              if (!year.includes(e.year)) {
-                year.push(e.year)
-                return <option value={e.year}>{e.year}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='make'>Make: </label>
-          <select
-            name='make'
-            id='carmake'
-            defaultValue={'all'} 
-            onChange={(e) => {
-              setMakeDropDown(e.target.value)
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.boatListings.map(e => {
-              if (!make.includes(e.make)) {
-                make.push(e.make)
-                return <option value={e.make}>{e.make}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='model'>Model: </label>
-          <select
-            name='model'
-            defaultValue={''}
-            onChange={() => {
-              console.log(type)
-              document.getElementById('boatcheck').checked = !document.getElementById('boatcheck').checked
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.boatListings.map(e => {
-              if (e.make === makeDropDown) {
-                model.push(e.model)
-                type.push({
-                  model: e.model,
-                  type: e.type
-                })
-                return <option value={e.model}>{e.model}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='location'>Location: </label>
-          <select
-            name='location'
-            id='boatLocation'
-            defaultValue={'all'} 
-            onChange={(e) => {
-              setLocationDropDown(e.target.value)
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.boatListings.map(e => {
-              if (!location.includes(e.location)) {
-                location.push(e.location)
-                return <option value={e.location}>{e.location}</option>
-              }
-            })}
-          </select>
+          <fieldset>
+            <legend>Year</legend>
+            <Typography id="typography" gutterBottom>
+              {/* Show vehicles from:<br></br> */}
+              <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
+            </Typography>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={yearRange} // Math.min(array)
+                onChange={handleChangeYear}
+                valueLabelDisplay="off"
+                color='primary'
+                step={1}
+                min={1950}
+                max={2023}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
+          </fieldset>
+          <fieldset>
+            <legend>Make</legend>
+            <select
+              name='make'
+              id='carmake'
+              defaultValue={'all'} 
+              onChange={(e) => {
+                setMakeDropDown(e.target.value)
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.boatListings.map(e => {
+                if (!make.includes(e.make)) {
+                  make.push(e.make)
+                  return <option value={e.make}>{e.make}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend>Model</legend>
+            <select
+              name='model'
+              defaultValue={''}
+              onChange={() => {
+                console.log(type)
+                document.getElementById('boatcheck').checked = !document.getElementById('boatcheck').checked
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.boatListings.map(e => {
+                if (e.make === makeDropDown) {
+                  model.push(e.model)
+                  type.push({
+                    model: e.model,
+                    type: e.type
+                  })
+                  return <option value={e.model}>{e.model}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend>Location</legend>
+            <select
+              name='location'
+              id='boatLocation'
+              defaultValue={'all'} 
+              // onChange={(e) => {
+              //   setLocationDropDown(e.target.value)
+              // }}
+              >
+              <option value='all'>All</option>
+              {originalListings.boatListings.map(e => {
+                if (!location.includes(e.location)) {
+                  location.push(e.location)
+                  return <option value={e.location}>{e.location}</option>
+                }
+              })}
+            </select>
+          </fieldset>
 
           <fieldset>
-            <legend>Type:</legend>
+            <legend>Type</legend>
               <div>
-                <input type='checkbox' name='boat' value='boat' id='boatcheck'></input>
+                <input className='checkinput' type='checkbox' name='boat' value='boat' id='boatcheck'></input>
                 <label htmlFor='car'>Boat</label>
               </div>
               <div>
-                <input type='checkbox' name='jetski' value='jet ski' id='jetskicheck'></input>
+                <input className='checkinput' type='checkbox' name='jetski' value='jet ski' id='jetskicheck'></input>
                 <label htmlFor='coupe'>Jet Ski</label>
               </div>
           </fieldset>
 
           <fieldset>
-            <legend>Price:</legend>
-            <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              step={1000}
-              min={0}
-              max={200000}
-              onChangeCommitted={handleChangeCommitted}
-            />
+            <legend>Price</legend>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={value}
+                onChange={handleChangePrice}
+                valueLabelDisplay="auto"
+                color='primary'
+                step={1000}
+                min={0}
+                max={200000}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
             <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -459,17 +521,17 @@ const handleReset = () => {
           </fieldset>
 
           <fieldset>
-            <legend>Condition:</legend>
+            <legend>Condition</legend>
               <div>
-                <input type='checkbox' name='poor' value='poor' id='poorcheck'></input>
+                <input className='checkinput' type='checkbox' name='poor' value='poor' id='poorcheck'></input>
                 <label htmlFor='poor'>Poor</label>
               </div>
               <div>
-                <input type='checkbox' name='good' value='good' id='goodcheck'></input>
+                <input className='checkinput' type='checkbox' name='good' value='good' id='goodcheck'></input>
                 <label htmlFor='good'>Good</label>
               </div>
               <div>
-                <input type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
+                <input className='checkinput' type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
                 <label htmlFor='excellent'>Excellent</label>
               </div>
           </fieldset>
@@ -482,122 +544,130 @@ const handleReset = () => {
       <form className='motorcycleFilterForm' onSubmit={handleSubmit}>
         {filterText === 'motorcycle' ?
         <>
-          <label htmlFor='year'>Year: </label>
-          <select
-            name='year'
-            id='motoyear'
-            defaultValue={'all'} 
-            >
-            <option value='all'>All</option>
-            {originalListings.motoListings.map(e => {
-              if (!year.includes(e.year)) {
-                year.push(e.year)
-                return <option value={e.year}>{e.year}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='make'>Make: </label>
-          <select
-            name='make'
-            id='motomake'
-            defaultValue={'all'} 
-            onChange={(e) => {
-              setMakeDropDown(e.target.value)
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.motoListings.map(e => {
-              if (!make.includes(e.make)) {
-                make.push(e.make)
-                return <option value={e.make}>{e.make}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='model'>Model: </label>
-          <select
-            name='model'
-            defaultValue={''}
-            onChange={() => {
-              console.log(type)
-              document.getElementById('motocheck').checked = !document.getElementById('motocheck').checked
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.motoListings.map(e => {
-              if (e.make === makeDropDown) {
-                model.push(e.model)
-                type.push({
-                  model: e.model,
-                  type: e.type
-                })
-                return <option value={e.model}>{e.model}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='location'>Location: </label>
-          <select
-            name='location'
-            id='motoLocation'
-            defaultValue={'all'} 
-            onChange={(e) => {
-              setLocationDropDown(e.target.value)
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.motoListings.map(e => {
-              if (!location.includes(e.location)) {
-                location.push(e.location)
-                return <option value={e.location}>{e.location}</option>
-              }
-            })}
-          </select>
+          <fieldset>
+            <legend>Year</legend>
+            <Typography id="typography" gutterBottom>
+              {/* Show vehicles from:<br></br> */}
+              <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
+            </Typography>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={yearRange} // Math.min(array)
+                onChange={handleChangeYear}
+                valueLabelDisplay="off"
+                color='primary'
+                step={1}
+                min={1950}
+                max={2023}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
+          </fieldset>
+          <fieldset>
+            <legend>Make</legend>
+            <select
+              name='make'
+              id='motomake'
+              defaultValue={'all'} 
+              onChange={(e) => {
+                setMakeDropDown(e.target.value)
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.motoListings.map(e => {
+                if (!make.includes(e.make)) {
+                  make.push(e.make)
+                  return <option value={e.make}>{e.make}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend>Model</legend>
+            <select
+              name='model'
+              defaultValue={''}
+              onChange={() => {
+                console.log(type)
+                document.getElementById('motocheck').checked = !document.getElementById('motocheck').checked
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.motoListings.map(e => {
+                if (e.make === makeDropDown) {
+                  model.push(e.model)
+                  type.push({
+                    model: e.model,
+                    type: e.type
+                  })
+                  return <option value={e.model}>{e.model}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend>Location</legend>
+            <select
+              name='location'
+              id='motoLocation'
+              defaultValue={'all'} 
+              >
+              <option value='all'>All</option>
+              {originalListings.motoListings.map(e => {
+                if (!location.includes(e.location)) {
+                  location.push(e.location)
+                  return <option value={e.location}>{e.location}</option>
+                }
+              })}
+            </select>
+          </fieldset>
 
           <fieldset>
-            <legend>Type:</legend>
+            <legend>Type</legend>
               <div>
-                <input type='checkbox' name='streetbike' value='Street Bike' id='streetbikecheck'></input>
+                <input className='checkinput' type='checkbox' name='streetbike' value='Street Bike' id='streetbikecheck'></input>
                 <label htmlFor='streetbike'>Street</label>
               </div>
               <div>
-                <input type='checkbox' name='dirtbike' value='Dirt Bike' id='dirtbikecheck'></input>
+                <input className='checkinput' type='checkbox' name='dirtbike' value='Dirt Bike' id='dirtbikecheck'></input>
                 <label htmlFor='dirtbike'>Dirt</label>
               </div>
               <div>
-                <input type='checkbox' name='cruiser' value='Cruiser' id='cruisercheck'></input>
+                <input className='checkinput' type='checkbox' name='cruiser' value='Cruiser' id='cruisercheck'></input>
                 <label htmlFor='cruiser'>Cruiser</label>
               </div>
               <div>
-                <input type='checkbox' name='sportbike' value='Sport Bike' id='sportbikecheck'></input>
+                <input className='checkinput' type='checkbox' name='sportbike' value='Sport Bike' id='sportbikecheck'></input>
                 <label htmlFor='sportbike'>Sport</label>
               </div>
               <div>
-                <input type='checkbox' name='dualsport' value='Dual Sport' id='dualsportcheck'></input>
+                <input className='checkinput' type='checkbox' name='dualsport' value='Dual Sport' id='dualsportcheck'></input>
                 <label htmlFor='dualsport'>Dual Sport</label>
               </div>
               <div>
-                <input type='checkbox' name='touringbike' value='Touring Bike' id='touringbikecheck'></input>
+                <input className='checkinput' type='checkbox' name='touringbike' value='Touring Bike' id='touringbikecheck'></input>
                 <label htmlFor='touringbike'>Touring</label>
               </div>
               <div>
-                <input type='checkbox' name='adventurebike' value='Adventure Bike' id='adventurebikecheck'></input>
+                <input className='checkinput' type='checkbox' name='adventurebike' value='Adventure Bike' id='adventurebikecheck'></input>
                 <label htmlFor='adventurebike'>Adventure</label>
               </div>
           </fieldset>
 
           <fieldset>
-            <legend>Price:</legend>
-            <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              step={1000}
-              min={0}
-              max={200000}
-              onChangeCommitted={handleChangeCommitted}
-            />
+            <legend>Price</legend>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={value}
+                onChange={handleChangePrice}
+                valueLabelDisplay="auto"
+                color='primary'
+                step={1000}
+                min={0}
+                max={200000}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
             <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -617,17 +687,17 @@ const handleReset = () => {
           </fieldset>
 
           <fieldset>
-            <legend>Condition:</legend>
+            <legend>Condition</legend>
               <div>
-                <input type='checkbox' name='poor' value='poor' id='poorcheck'></input>
+                <input className='checkinput' type='checkbox' name='poor' value='poor' id='poorcheck'></input>
                 <label htmlFor='poor'>Poor</label>
               </div>
               <div>
-                <input type='checkbox' name='good' value='good' id='goodcheck'></input>
+                <input className='checkinput' type='checkbox' name='good' value='good' id='goodcheck'></input>
                 <label htmlFor='good'>Good</label>
               </div>
               <div>
-                <input type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
+                <input className='checkinput' type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
                 <label htmlFor='excellent'>Excellent</label>
               </div>
           </fieldset>
@@ -639,102 +709,94 @@ const handleReset = () => {
       <form className='rvFilterForm' onSubmit={handleSubmit}>
         {filterText === 'rv' ?
         <>
-          <label htmlFor='year'>Year: </label>
-          <select
-            name='year'
-            id='rvyear'
-            defaultValue={'all'} 
-            >
-            <option value='all'>All</option>
-            {originalListings.rvListings.map(e => {
-              if (!year.includes(e.year)) {
-                year.push(e.year)
-                return <option value={e.year}>{e.year}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='make'>Make: </label>
-          <select
-            name='make'
-            id='rvmake'
-            defaultValue={'all'} 
-            onChange={(e) => {
-              setMakeDropDown(e.target.value)
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.rvListings.map(e => {
-              if (!make.includes(e.make)) {
-                make.push(e.make)
-                return <option value={e.make}>{e.make}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='model'>Model: </label>
-          <select
-            name='model'
-            defaultValue={''}
-            onChange={() => {
-              console.log(type)
-              document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.rvListings.map(e => {
-              if (e.make === makeDropDown) {
-                model.push(e.model)
-                type.push({
-                  model: e.model,
-                  type: e.type
-                })
-                return <option value={e.model}>{e.model}</option>
-              }
-            })}
-          </select>
-            <br></br>
-          <label htmlFor='location'>Location: </label>
-          <select
-            name='location'
-            id='rvLocation'
-            defaultValue={'all'} 
-            onChange={(e) => {
-              setLocationDropDown(e.target.value)
-            }}
-            >
-            <option value='all'>All</option>
-            {originalListings.rvListings.map(e => {
-              if (!location.includes(e.location)) {
-                location.push(e.location)
-                return <option value={e.location}>{e.location}</option>
-              }
-            })}
-          </select>
+          <fieldset>
+            <legend>Year</legend>
+            <Typography id="typography" gutterBottom>
+              {/* Show vehicles from:<br></br> */}
+              <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
+            </Typography>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={yearRange} // Math.min(array)
+                onChange={handleChangeYear}
+                valueLabelDisplay="off"
+                color='primary'
+                step={1}
+                min={1950}
+                max={2023}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
+          </fieldset>
+          <fieldset>
+            <legend>Model</legend>
+            <select
+              name='model'
+              defaultValue={''}
+              onChange={() => {
+                console.log(type)
+                document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.rvListings.map(e => {
+                if (e.make === makeDropDown) {
+                  model.push(e.model)
+                  type.push({
+                    model: e.model,
+                    type: e.type
+                  })
+                  return <option value={e.model}>{e.model}</option>
+                }
+              })}
+            </select>
+          </fieldset>
 
           <fieldset>
-            <legend>Type:</legend>
+            <legend>Location</legend>
+            <select
+              name='location'
+              id='rvLocation'
+              defaultValue={'all'} 
+              // onChange={(e) => {
+              //   setLocationDropDown(e.target.value)
+              // }}
+              >
+              <option value='all'>All</option>
+              {originalListings.rvListings.map(e => {
+                if (!location.includes(e.location)) {
+                  location.push(e.location)
+                  return <option value={e.location}>{e.location}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend>Type</legend>
               <div>
-                <input type='checkbox' name='motorized' value='motorized' id='motorizedcheck'></input>
+                <input className='checkinput' type='checkbox' name='motorized' value='motorized' id='motorizedcheck'></input>
                 <label htmlFor='car'>Motorized</label>
               </div>
               <div>
-                <input type='checkbox' name='towable' value='towable' id='towablecheck'></input>
+                <input className='checkinput' type='checkbox' name='towable' value='towable' id='towablecheck'></input>
                 <label htmlFor='coupe'>Towable</label>
               </div>
           </fieldset>
 
           <fieldset>
-            <legend>Price:</legend>
-            <Slider
-              value={value}
-              onChange={handleChange}
-              valueLabelDisplay="auto"
-              step={1000}
-              min={0}
-              max={200000}
-              onChangeCommitted={handleChangeCommitted}
-            />
+            <legend>Price</legend>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={value}
+                onChange={handleChangePrice}
+                valueLabelDisplay="auto"
+                color='primary'
+                step={1000}
+                min={0}
+                max={200000}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
             <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -754,17 +816,17 @@ const handleReset = () => {
           </fieldset>
 
           <fieldset>
-            <legend>Condition:</legend>
+            <legend>Condition</legend>
               <div>
-                <input type='checkbox' name='poor' value='poor' id='poorcheck'></input>
+                <input className='checkinput' type='checkbox' name='poor' value='poor' id='poorcheck'></input>
                 <label htmlFor='poor'>Poor</label>
               </div>
               <div>
-                <input type='checkbox' name='good' value='good' id='goodcheck'></input>
+                <input className='checkinput' type='checkbox' name='good' value='good' id='goodcheck'></input>
                 <label htmlFor='good'>Good</label>
               </div>
               <div>
-                <input type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
+                <input className='checkinput' type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
                 <label htmlFor='excellent'>Excellent</label>
               </div>
           </fieldset>
@@ -773,21 +835,135 @@ const handleReset = () => {
         </> : <></>}
       </form>
       
-      {filterText === 'trailer' ?
-      <>
-        Trailer Selected
-        <div>Make</div>
-        <div>Model</div>
-        <div>Year</div>
-        <div>Type</div>
-        <div>Price</div>
-        <div>Length</div>
-        <div>Location</div>
-        <div>Condition</div>
-        <div>For Sale</div>
-      </>
-      :<></>}
-      <button onClick={() => handleReset()}>Reset</button>
+      {/* ---------------------------------TRAILER---------------------------------------- */}
+      <form className='rvFilterForm' onSubmit={handleSubmit}>
+        {filterText === 'trailer' ?
+        <>
+         <fieldset>
+            <legend>Year</legend>
+            <Typography id="typography" gutterBottom>
+              {/* Show vehicles from:<br></br> */}
+              <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
+            </Typography>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={yearRange} // Math.min(array)
+                onChange={handleChangeYear}
+                valueLabelDisplay="off"
+                color='primary'
+                step={1}
+                min={1950}
+                max={2023}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
+          </fieldset>
+          <fieldset>
+            <legend>Model</legend>
+            <select
+              name='model'
+              defaultValue={''}
+              onChange={() => {
+                console.log(type)
+                document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
+              }}
+              >
+              <option value='all'>All</option>
+              {originalListings.trailerListings.map(e => {
+                if (e.make === makeDropDown) {
+                  model.push(e.model)
+                  type.push({
+                    model: e.model,
+                    type: e.type
+                  })
+                  return <option value={e.model}>{e.model}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend>Location</legend>
+            <select
+              name='location'
+              id='trailerLocation'
+              defaultValue={'all'} 
+              // onChange={(e) => {
+              //   setLocationDropDown(e.target.value)
+              // }}
+              >
+              <option value='all'>All</option>
+              {originalListings.trailerListings.map(e => {
+                if (!location.includes(e.location)) {
+                  location.push(e.location)
+                  return <option value={e.location}>{e.location}</option>
+                }
+              })}
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend>Type</legend>
+              <div>
+                <input className='checkinput' type='checkbox' name='flatbed' value='flatbed' id='flatbedcheck'></input>
+                <label htmlFor='Flatbed'>Flatbed</label>
+              </div>
+              <div>
+                <input className='checkinput' type='checkbox' name='enclosed' value='enclosed' id='enclosedcheck'></input>
+                <label htmlFor='Enclosed'>Enclosed</label>
+              </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Price</legend>
+            <ThemeProvider theme={theme}>
+              <Slider
+                value={value}
+                onChange={handleChangePrice}
+                valueLabelDisplay="auto"
+                color='primary'
+                step={1000}
+                min={0}
+                max={200000}
+                onChangeCommitted={handleChangeCommitted}
+              />
+            </ThemeProvider>
+            <input type='number' name='min' value={value[0]} placeholder='min' onChange={(e) => {
+              if (e.target.value >= value[1]) {
+                setValue([value[1], value[1]])
+              } else {
+                setValue([e.target.value, value[1]])
+              }
+              }}/>
+            <input type='number' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+                if (e.target.value <= value[0]) {
+                  setValue([value[0], value[0]])
+                  setMaxValue(e.target.value)
+                } else {
+                  setValue([value[0], e.target.value])
+                  setMaxValue(e.target.value)
+                }
+              }}/>
+          </fieldset>
+
+          <fieldset>
+            <legend>Condition</legend>
+              <div>
+                <input className='checkinput' type='checkbox' name='poor' value='poor' id='poorcheck'></input>
+                <label htmlFor='poor'>Poor</label>
+              </div>
+              <div>
+                <input className='checkinput' type='checkbox' name='good' value='good' id='goodcheck'></input>
+                <label htmlFor='good'>Good</label>
+              </div>
+              <div>
+                <input className='checkinput' type='checkbox' name='excellent' value='excellent' id='excellentcheck'></input>
+                <label htmlFor='excellent'>Excellent</label>
+              </div>
+          </fieldset>
+
+          <button id='filtersubmit' type='submit'>Submit</button>
+        </> : <></>}
+      </form>
+      </fieldset>
     </div>
   )
 }
@@ -802,18 +978,3 @@ export default Filters
 // Type
 
 
-{/* <div>Make</div>
-<div>Model</div>
-<div>Year</div>
-<div>Type</div>
-<div>Price</div>
-<div>Mileage</div>
-<div>Location</div>
-<div>Transmission</div>
-<div>Condition</div>
-<div>Color</div>
-<div>Hours</div>
-<div>Type</div>
-<div>Weight</div>
-<div>Sleeps</div>
-<div>Length</div> */}
