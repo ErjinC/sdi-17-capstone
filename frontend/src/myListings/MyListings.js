@@ -50,7 +50,6 @@ const MyListings = () => {
                 <label class="tgl-btn" data-tg-off="Sold Listings" data-tg-on="Open Listings" for="cb3"></label>
             </div>
             
-
             <div className='listContainer' id='listingsPageListContainer'>
                 <>
                     {
