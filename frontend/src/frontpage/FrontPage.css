@@ -1,7 +1,7 @@
 #frontPageContainer{
   display: flex;
   flex-direction: column;
-  height: 90%;
+  height: 100%;
 }
 
 #flexfrontpagetop {
@@ -55,6 +55,10 @@
   max-height: 120vh;
   overflow-y: scroll;
   justify-content: space-around;
+  background: white;
+  background: #8ecae6;
+  border-radius: 10px;
+  box-shadow: 1px 1px 10px 1px #4F200D;
 }
 
 .listContainer button {
@@ -110,8 +114,10 @@ legend {
 #filterbar {
   /* width: 15rem; */
   width: 20%;
+  height: 100%;
   margin: 1rem;
   height: auto;
+  overflow: scroll;
 }
 
 #vehiclefilter {
@@ -137,13 +143,14 @@ legend {
   border-radius: 5px;
   width: 40%;
   background-color: rgba(255, 132, 0, 0.3);
+  background: #ffb703;
   margin: .5rem;
   padding: .2rem;
 }
 
 #filterbutton:hover {
   cursor: pointer;
-  background-color: rgb(255, 132, 0)
+  background: #fb8500;
 }
 
 #searchbar {
@@ -153,5 +160,6 @@ legend {
 #flexcontainerbuttons {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  width: 100%;
 }

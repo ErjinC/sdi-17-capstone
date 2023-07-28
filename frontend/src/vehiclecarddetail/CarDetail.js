@@ -110,14 +110,13 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
               <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>}
             </div>
             { 
-                linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
+              linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
                 //Display favorite icons toggle on home page
                 favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
                 : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span> 
-              
-                :
-                //otherwise check if we are in profile
-                linkRoute === ('profile') ? 
+              //otherwise check if we are in profile
+              :
+              linkRoute === ('profile') ? 
                 //if we are in profile, display remove icons instead
                 <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>delete</span>
               :
@@ -130,13 +129,9 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
                 <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail">delete</span>
                 </>
               :
-              <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
-              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={() => handleListingRemove()}>delete</span>
-              </>
-            :
-              //otherwise display nothing
-              <></>
-            }
+                //otherwise display nothing
+                <></>
+          }
           </div>
           <h1 id='detailheader'>{vehicle.year} {vehicle.make} {vehicle.model}</h1>
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>{' $'+vehicle.price}</div>

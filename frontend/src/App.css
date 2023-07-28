@@ -1,12 +1,17 @@
 #credits {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2em;
     left: 0;
     right: 0;
     bottom: 0;
     text-align: center;
     z-index: 12;
-    background-color: rgba(246, 241, 233);
+    background-color: 8ecae6;
     align-self: flex-end;
 } 
+
+#fullpage{
+    height: 87%;
+    margin: 0;
+    padding: 0;
+}
