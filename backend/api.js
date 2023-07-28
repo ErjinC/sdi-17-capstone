@@ -91,42 +91,42 @@ api.get('/listings', async (req, res) => {
         "created_at",
         "updated_at")
         .join('motorcycles', {'motorcycles.motorcycleId': 'listings.motorcycle_id'})
-    let boatListings = await knex('listings').select(
-        'listingId',
-        'user_id',
-        'boat_id',
-        'sold',
-        'type',
-        'description',
-        'image',
-        'make',
-        'model',
-        'year',
-        'price',
-        'hours',
-        'condition',
-        'location',
-        "created_at",
-        "updated_at")
-        .join('boats', 'boats.boatId','listings.boat_id')
-    let trailerListings = await knex('listings').select(
-        'listingId',
-        'user_id',
-        'trailer_id',
-        'sold',
-        'type',
-        'description',
-        'image',
-        'make',
-        'model',
-        'year',
-        'price',
-        'length',
-        'condition',
-        'location',
-        "created_at",
-        "updated_at")
-        .join('trailers', 'trailers.trailerId','listings.trailer_id')
+        let boatListings = await knex('listings').select(
+            'listingId',
+            'boat_id',
+            'user_id',
+            'sold',
+            'type',
+            'description',
+            'image',
+            'make',
+            'model',
+            'year',
+            'price',
+            'hours',
+            'condition',
+            'location',
+            "created_at",
+            "updated_at")
+            .join('boats', 'boats.boatId','listings.boat_id')
+        let trailerListings = await knex('listings').select(
+            'listingId',
+            'trailer_id',
+            'user_id',
+            'sold',
+            'type',
+            'description',
+            'image',
+            'make',
+            'model',
+            'year',
+            'price',
+            'length',
+            'condition',
+            'location',
+            "created_at",
+            "updated_at")
+            .join('trailers', 'trailers.trailerId','listings.trailer_id')
 
     let totalListings = {carListings, rvListings, motoListings, boatListings, trailerListings};
     res.status(200).json(totalListings)
@@ -544,6 +544,28 @@ api.delete('/deleteUser/:userId', async (req, res) => {     //     Deletes a Use
 
     let deleteOperation = await knex('users').where({userId: userId}).delete()
     res.status(200).send({success: true})
+})
+
+api.delete('/listings', async (req, res) => {     //    Deletes a vehicle based on vehicle passed in
+    console.log(req.body)
+    if (req.body.car_id) {
+        knex('cars').where({carId: req.body.car_id}).del()
+            .then(result => res.status(202).send({success: true}))
+    } else if (req.body.boat_id) {
+        knex('boats').where({boatId: req.body.boat_id}).del()
+            .then(result => res.status(202).send({success: true}))
+    } else if (req.body.motorcycle_id) {
+        knex('motorcycles').where({motorcycleId: req.body.motorcycle_id}).del()
+            .then(result => res.status(202).send({success: true}))
+    } else if (req.body.rv_id) {
+        knex('rvs').where({rvId: req.body.rv_id}).del()
+            .then(result => res.status(202).send({success: true}))
+    } else if (req.body.trailer_id) {
+        knex('trailers').where({trailerId: req.body.trailer_id}).del()
+            .then(result => res.status(202).send({success: true}))
+    } else {
+        res.status(400).json({success: false})
+    }
 })
 
 

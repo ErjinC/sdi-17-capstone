@@ -89,4 +89,4 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   )
 }
 
-export default VehicleCard
+export default VehicleCard;

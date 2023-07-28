@@ -49,7 +49,6 @@ const MyListings = () => {
                 <input class="tgl tgl-skewed" id="cb3" type="checkbox" checked={!soldView} onClick={() => setSoldView(!soldView)}/>
                 <label class="tgl-btn" data-tg-off="Sold Listings" data-tg-on="Open Listings" for="cb3"></label>
             </div>
-
             <div id='resultsfilter'>
 
             <div className='listContainer'>
@@ -95,7 +94,7 @@ const MyListings = () => {
                 </>
             </div>
 
-            <div>
+            {/* <div>
                 <div>Filters</div>
                 <label for="vehicle" id='vehiclefilter'>Vehicle: </label>
                 <select
@@ -115,17 +114,17 @@ const MyListings = () => {
                 </select>
 
                 <div>
-                {/* {document.getElementById('vehicleSelect').value === 'car' ? <>Car selected</>:<></>}
+                {document.getElementById('vehicleSelect').value === 'car' ? <>Car selected</>:<></>}
                 {document.getElementById('vehicleSelect').value === 'boat' ? <>Boat selected</>:<></>}
                 {document.getElementById('vehicleSelect').value === 'motorcycle' ? <>Motorcycle selected</>:<></>}
                 {document.getElementById('vehicleSelect').value === 'rv' ? <>RV selected</>:<></>}
-                {document.getElementById('vehicleSelect').value === 'trailer' ? <>Trailer selected</>:<></>} */}
+                {document.getElementById('vehicleSelect').value === 'trailer' ? <>Trailer selected</>:<></>}
                 </div>
-            </div>
+            </div> */}
 
             </div>
         </div>
     )
 }
 
-export default MyListings
+export default MyListings;
