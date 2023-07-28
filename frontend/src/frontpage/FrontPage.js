@@ -12,9 +12,9 @@ import { ParentContext } from '../App'
 const FrontPage = () => {
 
   const {currentUser,setCurrentUser, userFavorites, setUserFavorites} = React.useContext(ParentContext)
-  
+  const [originalListings, setOriginalListings] = useState()
   const [detailedView, setDetailedView] = useState({active:false, vehicle:{}, favorited:false});
-  const [filterText, setFilterText] = useState('')
+  const [filterText, setFilterText] = useState(sessionStorage.getItem('vehiclefilter'))
   const [listings, setListings] = useState();
 
   // function vehicleFilterStorage(name, value) {
@@ -40,7 +40,7 @@ const FrontPage = () => {
     }
     fetch('http://localhost:3001/listings')
     .then(res => res.json())
-    .then(data => setListings(data))
+    .then(data => {setListings(data); setOriginalListings(data)})
 
     if (sessionStorage.getItem('CurrentUser') !== null) {
       setUserFavorites(JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item)))
@@ -84,8 +84,7 @@ const FrontPage = () => {
           </>
       </div>
 
-      <div>
-        <div>Filters</div>
+      <div id="filterbar">
         <label for="vehicle" id='vehiclefilter'>Vehicle: </label>
         <select
           name="vehicle"
@@ -93,6 +92,7 @@ const FrontPage = () => {
           defaultValue={vehicleFilterRetrieve('vehiclefilter')}
           onChange={(e) => {
             sessionStorage.setItem('vehiclefilter', e.target.value)
+            setListings(originalListings)
             switch(e.target.value) {
               case 'all':
                 setFilterText('all')
@@ -133,79 +133,10 @@ const FrontPage = () => {
         </select>
 
         <div>
-          {/* {vehicleFilterRetrieve('vehiclefilter') === 'car' ?
-          <>Car Selected
-            <div>Make</div>
-            <div>Model</div>
-            <div>Year</div>
-            <div>Type</div>
-            <div>Price</div>
-            <div>Mileage</div>
-            <div>Location</div>
-            <div>Transmission</div>
-            <div>Condition</div>
-            <div>Color</div>
-            <div>For Sale</div>
-          </>
-          :<></>} */}
-          {listings ? <Filters filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> : <></> }
-          {/* {vehicleFilterRetrieve('vehiclefilter') === 'boat' ?
-          <>Boat Selected
-            <div>Make</div>
-            <div>Model</div>
-            <div>Year</div>
-            <div>Type</div>
-            <div>Price</div>
-            <div>Hours</div>
-            <div>Location</div>
-            <div>Condition</div>
-            <div>Type</div>
-            <div>Price</div>
-            <div>For Sale</div>
-          </>
-          :<></>}
-          {vehicleFilterRetrieve('vehiclefilter') === 'motorcycle' ?
-          <>Motorcycle Selected
-            <div>Make</div>
-            <div>Model</div>
-            <div>Year</div>
-            <div>Price</div>
-            <div>Mileage</div>
-            <div>Color</div>
-            <div>Location</div>
-            <div>Condition</div>
-            <div>Type</div>
-            <div>For Sale</div>
-          </>
-          :<></>}
-          {vehicleFilterRetrieve('vehiclefilter') === 'rv' ?
-          <>RV Selected
-            <div>Make</div>
-            <div>Model</div>
-            <div>Year</div>
-            <div>Type</div>
-            <div>Price</div>
-            <div>Weight</div>
-            <div>Mileage</div>
-            <div>Sleeps</div>
-            <div>Location</div>
-            <div>Condition</div>
-            <div>For Sale</div>
-          </>
-          :<></>}
-          {vehicleFilterRetrieve('vehiclefilter') === 'trailer' ?
-          <>Trailer Selected
-            <div>Make</div>
-            <div>Model</div>
-            <div>Year</div>
-            <div>Type</div>
-            <div>Price</div>
-            <div>Length</div>
-            <div>Location</div>
-            <div>Condition</div>
-            <div>For Sale</div>
-          </>
-          :<></>} */}
+
+          {listings && originalListings && filterText? <Filters originalListings={originalListings} filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> : <></> }
+          {/* <Filters originalListings={originalListings} filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> */}
+
         </div>
       </div>
 

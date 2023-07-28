@@ -74,3 +74,40 @@
   flex-direction: row;
   height: 100%;
 }
+
+fieldset fieldset {
+  border-radius: 6px;
+}
+
+fieldset select {
+  width: 8rem;
+}
+
+fieldset input, fieldset select {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  background-color: rgb(246, 241, 233);
+  font-size: small;
+  font: inherit;
+  width: 6rem;
+}
+
+.checkinput {
+  width: 1rem;
+}
+
+legend {
+  font-weight: bold;
+}
+
+#typography {
+  display: flex;
+  justify-content: space-around;
+  margin: 0;
+  padding: 0;
+}
+
+#typography p {
+  margin: 0;
+  padding: 0;
+}
