@@ -52,17 +52,14 @@ const MyListings = () => {
                         {(detailedView.vehicle.type === 'Street Bike'||detailedView.vehicle?.type === 'Dirt Bike'||detailedView.vehicle?.type === 'Cruiser'||detailedView.vehicle?.type === "Sport Bike"||detailedView.vehicle?.type === "Touring Bike"||detailedView.vehicle?.type === "Adventure Bike"||detailedView.vehicle?.type === "Dual Sport")?<MotoDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
                         {(detailedView.vehicle.type === 'motorized'||detailedView.vehicle.type === 'towable')?<RvDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
                         {(detailedView.vehicle.type === 'flatbed'||detailedView.vehicle.type === 'enclosed')?<TrailerDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
-                        <div id='returnButtonContainer'> 
-                        <button onClick={() => { setDetailedView({ active: false, vehicle: {} }) }}>Go Back</button>
-                        </div>
                     </div>
                     </div>
                 </> : <></>}
-                    {myListings?.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    {myListings?.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    {myListings?.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    {myListings?.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                    {myListings?.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.carListings.map(car => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.boatListings.map(boat => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.rvListings.map(rv => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.motoListings.map(moto => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
+                    {myListings?.trailerListings.map(trailer => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
                     <div id='addcard' onClick={() => navigate('/createListing')}><p id='addsymbol'>+</p></div>
                 </>
             </div>

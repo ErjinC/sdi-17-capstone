@@ -1,18 +1,22 @@
 #flexcontainerregister {
   padding-top: 2rem;
 }
+
 #flexcontainerregister > * {
   font-size: 18px
 }
+
 #registerfield > * {
   margin: 10px;
 }
+
 #registerbutton {
   font-size: 16px;
   padding: 2px;
   padding-left: 10px;
   padding-right: 10px;
 }
+
 #registerheader {
   display: flex;
   flex-direction: row;
@@ -50,5 +54,9 @@
 }
 
 #lastname {
+  display: flex;
+}
+
+#passwordConfirm{
   display: flex;
 }

@@ -5,6 +5,7 @@ import { ParentContext } from '../App'
 const RvDetail = ({vehicle, favorited, setDetailedView}) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [favorite, setFavorite] = React.useState(favorited)
+  const [soldStatus, setSoldStatus] = useState(vehicle.sold)
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
@@ -34,6 +35,16 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
     }
   }
 
+  const handleSell = () => {
+    console.log('Sold')
+    setSoldStatus(true);
+  }
+
+  const handleRelist = () => {
+    console.log('Relisting')
+    setSoldStatus(false);
+  }
+
   return (
     <>
       <div id='detailFlexContainer'>
@@ -57,9 +68,18 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
               //otherwise check if we are in profile
               linkRoute === 'profile' ? 
               //if we are in profile, display remove icons instead
-              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span> 
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span>
+            :
+              linkRoute === 'listings' ? 
+              //if we are not in profile, check if we're in listings
+              <>
+              {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
               :
-              //anywhere else we won't display favorite icons
+              <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail">delete</span>
+              </>
+            :
+              //otherwise display nothing
               <></>
             }
           </div>

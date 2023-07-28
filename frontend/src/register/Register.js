@@ -6,7 +6,8 @@ const Register = () => {
   const [last, setLast] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [base, setBase] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [base, setBase] = useState('Los Angeles SFB');
 
   const allBases = [
     'Los Angeles SFB',
@@ -80,9 +81,22 @@ const Register = () => {
               ></input>
             </div>
 
+            <div id="passwordConfirm">
+              <span class="material-symbols-outlined loginicon">lock</span>
+              <input
+              type='password'
+              placeholder='Password'
+              id='passwordConfirm-value'
+              onChange={() => {
+                setPasswordConfirm(document.getElementById('passwordConfirm-value').value)
+              }}
+              ></input>
+            </div>
+
             <div id="base">
               <span class="material-symbols-outlined loginicon">home</span>
-              <select name="base" id='base-value' onChange={() => setBase(document.getElementById('base-value').value)}>
+              {/* <select name="base" id='base-value' onChange={() => setBase(document.getElementById('base-value').value)}> */}
+              <select name="base" id='base-value' value='Los Angeles SFB' onChange={(event) => setBase(event.target.value)}>
                 <option value="" disabled> --Please choose a base -- </option>
                 {allBases.map((baseOption) => {
                   return (
@@ -90,14 +104,15 @@ const Register = () => {
                   )
                 })}
               </select>
-
             </div>
 
             <button
             id='registerbutton'
             onClick={() => {
-              if (document.getElementById('first').value === '' || document.getElementById('username').value === '' || document.getElementById('username').value === '' || document.getElementById('password').value === '' || document.getElementById('base').value === '') {
+              if (document.getElementById('first').value === '' || document.getElementById('username').value === '' || document.getElementById('username').value === '' || document.getElementById('password').value === '' || document.getElementById('base-value').value === '') {
                 alert('Please fill in ALL text boxes!')
+              } if (password !== passwordConfirm) {
+                alert('Passwords do not match, please try again.')
               } else {
                 fetch('http://localhost:3001/register', {
                   method: 'POST',
@@ -112,9 +127,16 @@ const Register = () => {
                     'base': base
                   }])
                 })
-                .then(data => data.json())
-                .then(window.location='/login')
-                .then(alert('Registration Successful!'))
+                .then((data) => data.json())
+                .then(res => {
+                  console.log(res)
+                  if(!res.success){
+                    alert(res.message)
+                  }else{
+                    window.location='/login'
+                    alert(res.message)
+                  }
+                })
               }
             }}
             >

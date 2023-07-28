@@ -25,7 +25,7 @@ const Filters = ({filterText, listings, setListings, detailedView, setDetailedVi
 
   const [value, setValue] = useState([0, 200000]);
 
-  const [yearRange, setYearRange] = useState([1950, 2023])
+  const [yearRange, setYearRange] = useState([1950, new Date().getFullYear()+1])
   const [yearRangeMax, setYearRangeMax] = useState('')
 
   const handleChangePrice = (event, newValue) => {

@@ -267,24 +267,28 @@ api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique 
 
 api.post('/login', async (req,res) => {     //     Allows a user to login
     // console.log('body: ', req.body[0].username)
-    console.log('request body: ', req.body[0])
+    // console.log('request body: ', req.body[0])
     if(req.body[0]){
     let query = await knex('users').select('password').where({username: req.body[0].username})
     // console.log('query ', query)
-    let pw = query[0].password
-    bcrypt.compare(req.body[0].password, pw, async function(err, result) {
-        if (result) {
-            // authenticate
-            let user = await knex('users').select('userId', 'username', 'first_name', 'last_name', 'base', 'favorites', 'admin').where({username: req.body[0].username})
-            // console.log('user: ', {...user[0], success: true})
-            res.status(200).json({...user[0], success: true})
-        } else {
-            // error
-            res.status(400).json({success: false})
+    if(query[0]){
+        let pw = query[0].password
+        bcrypt.compare(req.body[0].password, pw, async function(err, result) {
+            if (result) {
+                // authenticate
+                let user = await knex('users').select('userId', 'username', 'first_name', 'last_name', 'base', 'favorites', 'admin').where({username: req.body[0].username})
+                // console.log('user: ', {...user[0], success: true})
+                res.status(200).json({...user[0], success: true})
+            } else {
+                // error
+                res.status(400).json({success: false})
+            }
+        })
+        }else{
+            res.status(400).json('Request body is empty, try again.')
         }
-    })
     }else{
-        res.status(400).json('Request body is empty, try again.')
+        res.status(400).json({success: false})
     }
 })
 
@@ -293,9 +297,9 @@ api.post('/register', async (req, res) => {     //     User Registration
     let userExists = await knex('users').first().where({username: req.body[0].username})
     // console.log('user exists? ', userExists)
     if (userExists != undefined) {
-        res.status(400).json('User exists')
+        res.status(400).json({success: false, message: 'An account with that username already exists, please try again!'})
     } else {
-        // console.log('inserting user: ', req.body[0])
+        console.log('inserting user: ', req.body[0])
         knex('users').insert(
             {
                 admin: false,
@@ -307,8 +311,8 @@ api.post('/register', async (req, res) => {     //     User Registration
                 favorites: ''
             }
         )
-        .then(result => res.status(200).json('Success'))
-        .catch(err => res.status(404).json(err));
+        .then(result => res.status(200).json({success: true, message: 'Registration Successful!'}))
+        .catch(err => res.status(404).json({success: false, message: 'Server Error!'}));
     }
 })
 
@@ -514,6 +518,17 @@ api.patch('/favorites', (req, res) => {
     .update({favorites: req.body.favorites})
     .then(res.status(200).json("Success"))
     .catch(err => res.status(500).send(err))
+})
+
+api.patch('/sold/:vehicleid', (req, res) => {
+    let tableName = `${req.body.type}s`
+    let vehicleID = `${req.body.type}Id`
+    // console.log(tableName);
+    // res.send('done')
+    knex(tableName).where(vehicleID, req.params.vehicleid)
+    .update({sold: req.body.sold})
+    .then(res.status(200).json("Success"))
+    .catch(err => console.log(err))
 })
 
 //////////        DEL REQUESTS        //////////

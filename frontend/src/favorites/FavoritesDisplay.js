@@ -103,7 +103,7 @@ const FavoritesDisplay = () => {
 
     return (
         <>
-            {favoritesDisplayList?.map((vehicle) => {
+            {favoritesDisplayList?.filter(vehicle=>!(vehicle.sold)).map((vehicle) => {
                 return (
                     <>
                         {detailedView.active ?
@@ -122,6 +122,7 @@ const FavoritesDisplay = () => {
                     </>
                 )
             })}
+            {favoritesDisplayList?.filter(vehicle=>!(vehicle.sold)).length===0?<div id='noFavoritesText'>You have no favorites yet</div>:<></>}
         </>
     )
 }

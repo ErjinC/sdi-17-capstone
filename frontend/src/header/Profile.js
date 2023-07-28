@@ -222,7 +222,7 @@ function Profile() {
       </div>
       <ToastContainer />
       <div id='favoriteListContainer'>
-        <div id='favoriteTitle'>Your Favorites:</div>
+        <div id='favoriteTitle'>Your Favorited Listings:</div>
         <div id='favoriteList'>
           <FavoritesDisplay /> 
         </div>
