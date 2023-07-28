@@ -147,7 +147,7 @@ exports.seed = async function (knex) {
             transmission: "manual",
             image: "https://placekitten.com/500/300",
             condition: "good",
-            location: "Buckley AFB",
+            location: "Buckley SFB",
             description: "Strong truck, good for work or travel."
         },
         {

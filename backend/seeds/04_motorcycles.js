@@ -138,7 +138,7 @@ exports.seed = async function(knex) {
       mileage: 2500,
       color: "green",
       condition: "good",
-      location: "Buckley AFB",
+      location: "Buckley SFB",
       description: "Good condition. Regularly serviced."
     },
     {
