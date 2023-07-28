@@ -91,40 +91,42 @@ api.get('/listings', async (req, res) => {
         "created_at",
         "updated_at")
         .join('motorcycles', {'motorcycles.motorcycleId': 'listings.motorcycle_id'})
-        let boatListings = await knex('listings').select(
-            'listingId',
-            'user_id',
-            'sold',
-            'type',
-            'description',
-            'image',
-            'make',
-            'model',
-            'year',
-            'price',
-            'hours',
-            'condition',
-            'location',
-            "created_at",
-            "updated_at")
-            .join('boats', 'boats.boatId','listings.boat_id')
-        let trailerListings = await knex('listings').select(
-            'listingId',
-            'user_id',
-            'sold',
-            'type',
-            'description',
-            'image',
-            'make',
-            'model',
-            'year',
-            'price',
-            'length',
-            'condition',
-            'location',
-            "created_at",
-            "updated_at")
-            .join('trailers', 'trailers.trailerId','listings.trailer_id')
+    let boatListings = await knex('listings').select(
+        'listingId',
+        'user_id',
+        'boat_id',
+        'sold',
+        'type',
+        'description',
+        'image',
+        'make',
+        'model',
+        'year',
+        'price',
+        'hours',
+        'condition',
+        'location',
+        "created_at",
+        "updated_at")
+        .join('boats', 'boats.boatId','listings.boat_id')
+    let trailerListings = await knex('listings').select(
+        'listingId',
+        'user_id',
+        'trailer_id',
+        'sold',
+        'type',
+        'description',
+        'image',
+        'make',
+        'model',
+        'year',
+        'price',
+        'length',
+        'condition',
+        'location',
+        "created_at",
+        "updated_at")
+        .join('trailers', 'trailers.trailerId','listings.trailer_id')
 
     let totalListings = {carListings, rvListings, motoListings, boatListings, trailerListings};
     res.status(200).json(totalListings)
@@ -198,6 +200,7 @@ api.get('/listings/:userid', async (req, res) => {
     let boatListings = await knex('listings').select(
         'listingId',
         'user_id',
+        'boat_id',
         'sold',
         'type',
         'description',
@@ -216,6 +219,7 @@ api.get('/listings/:userid', async (req, res) => {
     let trailerListings = await knex('listings').select(
         'listingId',
         'user_id',
+        'trailer_id',
         'sold',
         'type',
         'description',
@@ -523,8 +527,6 @@ api.patch('/favorites', (req, res) => {
 api.patch('/sold/:vehicleid', (req, res) => {
     let tableName = `${req.body.type}s`
     let vehicleID = `${req.body.type}Id`
-    // console.log(tableName);
-    // res.send('done')
     knex(tableName).where(vehicleID, req.params.vehicleid)
     .update({sold: req.body.sold})
     .then(res.status(200).json("Success"))

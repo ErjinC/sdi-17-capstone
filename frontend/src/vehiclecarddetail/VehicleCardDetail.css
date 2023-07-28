@@ -96,6 +96,7 @@
   display: inline-block;
   margin-right: 0.25em;
   border-radius: 50px;
+  background-color: black;
 }
 
 .detailItem {
@@ -194,3 +195,4 @@
 
 .relistButton:hover {
   transform: scale(1.1);
+}

@@ -36,13 +36,29 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
   }
 
   const handleSell = () => {
-    console.log('Sold')
+    console.log('Sold',vehicle)
     setSoldStatus(true);
+    fetch(`http://localhost:3001/sold/${vehicle.boat_id}`, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        type: 'boat',
+        sold: true
+      })
+    })
   }
 
   const handleRelist = () => {
     console.log('Relisting')
     setSoldStatus(false);
+    fetch(`http://localhost:3001/sold/${vehicle.boat_id}`, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        type: 'boat',
+        sold: false
+      })
+    })
   }
 
   return (
@@ -54,9 +70,10 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
         <div id="detailsContainer">
           <div class='detailButtons'>
             <div id='returnButtonContainer'> 
-              <span onClick={() => { setDetailedView({ active: false, vehicle: {} }) }} class="material-symbols-outlined">arrow_back</span>
+              {linkRoute === 'listings' ? <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>:
+              <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>}
             </div>
-            { linkRoute === '' ?
+            { linkRoute === '' && sessionStorage.getItem('CurrentUser') != null  ?
               //Display favorite icons toggle on home page
               favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
               : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span> 
