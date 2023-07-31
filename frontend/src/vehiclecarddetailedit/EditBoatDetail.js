@@ -3,13 +3,20 @@ import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 import { ToastContainer, toast } from 'react-toastify';
 
-const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
+const EditBoatDetail = ({ vehicle, favorited, setDetailedView }) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [favorite, setFavorite] = React.useState(favorited)
   const [soldStatus, setSoldStatus] = useState(vehicle.sold)
+  const [editToggle, setEditToggle] = useState(false)
+  const [editYear, setEditYear] = useState(vehicle.year)
+  const [editMake, setEditMake] = useState(vehicle.make)
+  const [editModel, setEditModel] = useState(vehicle.model)
+  const [editPrice, setEditPrice] = useState(vehicle.price)
+  const [editDescription, setEditDescription] = useState(vehicle.description)
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
+  console.log(vehicle)
 
   const [listingOwner, setListingOwner] = useState({})
   useEffect(() => {
@@ -91,6 +98,42 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
     })
   }
 
+  const handleEdit = () => {
+    // console.log('New Year: ', editYear)
+    // console.log('New Make: ', editMake)
+    // console.log('New Model: ', editModel)
+    // console.log('New Price: ', editPrice)
+    // console.log('New Description: ', editDescription)
+    const patchOptions = {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        boat_id: vehicle.boat_id,
+        newYear: editYear,
+        newMake: editMake,
+        newModel: editModel,
+        newPrice: editPrice,
+        newDescription: editDescription,
+      })
+    }
+
+    fetch(`http://localhost:3001/updateListing`, patchOptions)
+      .then(data => data.json())
+      .then(res => {
+        if (res.success){
+          // success message
+          console.log('result: ', res.vehicle)
+          setEditToggle(!editToggle)
+          setDetailedView({active: true, vehicle: res.vehicle})
+          // window.location.reload()
+        } else {
+          // failure message
+          toast.error('Update failed, please try again later')
+          setEditToggle(!editToggle)
+        }
+      })
+  }
+
   return (
     <>
       <div id='detailFlexContainer'>
@@ -127,20 +170,24 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
               <></>
             }
           </div>
-          <h1 id='detailheader'>{vehicle.year} {vehicle.make} {vehicle.model}</h1>
-          <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>{' $'+vehicle.price}</div>
+          {<h1 id='detailheader'>{vehicle.year} {vehicle.make} {vehicle.model}</h1>}
+          {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">calendar_month</span>Year:  <input type='number' defaultValue={vehicle.year} onChange={(e) => setEditYear(Number(e.target.value))}/></div> : <></>}
+          {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">label</span>Make:  <input type='text' defaultValue={vehicle.make}  onChange={(e) => setEditMake(e.target.value)}/></div> : <></>}
+          {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">label_important</span>Model:  <input type='text' defaultValue={vehicle.model}  onChange={(e) => setEditModel(e.target.value)}/></div> : <></>}
+          {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>Price:  <input type='number' defaultValue={vehicle.price}  onChange={(e) => setEditPrice(Number(e.target.value))}/></div>  : <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>{' $'+vehicle.price}</div>}
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">build_circle</span> {vehicle.condition.charAt(0).toUpperCase()+ vehicle.condition.slice(1) + ' Condition'}</div>
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">directions_boat</span> {vehicle.type.charAt(0).toUpperCase()+ vehicle.type.slice(1)}</div>
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">not_listed_location</span> {vehicle.location}</div>
-          <div className='detailHeader'><strong>Contact Information</strong></div>
-          <div className='detailItem'><span id="icon" class="material-symbols-outlined">person</span>{listingOwner.first_name + ' ' + listingOwner.last_name}</div>
-          <div className='detailItem'><span id="icon" class="material-symbols-outlined">mail</span>{listingOwner.email}</div>
-          <div className='detailItem'><span id="icon" class="material-symbols-outlined">call</span>{listingOwner.phone}</div>
+          {editToggle ? <></> : <div className='detailHeader'><strong>Contact Information</strong></div>}
+          {editToggle ? <></> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">person</span>{listingOwner.first_name + ' ' + listingOwner.last_name}</div>}
+          {editToggle ? <></> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">mail</span>{listingOwner.email}</div>}
+          {editToggle ? <></> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">call</span>{listingOwner.phone}</div>}
 
           <div className='detailDescriptionItem'>
-            <strong>Description:</strong>
+            <strong>Edit Description:</strong>
           </div>
-          <textarea disabled id="description">{vehicle.description}</textarea>
+          {editToggle ? <textarea type="textarea" defaultValue={vehicle.description} onChange={(e) => setEditDescription(e.target.value)}></textarea> : <textarea disabled id="description">{vehicle.description}</textarea>}
+          {editToggle ? <button onClick={() => handleEdit()}>Update</button> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
         </div>
     </div>
     <ToastContainer autoClose={1500}/>
@@ -148,17 +195,4 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
   )
 }
 
-// boatId: 1,
-// sold: false, !!
-// type: "boat", !!
-// make: "Sea Ray", !!
-// model: "Sundancer 260", !!
-// year: 2010, !!
-// price: 40000, !!
-// hours: 300, !!
-// image: "https://placekitten.com/500/300",
-// condition: "good", !!
-// location: "Beale AFB", !!
-// description: "Bent propeller. Runs well. Needs new canopy." !
-
-export default BoatDetail
+export default EditBoatDetail;
