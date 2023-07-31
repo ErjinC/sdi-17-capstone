@@ -7,6 +7,7 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [favorite, setFavorite] = React.useState(favorited)
   const [soldStatus, setSoldStatus] = useState(vehicle.sold)
+  const [reported, setReported] = useState(vehicle.reported)
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
@@ -91,6 +92,65 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
     })
   }
 
+  
+  const handleReport = () => {
+    if(reported) {
+      window.alert('Listing has already been reported')
+    } else {
+      setReported(true);
+      window.alert('Thank you for your report, an admin will review the listing.')
+      fetch(`http://localhost:3001/report/${vehicle.listingId}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          reported: true
+        })
+      })
+      document.getElementById('report').style.color = '#ffb703'
+    }
+  }
+
+  const handleApproveListing = () =>{
+    if(window.confirm('Are you sure you would like to approve this listing?')){
+      fetch(`http://localhost:3001/report/${vehicle.listingId}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          reported: false
+        })
+      })
+    }
+  }
+
+  const handleDenyListing = () =>{
+    // console.log('vehicle: ', vehicle)
+    if (window.confirm('Are you sure you would like to remove this listing?')) {
+      fetch(`http://localhost:3001/listings`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(vehicle)
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            toast.success('Listing successfully removed!', {
+              position: toast.POSITION.BOTTOM_CENTER
+            })
+            setTimeout(() => {
+              window.location='/listings'
+            }, 2000);  
+          } else if (!data.success) {
+            toast.error('Failed to delete!', {
+              position: toast.POSITION.BOTTOM_CENTER
+            })
+            setTimeout(() => {
+              window.location='/listings'
+            }, 2000);  
+          }
+        })
+    }
+  }
+
   return (
     <>
       <div id='detailFlexContainer'>
@@ -99,32 +159,39 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
         </div>
         <div id="detailsContainer">
           <div class='detailButtons'>
-            <div id='returnButtonContainer'>
-              {linkRoute === 'listings' ? <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>:
-              <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>}
+            <div id='returnButtonContainer'> 
+              <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>
             </div>
-            { linkRoute === '' && sessionStorage.getItem('CurrentUser') != null  ?
-              //Display favorite icons toggle on home page
-              favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span>
-              : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span>
-
-            :
+            { linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
+                //Display favorite icons toggle on home page
+                <>
+                <span  id='report' class="material-symbols-outlined" onClick={() => {handleReport()}}>report</span>
+                {favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span>
+                : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span>}
+                </>
               //otherwise check if we are in profile
-              linkRoute === 'profile' ?
-              //if we are in profile, display remove icons instead
-              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span>
-            :
-              linkRoute === 'listings' ?
-              //if we are not in profile, check if we're in listings
-              <>
-              {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
               :
-              <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
-              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={() => handleListingRemove()}>delete</span>
-              </>
-            :
-              //otherwise display nothing
-              <></>
+              linkRoute === ('profile') ? 
+                //if we are in profile, display remove icons instead
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>delete</span>
+              :
+                linkRoute === 'listings' ? 
+                //if we are not in profile, check if we're in listings
+                <>
+                {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
+                :
+                <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={()=>{handleListingRemove()}}>delete</span>
+                </>
+              :
+                linkRoute === 'admin' ? 
+                //if we are not in listings, check if we're in admin
+                <>
+                <span  id='approve' class="material-symbols-outlined" onClick={()=>{handleApproveListing(); window.location.reload();}}>check_circle</span> <span id='deny' className="material-symbols-outlined" onClick={()=>{handleDenyListing(); window.location.reload();}}>remove_circle_outline</span>
+                </>
+              :
+                //otherwise display nothing
+                <></>
             }
           </div>
           <h1 id='detailheader'>{vehicle.year} {vehicle.make} {vehicle.model}</h1>

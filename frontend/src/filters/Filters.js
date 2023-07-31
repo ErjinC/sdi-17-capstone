@@ -1078,5 +1078,3 @@ export default Filters
 // Condition
 // Location
 // Type
-
-

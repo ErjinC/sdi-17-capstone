@@ -63,7 +63,7 @@
 
 #returnButtonContainer:hover {
   color: #FF8400;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 
@@ -75,7 +75,7 @@
 }
 
 .favoriteIconDetail:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
   cursor: pointer;
 }
 
@@ -195,4 +195,34 @@
 
 .relistButton:hover {
   transform: scale(1.1);
+}
+
+#report {
+  font-size: clamp(25px, 5vh, 100px);
+}
+
+#report:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  color: #ffb703;
+}
+
+#approve {
+  color: rgb(59, 199, 24);
+  font-size: clamp(25px, 5vh, 100px);
+}
+
+#approve:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+#deny {
+  color: rgb(199, 24, 24);
+  font-size: clamp(25px, 5vh, 100px);
+}
+
+#deny:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }

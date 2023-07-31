@@ -69,7 +69,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
       <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle,favorited:favorited})}}>
         { linkRoute === '' ?
           //Display favorite icons toggle on home page
-          favorited ? <span id='favoritedIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span> 
+          favorited ? <><span id='favoritedIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span></>
           : <span id='addFavoriteIcon' className="material-symbols-outlined favoriteIcon" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span> 
         
         :

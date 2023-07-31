@@ -1,4 +1,5 @@
 #flexcontainerheader {
+  background: var(--background-accent);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
