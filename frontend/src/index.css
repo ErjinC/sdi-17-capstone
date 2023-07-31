@@ -18,7 +18,6 @@ body {
   background: var(--background);
   background-size: cover;
   overflow: scroll;
-  color: rgb(79, 32, 13);
   color: white;
 }
 

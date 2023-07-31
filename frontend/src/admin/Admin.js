@@ -19,13 +19,13 @@ const Admin = () => {
 
                 <TabPanels>
                     <TabPanel>
-                    <ReportAdmin />
+                        <ReportAdmin />
                     </TabPanel>
                     <TabPanel>
-                    <AccountAdmin />
+                        <AccountAdmin/>
                     </TabPanel>
                     <TabPanel>
-                    <EditLocationAdmin />
+                        <EditLocationAdmin />
                     </TabPanel>
                 </TabPanels>
                 </Tabs>

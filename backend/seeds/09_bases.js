@@ -28,5 +28,5 @@ exports.seed = async function(knex) {
     {baseId: 20, name: 'Aviano AFB'}
   ]);
 
-  await knex.raw("ALTER SEQUENCE \"trailers_trailerId_seq\" RESTART WITH 21;")
+  await knex.raw("ALTER SEQUENCE \"bases_baseId_seq\" RESTART WITH 21;")
 };
