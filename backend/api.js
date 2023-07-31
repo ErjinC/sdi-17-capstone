@@ -250,29 +250,31 @@ api.get('/listings/:userid', async (req, res) => {
     res.status(200).json(totalListings)
 })
 
-api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique locations in the DB & sends them back
-    let carLocations = await knex('cars').select("location");
-    let rvLocations = await knex('rvs').select("location");
-    let motoLocations = await knex('motorcycles').select("location");
-    let boatLocations = await knex('boats').select("location");
-    let trailerLocations = await knex('trailers').select("location");
 
-    let totalLocations = [carLocations, rvLocations, motoLocations, boatLocations, trailerLocations];
-    let uniqueLocations = [];
+// api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique locations in the DB & sends them back
+//     let carLocations = await knex('cars').select("location");
+//     let rvLocations = await knex('rvs').select("location")   ;
+//     let motoLocations = await knex('motorcycles').select("location");
+//     let boatLocations = await knex('boats').select("location");
+//     let trailerLocations = await knex('trailers').select("location");
 
-    totalLocations.forEach((vehicleType) => {
-        vehicleType.forEach((vehicleLocation) => {
-            if (!uniqueLocations.includes(vehicleLocation.location)) {
-                uniqueLocations.push(vehicleLocation.location);
-            }
-        });
-    })
+//     let totalLocations = [carLocations, rvLocations, motoLocations, boatLocations, trailerLocations];
+//     let uniqueLocations = [];
 
-    res.status(200).send({
-        locations: uniqueLocations,
-        success: true
-    })
-})
+//     totalLocations.forEach((vehicleType) => {
+//         vehicleType.forEach((vehicleLocation) => {
+//             if (!uniqueLocations.includes(vehicleLocation.location)) {
+//                 uniqueLocations.push(vehicleLocation.location);
+//             }
+//         });
+//     })
+
+//     res.status(200).send({
+//         locations: uniqueLocations,
+//         success: true
+//     })
+// })
+
 
 api.get('/bases', (req, res) => {
     knex('bases').select()
@@ -580,7 +582,9 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             mileage: req.body.newMileage,
             transmission: req.body.newTransmission,
             color: req.body.newColor,
-        })
+            condition: req.body.newCondition,
+            location: req.body.newLocation,
+            })
             .then(result => {
                 if (result) {
                     knex('listings').select(
@@ -610,12 +614,41 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
                 }
             })
     } else if (req.body.boat_id) {
-        knex('boats').where({ boatId: req.body.boat_id }).update({
-            year: req.body.newYear,
-            make: req.body.newMake,
-            model: req.body.newModel,
-            price: req.body.newPrice,
-            description: req.body.newDescription,
+        knex('boats').where({boatId: req.body.boat_id}).update({
+        year: req.body.newYear,
+        make: req.body.newMake,
+        model: req.body.newModel,
+        price: req.body.newPrice,
+        description: req.body.newDescription,
+        condition: req.body.newCondition,
+        location: req.body.newLocation,
+        })
+        .then(result => {
+            if (result) {
+                knex('listings').select(
+                    'listingId',
+                    'boat_id',
+                    'user_id',
+                    'sold',
+                    'type',
+                    'description',
+                    'image',
+                    'make',
+                    'model',
+                    'year',
+                    'price',
+                    'hours',
+                    'condition',
+                    'location',
+                    "created_at",
+                    "updated_at")
+                    .join('boats', 'boats.boatId','listings.boat_id')
+                    .where({boat_id: req.body.boat_id})
+                    .then(boat => {
+                        console.log('boat: ', boat)
+                        res.status(200).json({success: true, vehicle: boat[0]})
+                    })
+            }
         })
             .then(result => {
                 if (result) {
@@ -650,8 +683,10 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             model: req.body.newModel,
             price: req.body.newPrice,
             description: req.body.newDescription,
-            mileage: req.body.newMileage
-        })
+            mileage: req.body.newMileage,
+            condition: req.body.newCondition,
+            location: req.body.newLocation,
+            })
             .then(result => {
                 if (result) {
                     knex('listings').select(
@@ -687,8 +722,11 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             model: req.body.newModel,
             price: req.body.newPrice,
             description: req.body.newDescription,
-            mileage: req.body.newMileage
-        })
+            mileage: req.body.newMileage,
+            condition: req.body.newCondition,
+            location: req.body.newLocation,
+            weight: req.body.newWeight
+            })
             .then(result => {
                 if (result) {
                     knex('listings').select(
@@ -726,7 +764,9 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             length: req.body.newLength,
             price: req.body.newPrice,
             description: req.body.newDescription,
-        })
+            condition: req.body.newCondition,
+            location: req.body.newLocation,
+            })
             .then(result => {
                 if (result) {
                     knex('listings').select(

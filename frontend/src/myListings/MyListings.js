@@ -18,6 +18,7 @@ const MyListings = () => {
     const [detailedView, setDetailedView] = useState({active:false,vehicle:{}});
     const [userFavorites, setUserFavorites ] = useState([]);
     const [soldView, setSoldView] = useState(false)
+    const [locations, setLocations] = useState([])
     const user = JSON.parse(sessionStorage.getItem('CurrentUser'))
     const navigate = useNavigate();
 
@@ -28,6 +29,14 @@ const MyListings = () => {
         fetch(`http://localhost:3001/listings/${user.userId}`)
         .then(res => res.json())
         .then(data => setMyListings(data))
+
+        fetch('http://localhost:3001/bases')
+        .then((res) => res.json())
+        .then((data) => {
+            // console.log(data)
+            setLocations(data)
+        })
+
     }, [])
 
     // console.log(typeof(myListings.carListings))
@@ -63,11 +72,11 @@ const MyListings = () => {
                         <>
                             <div id='detailedViewContainerOverlay'>
                                 <div id='detailedViewContainer'>
-                                    {(detailedView.vehicle?.type === 'car'||detailedView.vehicle?.type === 'coupe'||detailedView.vehicle?.type === 'truck')?<EditCarDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
-                                    {(detailedView.vehicle.type === 'boat'||detailedView.vehicle?.type === 'jet ski')?<EditBoatDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
-                                    {(detailedView.vehicle.type === 'Street Bike'||detailedView.vehicle?.type === 'Dirt Bike'||detailedView.vehicle?.type === 'Cruiser'||detailedView.vehicle?.type === "Sport Bike"||detailedView.vehicle?.type === "Touring Bike"||detailedView.vehicle?.type === "Adventure Bike"||detailedView.vehicle?.type === "Dual Sport")?<EditMotoDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
-                                    {(detailedView.vehicle.type === 'motorized'||detailedView.vehicle.type === 'towable')?<EditRvDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
-                                    {(detailedView.vehicle.type === 'flatbed'||detailedView.vehicle.type === 'enclosed')?<EditTrailerDetail setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
+                                    {(detailedView.vehicle?.type === 'car'||detailedView.vehicle?.type === 'coupe'||detailedView.vehicle?.type === 'truck')?<EditCarDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
+                                    {(detailedView.vehicle.type === 'boat'||detailedView.vehicle?.type === 'jet ski')?<EditBoatDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
+                                    {(detailedView.vehicle.type === 'Street Bike'||detailedView.vehicle?.type === 'Dirt Bike'||detailedView.vehicle?.type === 'Cruiser'||detailedView.vehicle?.type === "Sport Bike"||detailedView.vehicle?.type === "Touring Bike"||detailedView.vehicle?.type === "Adventure Bike"||detailedView.vehicle?.type === "Dual Sport")?<EditMotoDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
+                                    {(detailedView.vehicle.type === 'motorized'||detailedView.vehicle.type === 'towable')?<EditRvDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
+                                    {(detailedView.vehicle.type === 'flatbed'||detailedView.vehicle.type === 'enclosed')?<EditTrailerDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
                                 </div>
                             </div>
                         </> : <></>

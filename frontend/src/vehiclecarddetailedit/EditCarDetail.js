@@ -3,8 +3,10 @@ import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 import { Modal } from '@mui/material'
 import { ToastContainer, toast } from 'react-toastify';
+import { Select } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 
-const EditCarDetail = ({vehicle, favorited, setDetailedView}) => {
+const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
   const {userFavorites, setUserFavorites} = useContext(ParentContext)
   const [favorite, setFavorite] = useState(favorited)
   const [soldStatus, setSoldStatus] = useState(vehicle.sold)
@@ -12,8 +14,10 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView}) => {
   const [editYear, setEditYear] = useState(vehicle.year)
   const [editMake, setEditMake] = useState(vehicle.make)
   const [editModel, setEditModel] = useState(vehicle.model)
+  const [editCondition, setEditCondition] = useState(vehicle.condition)
   const [editPrice, setEditPrice] = useState(vehicle.price)
   const [editMileage, setEditMileage] = useState(vehicle.mileage)
+  const [editLocation, setEditLocation] = useState(vehicle.location)
   const [editTransmission, setEditTransmission] = useState(vehicle.transmission)
   const [editColor, setEditColor] = useState(vehicle.color)
   const [editDescription, setEditDescription] = useState(vehicle.description)
@@ -123,6 +127,8 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView}) => {
         newMileage: editMileage,
         newTransmission: editTransmission,
         newColor: editColor,
+        newCondition: editCondition,
+        newLocation: editLocation,
       })
     }
 
@@ -144,7 +150,7 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView}) => {
   }
 
   return (
-    <>
+    <ChakraProvider>
       <div id='detailFlexContainer'>
         {/* <div class='detailHeader'>
 
@@ -192,11 +198,20 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView}) => {
 
           {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined"><span class="material-icons-outlined">sell</span></span>Price:  <input type='number' defaultValue={vehicle.price}  onChange={(e) => setEditPrice(Number(e.target.value))}/></div>  : <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>{' $'+vehicle.price}</div>}
 
+          {editToggle ? <Select defaultValue={vehicle.condition} onChange={(e) => setEditCondition(e.target.value)}>
+                          <option value='poor'>Poor</option>
+                          <option value='good'>Good</option>
+                          <option value='excellent'>Excellent</option>
+                        </Select> :
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">build_circle</span> {vehicle.condition.charAt(0).toUpperCase()+ vehicle.condition.slice(1) + ' Condition'}</div>
+          }
 
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">directions_car</span> {vehicle.type.charAt(0).toUpperCase()+ vehicle.type.slice(1)}</div>
 
-          <div className='detailItem'><span id="icon" class="material-symbols-outlined">not_listed_location</span> {vehicle.location}</div>
+          {editToggle ? <Select defaultValue={vehicle.location} onChange={(e) => setEditLocation(e.target.value)}>
+                          {locations?.map((location) => <option key={location.baseId} value={location.name}>{location.name}</option>)}
+                        </Select> :
+                        <div className='detailItem'><span id="icon" class="material-symbols-outlined">not_listed_location</span> {vehicle.location}</div>}
 
           {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">speed</span>Mileage:  <input type='number' defaultValue={vehicle.mileage}  onChange={(e) => setEditMileage(Number(e.target.value))}/></div> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">speed</span> {vehicle.mileage + ' miles'}</div>}
 
@@ -213,11 +228,11 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView}) => {
             <strong>Edit Description:</strong>
           </div>
           {editToggle ? <textarea type="textarea" defaultValue={vehicle.description} onChange={(e) => setEditDescription(e.target.value)}></textarea> : <textarea disabled id="description">{vehicle.description}</textarea>}
-          {editToggle ? <button onClick={() => handleEdit()}>Update</button> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
+          {editToggle ? <><button onClick={() => handleEdit()}>Update</button><button onClick={() => setEditToggle(!editToggle)}>Discard</button></> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
         </div>
     </div>
     <ToastContainer autoClose={1500}/>
-    </>
+    </ChakraProvider>
   )
 }
 
