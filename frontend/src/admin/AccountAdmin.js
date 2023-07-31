@@ -27,7 +27,7 @@ const AccountAdmin = () => {
         {/* Map and iterate the following div */}
         {userList.map(item => {
           return(
-            <AccountCard user={item} setUserList={setUserList}/>
+            <AccountCard user={item}/>
           )
         })}
       </div>
