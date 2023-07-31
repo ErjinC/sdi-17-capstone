@@ -250,29 +250,29 @@ api.get('/listings/:userid', async (req, res) => {
     res.status(200).json(totalListings)
 })
 
-api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique locations in the DB & sends them back
-    let carLocations = await knex('cars').select("location");
-    let rvLocations = await knex('rvs').select("location")   ;
-    let motoLocations = await knex('motorcycles').select("location");
-    let boatLocations = await knex('boats').select("location");
-    let trailerLocations = await knex('trailers').select("location");
+// api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique locations in the DB & sends them back
+//     let carLocations = await knex('cars').select("location");
+//     let rvLocations = await knex('rvs').select("location")   ;
+//     let motoLocations = await knex('motorcycles').select("location");
+//     let boatLocations = await knex('boats').select("location");
+//     let trailerLocations = await knex('trailers').select("location");
 
-    let totalLocations = [carLocations, rvLocations, motoLocations, boatLocations, trailerLocations];
-    let uniqueLocations = [];
+//     let totalLocations = [carLocations, rvLocations, motoLocations, boatLocations, trailerLocations];
+//     let uniqueLocations = [];
 
-    totalLocations.forEach((vehicleType) => {
-        vehicleType.forEach((vehicleLocation) => {
-            if (!uniqueLocations.includes(vehicleLocation.location)) {
-                uniqueLocations.push(vehicleLocation.location);
-            }
-        });
-    })
+//     totalLocations.forEach((vehicleType) => {
+//         vehicleType.forEach((vehicleLocation) => {
+//             if (!uniqueLocations.includes(vehicleLocation.location)) {
+//                 uniqueLocations.push(vehicleLocation.location);
+//             }
+//         });
+//     })
 
-    res.status(200).send({
-        locations: uniqueLocations,
-        success: true
-    })
-})
+//     res.status(200).send({
+//         locations: uniqueLocations,
+//         success: true
+//     })
+// })
 
 api.get('/bases', (req, res) => {
     knex('bases').select()
@@ -571,6 +571,8 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             mileage: req.body.newMileage,
             transmission: req.body.newTransmission,
             color: req.body.newColor,
+            condition: req.body.newCondition,
+            location: req.body.newLocation,
             })
             .then(result => {
                 if (result) {
@@ -608,6 +610,8 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
         model: req.body.newModel,
         price: req.body.newPrice,
         description: req.body.newDescription,
+        condition: req.body.newCondition,
+        location: req.body.newLocation,
         })
         .then(result => {
             if (result) {
@@ -643,7 +647,9 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             model: req.body.newModel,
             price: req.body.newPrice,
             description: req.body.newDescription,
-            mileage: req.body.newMileage
+            mileage: req.body.newMileage,
+            condition: req.body.newCondition,
+            location: req.body.newLocation,
             })
             .then(result => {
                 if (result) {
@@ -681,7 +687,10 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             model: req.body.newModel,
             price: req.body.newPrice,
             description: req.body.newDescription,
-            mileage: req.body.newMileage
+            mileage: req.body.newMileage,
+            condition: req.body.newCondition,
+            location: req.body.newLocation,
+            weight: req.body.newWeight
             })
             .then(result => {
                 if (result) {
@@ -721,6 +730,8 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             length: req.body.newLength,
             price: req.body.newPrice,
             description: req.body.newDescription,
+            condition: req.body.newCondition,
+            location: req.body.newLocation,
             })
             .then(result => {
                 if (result) {

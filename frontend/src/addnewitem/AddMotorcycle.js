@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './add.css'
 import { ToastContainer, toast } from 'react-toastify';
+import { Select } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 
-const AddMotorcycle = ({ currentUser, setVehicleType }) => {
+const AddMotorcycle = ({ locations, currentUser, setVehicleType }) => {
     const [type, setType] = useState('Street Bike');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -108,7 +110,7 @@ const AddMotorcycle = ({ currentUser, setVehicleType }) => {
                     <textarea type='textbox' className='description-input' onChange={(e) => setDescription(e.target.value)} />
                 </div>
             </div>
-            
+
             <button
                 className='addbutton'
                 onClick={() => {
