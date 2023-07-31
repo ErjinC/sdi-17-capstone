@@ -2,8 +2,10 @@ import React, {useState,useEffect} from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 import { ToastContainer, toast } from 'react-toastify';
+import { Select } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 
-const EditRvDetail = ({vehicle, favorited, setDetailedView}) => {
+const EditRvDetail = ({locations, vehicle, favorited, setDetailedView}) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [favorite, setFavorite] = React.useState(favorited)
   const [soldStatus, setSoldStatus] = useState(vehicle.sold)
@@ -12,9 +14,11 @@ const EditRvDetail = ({vehicle, favorited, setDetailedView}) => {
   const [editMake, setEditMake] = useState(vehicle.make)
   const [editModel, setEditModel] = useState(vehicle.model)
   const [editPrice, setEditPrice] = useState(vehicle.price)
+  const [editCondition, setEditCondition] = useState(vehicle.condition)
+  const [editLocation, setEditLocation] = useState(vehicle.location)
   const [editDescription, setEditDescription] = useState(vehicle.description)
   const [editLength, setEditLength] = useState(vehicle.length)
-  // const [editWeight, setEditWeight] = useState(vehicle.weight)
+  const [editWeight, setEditWeight] = useState(vehicle.weight)
   const [editMileage, setEditMileage] = useState(vehicle?.mileage)
   let link = window.location.href
   let linkArr = link.split('/')
@@ -116,8 +120,10 @@ const EditRvDetail = ({vehicle, favorited, setDetailedView}) => {
         newModel: editModel,
         newPrice: editPrice,
         newDescription: editDescription,
-        // newWeight: editWeight,
-        newMileage: editMileage
+        newWeight: editWeight,
+        newMileage: editMileage,
+        newCondition: editCondition,
+        newLocation: editLocation,
       })
     }
 
@@ -139,7 +145,7 @@ const EditRvDetail = ({vehicle, favorited, setDetailedView}) => {
   }
 
   return (
-    <>
+    <ChakraProvider>
       <div id='detailFlexContainer'>
         {/* <div class='detailHeader'>
 
@@ -199,14 +205,25 @@ const EditRvDetail = ({vehicle, favorited, setDetailedView}) => {
           {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">label</span>Make:  <input type='text' defaultValue={vehicle.make}  onChange={(e) => setEditMake(e.target.value)}/></div> : <></>}
           {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">label_important</span>Model:  <input type='text' defaultValue={vehicle.model}  onChange={(e) => setEditModel(e.target.value)}/></div> : <></>}
           {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>Price:  <input type='number' defaultValue={vehicle.price}  onChange={(e) => setEditPrice(Number(e.target.value))}/></div>  : <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>{' $'+vehicle.price}</div>}
+          {editToggle ? <Select defaultValue={vehicle.condition} onChange={(e) => setEditCondition(e.target.value)}>
+                          <option value='poor'>Poor</option>
+                          <option value='good'>Good</option>
+                          <option value='excellent'>Excellent</option>
+                        </Select> :
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">build_circle</span> {vehicle.condition.charAt(0).toUpperCase()+ vehicle.condition.slice(1) + ' Condition'}</div>
-          {vehicle.type === 'towable'?<></>:
+          }
+          {vehicle.type === 'towable' ?
+            editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">speed</span>Weight: <input type="number" defaultValue={vehicle.weight} onChange={(e) => setEditWeight(Number(e.target.value))}/></div> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">weight</span> {vehicle.weight + ' lbs'}</div>
+            :
             editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">speed</span>Mileage: <input type="number" defaultValue={vehicle.mileage} onChange={(e) => setEditMileage(Number(e.target.value))}/></div> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">speed</span> {vehicle.mileage + ' miles'}</div>
           }
-          {editToggle? <div className='detailItem'><span id="icon" class="material-symbols-outlined">straighten</span>Length: <input type="number" defaultValue={vehicle.length} onChange={(e) => setEditLength(Number(e.target.value))}/></div> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">straighten</span> {vehicle.length + ' ft.'}</div>}
+          {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">straighten</span>Length: <input type="number" defaultValue={vehicle.length} onChange={(e) => setEditLength(Number(e.target.value))}/></div> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">straighten</span> {vehicle.length + ' ft.'}</div>}
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">airport_shuttle</span> {vehicle.type.charAt(0).toUpperCase()+ vehicle.type.slice(1)}</div>
-          <div className='detailItem'><span class="material-symbols-outlined">weight</span>&nbsp;{vehicle.weight + ' lbs.'}</div>
-          <div className='detailItem'><span id="icon" class="material-symbols-outlined">not_listed_location</span> {vehicle.location}</div>
+          {/* <div className='detailItem'><span class="material-symbols-outlined">weight</span>&nbsp;{vehicle.weight + ' lbs.'}</div> */}
+          {editToggle ? <Select defaultValue={vehicle.location} onChange={(e) => setEditLocation(e.target.value)}>
+                          {locations?.map((location) => <option key={location.baseId} value={location.name}>{location.name}</option>)}
+                        </Select> :
+                        <div className='detailItem'><span id="icon" class="material-symbols-outlined">not_listed_location</span> {vehicle.location}</div>}
           {editToggle ? <></> : <div className='detailHeader'><strong>Contact Information</strong></div>}
           {editToggle ? <></> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">person</span>{listingOwner.first_name + ' ' + listingOwner.last_name}</div>}
           {editToggle ? <></> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">mail</span>{listingOwner.email}</div>}
@@ -216,29 +233,12 @@ const EditRvDetail = ({vehicle, favorited, setDetailedView}) => {
             <strong>Edit Description:</strong>
           </div>
           {editToggle ? <textarea type="textarea" defaultValue={vehicle.description} onChange={(e) => setEditDescription(e.target.value)}></textarea> : <textarea disabled id="description">{vehicle.description}</textarea>}
-          {editToggle ? <button onClick={() => handleEdit()}>Update</button> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
+          {editToggle ? <><button onClick={() => handleEdit()}>Update</button><button onClick={() => setEditToggle(!editToggle)}>Discard</button></> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
         </div>
     </div>
     <ToastContainer autoClose={1500}/>
-    </>
+    </ChakraProvider>
   )
 }
-
-//
-// rvId: 1,
-// sold: false, !!
-// type: "motorized", !!
-// make: "Jayco", !!
-// model: "Alante", !!
-// mileage: 26432, !!
-// sleeps: 6, !!
-// weight: 18000, !!
-// year: 2024, !!
-// price: 172418, !!
-// length: 29, !!
-// condition: "excellent", !!
-// image: "https://placekitten.com/500/300", !
-// location: "Beale AFB", !!
-// description: "Like new vehicle, newly refurbished interior and flooring. Equipped with solar panels, Wi-Fi antennas, and two A/C units. Slight scratching present on the exterior, but otherwise in great condition." !
 
 export default EditRvDetail

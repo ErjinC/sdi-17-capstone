@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import './add.css'
 import { ToastContainer, toast } from 'react-toastify';
+import { Select } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 
 
-const AddTrailer = ({ currentUser, setVehicleType }) => {
+const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
     const [type, setType] = useState('flatbed');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -91,8 +93,8 @@ const AddTrailer = ({ currentUser, setVehicleType }) => {
                             return <option value={location}>{location}</option> */}
                             {allBases.map((location) => {
                                 return <option value={location}>{location}</option>
-                            })}   
-                        
+                            })}
+
                     </select>
                 </div>
                 <div>

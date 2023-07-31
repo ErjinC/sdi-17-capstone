@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import './add.css'
 import { ToastContainer, toast } from 'react-toastify';
+import { Select } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 
-
-const AddCar = ({ currentUser, setVehicleType }) => {
+const AddCar = ({ locations, currentUser, setVehicleType }) => {
     const [type, setType] = useState('car');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');

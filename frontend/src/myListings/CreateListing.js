@@ -12,8 +12,17 @@ const CreateListing = () => {
   const {currentUser} = React.useContext(ParentContext)
   const [vehicleSelected, setVehicleSelected] = useState(false);
   const [vehicleType, setVehicleType] = useState('');
+  const [locations, setLocations] = useState();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    fetch('http://localhost:3001/bases')
+        .then((res) => res.json())
+        .then((data) => {
+            // console.log(data)
+            setLocations(data)
+    })
+  })
   function assignVehicleHandler(event) {
     setVehicleSelected(true);
     setVehicleType(event.target.value);
@@ -21,11 +30,11 @@ const CreateListing = () => {
 
   function renderComponent() {
     switch(vehicleType){
-        case 'car': return <AddCar currentUser= {currentUser} setVehicleType= {setVehicleType} />;
-        case 'motorcycles': return <AddMotorcycle currentUser= {currentUser} setVehicleType= {setVehicleType} />;
-        case 'rvs': return <AddRv currentUser= {currentUser} setVehicleType= {setVehicleType} />;
-        case 'boats': return <AddBoat currentUser= {currentUser} setVehicleType= {setVehicleType} />;
-        case 'trailers': return <AddTrailer currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'car': return <AddCar locations= {locations} currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'motorcycles': return <AddMotorcycle locations= {locations} currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'rvs': return <AddRv locations= {locations} currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'boats': return <AddBoat locations= {locations} currentUser= {currentUser} setVehicleType= {setVehicleType} />;
+        case 'trailers': return <AddTrailer locations= {locations} currentUser= {currentUser} setVehicleType= {setVehicleType} />;
         default: return <CreateListing />;
     }
   }
