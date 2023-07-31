@@ -9,6 +9,8 @@ import Register from './register/Register.js'
 import FrontPage from './frontpage/FrontPage.js'
 import BoatDetail from './vehiclecarddetail/BoatDetail.js'
 import CreateListing from './myListings/CreateListing';
+import Admin from './admin/Admin';
+import { ChakraProvider } from '@chakra-ui/react'
 // import useAuth from './useAuth.js';
 
 export const ParentContext = createContext();
@@ -35,18 +37,19 @@ function App() {
 
   return (
     <ParentContext.Provider value={contextValues}>
-      <Header />
-      <div id='fullpage'>
-        <Routes>
-          <Route path='/' element={<FrontPage />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/listings' element={<MyListings />} />
-          <Route path='/createListing' element={<CreateListing />} />
-        </Routes>
-      </div>
-      <div id='credits'>Created by SDI-17 Group 6 - Andrew Galbraith | Anthony Gravante | Ben Lesko | Erjin Choi | Kevin Cagle | Moses Jackson</div>
+        <Header />
+        <div id='fullpage'>
+          <Routes>
+            <Route path='/' element={<FrontPage />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/listings' element={<MyListings />} />
+            <Route path='/createListing' element={<CreateListing />} />
+            <Route path='/admin' element={<Admin />} />
+          </Routes>
+        </div>
+        {/* <div id='credits'>Created by SDI-17 Group 6 - Andrew Galbraith | Anthony Gravante | Ben Lesko | Erjin Choi | Kevin Cagle | Moses Jackson</div> */}
     </ParentContext.Provider>
   );
 }

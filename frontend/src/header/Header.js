@@ -13,6 +13,7 @@ const Header = () => {
         <a id="home" className="menu-item" href="/">Home</a>
         {currentUser.success ? <a id="profile" className="menu-item" href="/profile">Profile</a>: <></>}
         {currentUser.success ? <a id="listings" className="menu-item" href="/listings">My Listings</a> : <></>}
+        {currentUser.admin ? <a id="admin" className="menu-item" href="/admin">Admin</a> : <></>}
         {currentUser.success ? <a id="logout" className="menu-item" href="/login" onClick={() => sessionStorage.clear()}>Logout</a>: <a id="login" className="menu-item" href="/login">Login</a>}
         {currentUser.success ? <></> : <a id="register" className="menu-item" href="/register">Register</a>}
       </Menu>

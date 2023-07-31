@@ -17,6 +17,7 @@ exports.up = function(knex) {
     table.foreign("motorcycle_id").references("motorcycleId").inTable("motorcycles").onDelete('cascade');
     table.integer("trailer_id")
     table.foreign("trailer_id").references("trailerId").inTable("trailers").onDelete('cascade');
+    table.boolean("reported").defaultTo(false)
   })
 };
 

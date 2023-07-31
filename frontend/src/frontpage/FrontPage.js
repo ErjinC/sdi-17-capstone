@@ -45,8 +45,6 @@ const FrontPage = () => {
     if (sessionStorage.getItem('CurrentUser') !== null) {
       setUserFavorites(JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item)))
     }
-
-    console.log(userFavorites)
   }, [])
 
   return (

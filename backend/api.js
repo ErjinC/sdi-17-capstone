@@ -48,7 +48,8 @@ api.get('/listings', async (req, res) => {
         "location",
         "description",
         "created_at",
-        "updated_at")
+        "updated_at",
+        "reported")
         .join('cars', {'cars.carId': 'listings.car_id'})
     let rvListings = await knex('listings').select(
         "listingId",
@@ -69,7 +70,8 @@ api.get('/listings', async (req, res) => {
         "length",
         "description",
         "created_at",
-        "updated_at")
+        "updated_at",
+        "reported")
         .join('rvs', {'rvs.rvId': 'listings.rv_id'})
     let motoListings = await knex('listings').select(
         "listingId",
@@ -89,7 +91,8 @@ api.get('/listings', async (req, res) => {
         "description",
         "created_at",
         "created_at",
-        "updated_at")
+        "updated_at",
+        "reported")
         .join('motorcycles', {'motorcycles.motorcycleId': 'listings.motorcycle_id'})
         let boatListings = await knex('listings').select(
             'listingId',
@@ -107,7 +110,8 @@ api.get('/listings', async (req, res) => {
             'condition',
             'location',
             "created_at",
-            "updated_at")
+            "updated_at",
+            "reported")
             .join('boats', 'boats.boatId','listings.boat_id')
         let trailerListings = await knex('listings').select(
             'listingId',
@@ -125,7 +129,8 @@ api.get('/listings', async (req, res) => {
             'condition',
             'location',
             "created_at",
-            "updated_at")
+            "updated_at",
+            "reported")
             .join('trailers', 'trailers.trailerId','listings.trailer_id')
 
     let totalListings = {carListings, rvListings, motoListings, boatListings, trailerListings};
@@ -151,7 +156,8 @@ api.get('/listings/:userid', async (req, res) => {
         "location",
         "description",
         "created_at",
-        "updated_at")
+        "updated_at",
+        "reported")
         .join('cars', {'cars.carId': 'listings.car_id'})
         .where({user_id: parseInt(req.params.userid)})
     let rvListings = await knex('listings').select(
@@ -173,7 +179,8 @@ api.get('/listings/:userid', async (req, res) => {
         "length",
         "description",
         "created_at",
-        "updated_at")
+        "updated_at",
+        "reported")
         .join('rvs', {'rvs.rvId': 'listings.rv_id'})
         .where({user_id: parseInt(req.params.userid)})
     let motoListings = await knex('listings').select(
@@ -194,7 +201,8 @@ api.get('/listings/:userid', async (req, res) => {
         "description",
         "created_at",
         "created_at",
-        "updated_at")
+        "updated_at",
+        "reported")
         .join('motorcycles', {'motorcycles.motorcycleId': 'listings.motorcycle_id'})
         .where({user_id: parseInt(req.params.userid)})
     let boatListings = await knex('listings').select(
@@ -213,7 +221,8 @@ api.get('/listings/:userid', async (req, res) => {
         'condition',
         'location',
         "created_at",
-        "updated_at")
+        "updated_at",
+        "reported")
         .join('boats', 'boats.boatId','listings.boat_id')
         .where({user_id: parseInt(req.params.userid)})
     let trailerListings = await knex('listings').select(
@@ -232,7 +241,8 @@ api.get('/listings/:userid', async (req, res) => {
         'condition',
         'location',
         "created_at",
-        "updated_at")
+        "updated_at",
+        "reported")
         .join('trailers', 'trailers.trailerId','listings.trailer_id')
         .where({user_id: parseInt(req.params.userid)})
 
@@ -264,6 +274,13 @@ api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique 
     })
 })
 
+api.get('/bases', (req, res) => {
+    knex('bases').select()
+    .then(result => {
+        res.status(200).json(result)
+    })
+    .catch(err => res.send(500).json(err))
+})
 
 //////////        POST REQUESTS        //////////
 
@@ -533,6 +550,13 @@ api.patch('/sold/:vehicleid', (req, res) => {
     .catch(err => console.log(err))
 })
 
+api.patch('/report/:listingid', (req, res) => {
+    knex('listings').where({listingId: req.params.listingid})
+    .update({reported: req.body.reported})
+    .then(res.status(200).json("Success"))
+    .catch(err => console.log(err))
+})
+
 //////////        DEL REQUESTS        //////////
 
 // api.delete('/listings/:listingId', (req, res) => {
@@ -542,8 +566,9 @@ api.patch('/sold/:vehicleid', (req, res) => {
 api.delete('/deleteUser/:userId', async (req, res) => {     //     Deletes a User's account
     const userId = req.params.userId 
 
-    let deleteOperation = await knex('users').where({userId: userId}).delete()
-    res.status(200).send({success: true})
+    await knex('users').where({userId: userId}).delete()
+    .then(res.status(200).send({success: true}))
+    .catch(err => console.log(err))
 })
 
 api.delete('/listings', async (req, res) => {     //    Deletes a vehicle based on vehicle passed in

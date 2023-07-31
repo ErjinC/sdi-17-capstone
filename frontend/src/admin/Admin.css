@@ -1,0 +1,42 @@
+#flexcontaineraccountlist {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: .5rem;
+}
+#flexcontaineraccountlist > * {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: white solid 1px;
+  margin: .5rem;
+  padding: .5rem;
+}
+#buttondeleteaccount {
+  border: white solid 1px;
+  padding: .2rem;
+}
+
+.accountContainer{
+  position: relative;
+  width: 75%;
+}
+
+.accountInfoLeftContainer{
+  width: 50%;
+}
+
+.accountInfoRightContainer{
+  width: 50%;
+}
+
+#accountDeleteButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+#accountDeleteButton:hover {
+  cursor: pointer;
+}
