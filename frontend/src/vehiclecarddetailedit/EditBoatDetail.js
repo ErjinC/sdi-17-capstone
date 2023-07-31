@@ -2,8 +2,10 @@ import React, {useState,useEffect} from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 import { ToastContainer, toast } from 'react-toastify';
+import { Select } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 
-const EditBoatDetail = ({ vehicle, favorited, setDetailedView }) => {
+const EditBoatDetail = ({locations, vehicle, favorited, setDetailedView }) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [favorite, setFavorite] = React.useState(favorited)
   const [soldStatus, setSoldStatus] = useState(vehicle.sold)
@@ -12,6 +14,8 @@ const EditBoatDetail = ({ vehicle, favorited, setDetailedView }) => {
   const [editMake, setEditMake] = useState(vehicle.make)
   const [editModel, setEditModel] = useState(vehicle.model)
   const [editPrice, setEditPrice] = useState(vehicle.price)
+  const [editCondition, setEditCondition] = useState(vehicle.condition)
+  const [editLocation, setEditLocation] = useState(vehicle.location)
   const [editDescription, setEditDescription] = useState(vehicle.description)
   let link = window.location.href
   let linkArr = link.split('/')
@@ -25,6 +29,7 @@ const EditBoatDetail = ({ vehicle, favorited, setDetailedView }) => {
     .then((data) => {
         setListingOwner(data)
     })
+
   },[])
 
   const handleListingRemove = () => {
@@ -114,6 +119,8 @@ const EditBoatDetail = ({ vehicle, favorited, setDetailedView }) => {
         newModel: editModel,
         newPrice: editPrice,
         newDescription: editDescription,
+        newCondition: editCondition,
+        newLocation: editLocation,
       })
     }
 
@@ -135,7 +142,7 @@ const EditBoatDetail = ({ vehicle, favorited, setDetailedView }) => {
   }
 
   return (
-    <>
+    <ChakraProvider>
       <div id='detailFlexContainer'>
         <div id='detailimagecontainer'>
           <img id='detailimage' alt='placeholder' src={vehicle.image}></img>
@@ -175,9 +182,21 @@ const EditBoatDetail = ({ vehicle, favorited, setDetailedView }) => {
           {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">label</span>Make:  <input type='text' defaultValue={vehicle.make}  onChange={(e) => setEditMake(e.target.value)}/></div> : <></>}
           {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">label_important</span>Model:  <input type='text' defaultValue={vehicle.model}  onChange={(e) => setEditModel(e.target.value)}/></div> : <></>}
           {editToggle ? <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>Price:  <input type='number' defaultValue={vehicle.price}  onChange={(e) => setEditPrice(Number(e.target.value))}/></div>  : <div className='detailItem'><span id="icon" class="material-symbols-outlined">sell</span>{' $'+vehicle.price}</div>}
+
+          {editToggle ? <Select defaultValue={vehicle.condition} onChange={(e) => setEditCondition(e.target.value)}>
+                          <option value='poor'>Poor</option>
+                          <option value='good'>Good</option>
+                          <option value='excellent'>Excellent</option>
+                        </Select> :
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">build_circle</span> {vehicle.condition.charAt(0).toUpperCase()+ vehicle.condition.slice(1) + ' Condition'}</div>
+          }
+
           <div className='detailItem'><span id="icon" class="material-symbols-outlined">directions_boat</span> {vehicle.type.charAt(0).toUpperCase()+ vehicle.type.slice(1)}</div>
-          <div className='detailItem'><span id="icon" class="material-symbols-outlined">not_listed_location</span> {vehicle.location}</div>
+
+          {editToggle ? <Select defaultValue={vehicle.location} onChange={(e) => setEditLocation(e.target.value)}>
+                          {locations?.map((location) => <option key={location.baseId} value={location.name}>{location.name}</option>)}
+                        </Select> :
+                        <div className='detailItem'><span id="icon" class="material-symbols-outlined">not_listed_location</span> {vehicle.location}</div>}
           {editToggle ? <></> : <div className='detailHeader'><strong>Contact Information</strong></div>}
           {editToggle ? <></> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">person</span>{listingOwner.first_name + ' ' + listingOwner.last_name}</div>}
           {editToggle ? <></> : <div className='detailItem'><span id="icon" class="material-symbols-outlined">mail</span>{listingOwner.email}</div>}
@@ -187,11 +206,11 @@ const EditBoatDetail = ({ vehicle, favorited, setDetailedView }) => {
             <strong>Edit Description:</strong>
           </div>
           {editToggle ? <textarea type="textarea" defaultValue={vehicle.description} onChange={(e) => setEditDescription(e.target.value)}></textarea> : <textarea disabled id="description">{vehicle.description}</textarea>}
-          {editToggle ? <button onClick={() => handleEdit()}>Update</button> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
+          {editToggle ? <><button onClick={() => handleEdit()}>Update</button><button onClick={() => setEditToggle(!editToggle)}>Discard</button></> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
         </div>
     </div>
     <ToastContainer autoClose={1500}/>
-    </>
+    </ChakraProvider>
   )
 }
 

@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import './add.css'
 import { ToastContainer, toast } from 'react-toastify';
+import { Select } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 
 
-const AddRv = ({ currentUser, setVehicleType }) => {
+const AddRv = ({ locations, currentUser, setVehicleType }) => {
     const [type, setType] = useState('motorized');
     const [make, setMake] = useState('');
     const [model, setModel] = useState('');
@@ -76,7 +78,7 @@ const AddRv = ({ currentUser, setVehicleType }) => {
                 <div>
                     <label>Mileage</label>
                     <input type='number' id='mileage' onChange={(e) => setMileage(e.target.value)} />
-                </div> 
+                </div>
                 <div>
                     <label>Length</label>
                     <input type='number' id='length' onChange={(e) => setLength(e.target.value)} />
