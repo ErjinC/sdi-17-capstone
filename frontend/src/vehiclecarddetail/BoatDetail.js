@@ -37,14 +37,14 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
             })
             setTimeout(() => {
               window.location='/listings'
-            }, 2000);  
+            }, 2000);
           } else if (!data.success) {
             toast.error('Failed to delete!', {
               position: toast.POSITION.BOTTOM_CENTER
             })
             setTimeout(() => {
               window.location='/listings'
-            }, 2000);  
+            }, 2000);
           }
         })
     }

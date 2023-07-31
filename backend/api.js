@@ -54,7 +54,7 @@ api.get('/listings', async (req, res) => {
     let rvListings = await knex('listings').select(
         "listingId",
         "user_id",
-        "rv_id",      
+        "rv_id",
         "sold",
         "image",
         "type",
@@ -163,7 +163,7 @@ api.get('/listings/:userid', async (req, res) => {
     let rvListings = await knex('listings').select(
         "listingId",
         "user_id",
-        "rv_id",      
+        "rv_id",
         "sold",
         "image",
         "type",
@@ -252,14 +252,14 @@ api.get('/listings/:userid', async (req, res) => {
 
 api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique locations in the DB & sends them back
     let carLocations = await knex('cars').select("location");
-    let rvLocations = await knex('rvs').select("location")   ; 
+    let rvLocations = await knex('rvs').select("location")   ;
     let motoLocations = await knex('motorcycles').select("location");
     let boatLocations = await knex('boats').select("location");
     let trailerLocations = await knex('trailers').select("location");
-            
+
     let totalLocations = [carLocations, rvLocations, motoLocations, boatLocations, trailerLocations];
     let uniqueLocations = [];
-    
+
     totalLocations.forEach((vehicleType) => {
         vehicleType.forEach((vehicleLocation) => {
             if (!uniqueLocations.includes(vehicleLocation.location)) {
@@ -429,7 +429,7 @@ api.post('/addListing/trailers', async (req, res) => {     //     Adds a new tra
 		motorcycle_id: null,
 		trailer_id: getNewTrailerId[0].trailerId,
 	})
-    
+
     res.status(200).send({ success: true })
 })
 
@@ -509,7 +509,7 @@ api.put('/updateUserPassword/:userId', async (req, res) => {     //     Allows a
     if (hashedDBPasswordExists) {
         let updatePassword = await knex('users').where({userId: editUserId})
             .update({password: pwHash(newPassword)})
-    
+
         res.status(201).send({success: true})
     } else {
         res.send({success: false})
@@ -529,7 +529,7 @@ api.put('/updateUserInfo/:userId', async (req, res) => {     //     Allows a use
             last_name: newInfo["newLastName"],
             base: newInfo["newBase"],
         })
-        
+
     query ? res.status(200).send({...newInfo, success: true}) : res.status(400).send({success: false});
 })
 
@@ -550,6 +550,7 @@ api.patch('/sold/:vehicleid', (req, res) => {
     .catch(err => console.log(err))
 })
 
+
 api.patch('/report/:listingid', (req, res) => {
     knex('listings').where({listingId: req.params.listingid})
     .update({reported: req.body.reported})
@@ -557,14 +558,212 @@ api.patch('/report/:listingid', (req, res) => {
     .catch(err => console.log(err))
 })
 
+api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorcycle/rv/trailer based on id given
+    // console.log(req.body);
+    // console.log(req.body.vehicleId);
+    if (req.body.car_id) {
+        knex('cars').where({carId: req.body.car_id}).update({
+            year: req.body.newYear,
+            make: req.body.newMake,
+            model: req.body.newModel,
+            price: req.body.newPrice,
+            description: req.body.newDescription,
+            mileage: req.body.newMileage,
+            transmission: req.body.newTransmission,
+            color: req.body.newColor,
+            })
+            .then(result => {
+                if (result) {
+                    knex('listings').select(
+                        "listingId",
+                        "user_id",
+                        "car_id",
+                        "sold",
+                        "type",
+                        "make",
+                        "model",
+                        "year",
+                        "price",
+                        "mileage",
+                        "color",
+                        "transmission",
+                        "image",
+                        "condition",
+                        "location",
+                        "description",
+                        "created_at",
+                        "updated_at")
+                        .join('cars', {'cars.carId': 'listings.car_id'})
+                        .where({car_id: req.body.car_id})
+                        .then(car => {
+                            console.log('boat: ', car)
+                            res.status(200).json({success: true, vehicle: car[0]})
+                        })
+                }
+            })
+    } else if (req.body.boat_id) {
+        knex('boats').where({boatId: req.body.boat_id}).update({
+        year: req.body.newYear,
+        make: req.body.newMake,
+        model: req.body.newModel,
+        price: req.body.newPrice,
+        description: req.body.newDescription,
+        })
+        .then(result => {
+            if (result) {
+                knex('listings').select(
+                    'listingId',
+                    'boat_id',
+                    'user_id',
+                    'sold',
+                    'type',
+                    'description',
+                    'image',
+                    'make',
+                    'model',
+                    'year',
+                    'price',
+                    'hours',
+                    'condition',
+                    'location',
+                    "created_at",
+                    "updated_at")
+                    .join('boats', 'boats.boatId','listings.boat_id')
+                    .where({boat_id: req.body.boat_id})
+                    .then(boat => {
+                        console.log('boat: ', boat)
+                        res.status(200).json({success: true, vehicle: boat[0]})
+                    })
+            }
+        })
+    } else if (req.body.motorcycle_id) {
+        knex('motorcycles').where({motorcycleId: req.body.motorcycle_id}).update({
+            year: req.body.newYear,
+            make: req.body.newMake,
+            model: req.body.newModel,
+            price: req.body.newPrice,
+            description: req.body.newDescription,
+            mileage: req.body.newMileage
+            })
+            .then(result => {
+                if (result) {
+                    knex('listings').select(
+                        "listingId",
+                        "user_id",
+                        "motorcycle_id",
+                        "sold",
+                        "image",
+                        "type",
+                        "make",
+                        "model",
+                        "year",
+                        "price",
+                        "mileage",
+                        "color",
+                        "condition",
+                        "location",
+                        "description",
+                        "created_at",
+                        "created_at",
+                        "updated_at")
+                        .join('motorcycles', {'motorcycles.motorcycleId': 'listings.motorcycle_id'})
+                        .where({motorcycle_id: req.body.motorcycle_id})
+                        .then(motorcycle => {
+                            console.log('boat: ', motorcycle)
+                            res.status(200).json({success: true, vehicle: motorcycle[0]})
+                        })
+                }
+            })
+    } else if (req.body.rv_id) {
+        knex('rvs').where({rvId: req.body.rv_id}).update({
+            year: req.body.newYear,
+            make: req.body.newMake,
+            model: req.body.newModel,
+            price: req.body.newPrice,
+            description: req.body.newDescription,
+            mileage: req.body.newMileage
+            })
+            .then(result => {
+                if (result) {
+                    knex('listings').select(
+                        "listingId",
+                        "user_id",
+                        "rv_id",
+                        "sold",
+                        "image",
+                        "type",
+                        "make",
+                        "model",
+                        "year",
+                        "price",
+                        "mileage",
+                        "condition",
+                        "location",
+                        "sleeps",
+                        "weight",
+                        "length",
+                        "description",
+                        "created_at",
+                        "updated_at")
+                        .join('rvs', {'rvs.rvId': 'listings.rv_id'})
+                        .where({rv_id: req.body.rv_id})
+                        .then(rv => {
+                            console.log('boat: ', rv)
+                            res.status(200).json({success: true, vehicle: rv[0]})
+                        })
+                }
+            })
+    } else if (req.body.trailer_id) {
+        knex('trailers').where({trailerId: req.body.trailer_id}).update({
+            year: req.body.newYear,
+            make: req.body.newMake,
+            model: req.body.newModel,
+            length: req.body.newLength,
+            price: req.body.newPrice,
+            description: req.body.newDescription,
+            })
+            .then(result => {
+                if (result) {
+                    knex('listings').select(
+                        'listingId',
+                        'trailer_id',
+                        'user_id',
+                        'sold',
+                        'type',
+                        'description',
+                        'image',
+                        'make',
+                        'model',
+                        'year',
+                        'price',
+                        'length',
+                        'condition',
+                        'location',
+                        "created_at",
+                        "updated_at")
+                        .join('trailers', 'trailers.trailerId','listings.trailer_id')
+                        .where({trailer_id: req.body.trailer_id})
+                        .then(trailer => {
+                            console.log('boat: ', trailer)
+                            res.status(200).json({success: true, vehicle: trailer[0]})
+                        })
+                }
+            })
+    } else {
+        res.status(400).json({success: false})
+    }
+
+    // res.status(200).json({body_response: req.body})
+})
+
 //////////        DEL REQUESTS        //////////
 
 // api.delete('/listings/:listingId', (req, res) => {
-    
+
 // })
 
 api.delete('/deleteUser/:userId', async (req, res) => {     //     Deletes a User's account
-    const userId = req.params.userId 
+    const userId = req.params.userId
 
     await knex('users').where({userId: userId}).delete()
     .then(res.status(200).send({success: true}))
