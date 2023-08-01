@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react'
-import './VehicleCardDetail.css'
+import './VehicleCardDetailEdit.css'
 import { ParentContext } from '../App'
 // import { ToastContainer, toast } from 'react-toastify';
 import { Select, useToast } from '@chakra-ui/react'

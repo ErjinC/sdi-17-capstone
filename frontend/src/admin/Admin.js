@@ -9,12 +9,12 @@ import { ChakraProvider } from '@chakra-ui/react'
 const Admin = () => {
     return (
         <ChakraProvider>
-            <div>
+            <div id='adminPageWrapper'>
                 <Tabs>
                 <TabList>
-                    <Tab>Reported Listings View</Tab>
-                    <Tab>Accounts View</Tab>
-                    <Tab>Edit Locations Databse</Tab>
+                    <Tab>Reported Listings</Tab>
+                    <Tab>Account Management</Tab>
+                    <Tab>Base List Management</Tab>
                 </TabList>
 
                 <TabPanels>

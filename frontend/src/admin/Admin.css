@@ -1,18 +1,38 @@
+#adminPageWrapper{
+  /* height: 100%;
+  width: 100%; */
+  /* display: flex;
+  justify-content: center; */
+}
+
+#reportedListContainer{
+  width: 98%;
+  height: 80vh;
+}
+
 #flexcontaineraccountlist {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: .5rem;
+  width: 100%;
+  overflow: auto;
+  height: 80vh;
 }
+
 #flexcontaineraccountlist > * {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   border: white solid 1px;
+  flex: 1 1 48%;
+  min-width: 450px;
   margin: .5rem;
   padding: .5rem;
 }
+
 #buttondeleteaccount {
   border: white solid 1px;
   padding: .2rem;
@@ -82,11 +102,12 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  overflow-y: scroll;
   row-gap: 5px;
   width: 30%;
   min-width: 250px;
   height: 85%;
-  max-height: 85%;
+  max-height: 80vh;
 }
 
 .baseItem{
@@ -110,6 +131,18 @@
   cursor: pointer;
 }
 
+#addNewBaseContainer:hover {
+  transform: scale(1.015);
+  box-shadow: 1px 1px 10px 1px rgba(204, 204, 204, 0.8);
+}
+
 #newBaseTextInput{
   color: black;
+}
+
+#adminNoListingsText{
+  display: flex;
+  align-items: center;
+  font-size: x-large;
+  font-weight: bold;
 }
