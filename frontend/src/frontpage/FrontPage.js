@@ -79,6 +79,7 @@ const FrontPage = () => {
           <legend for="vehicle" id='vehiclefilter'>Choose a Vehicle</legend>
           <select
             name="vehicle"
+            data-testid="vehicleSelect"
             id="vehicleSelect"
             defaultValue={vehicleFilterRetrieve('vehiclefilter')}
             onChange={(e) => {

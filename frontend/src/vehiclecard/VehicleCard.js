@@ -58,7 +58,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
 
   if (sessionStorage.getItem('CurrentUser') == null) {
     return(
-      <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
+      <div data-testid='detailView' id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
       <img id='vehiclecardimage' alt='Vehicle' src={vehicle.image}></img>
       <div><strong>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</strong></div>
       <div>Cost: {'$'+vehicle.price}</div>
