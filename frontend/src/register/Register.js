@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import './Register.css'
+import { ChakraProvider, useToast } from '@chakra-ui/react';
 
 const Register = () => {
   const [first, setFirst] = useState('');
@@ -8,6 +9,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [base, setBase] = useState('Los Angeles SFB');
+  const toast = useToast()
 
   const allBases = [
     'Los Angeles SFB',
@@ -28,6 +30,7 @@ const Register = () => {
   ];
 
   return (
+    <ChakraProvider>
     <div id="page">
       <div id='registersection'>
         <div id='registerheader'>Lemon Drop User Registration</div>
@@ -85,7 +88,7 @@ const Register = () => {
               <span class="material-symbols-outlined loginicon">lock</span>
               <input
               type='password'
-              placeholder='Password'
+              placeholder='Confirm Password'
               id='passwordConfirm-value'
               onChange={() => {
                 setPasswordConfirm(document.getElementById('passwordConfirm-value').value)
@@ -110,9 +113,21 @@ const Register = () => {
             id='registerbutton'
             onClick={() => {
               if (document.getElementById('first').value === '' || document.getElementById('username').value === '' || document.getElementById('username').value === '' || document.getElementById('password').value === '' || document.getElementById('base-value').value === '') {
-                alert('Please fill in ALL text boxes!')
-              } if (password !== passwordConfirm) {
-                alert('Passwords do not match, please try again.')
+                // alert('Please fill in ALL text boxes!')
+                toast({
+                  title: "Please fill in all fields",
+                  status: 'error',
+                  duration: 2000,
+                  isClosable: true,
+                })
+              } else if (password !== passwordConfirm) {
+                // alert('Passwords do not match, please try again.')
+                toast({
+                  title: "Passwords do not match",
+                  status: 'error',
+                  duration: 2000,
+                  isClosable: true,
+                })
               } else {
                 fetch('http://localhost:3001/register', {
                   method: 'POST',
@@ -129,12 +144,24 @@ const Register = () => {
                 })
                 .then((data) => data.json())
                 .then(res => {
-                  console.log(res)
+                  // console.log(res)
                   if(!res.success){
-                    alert(res.message)
+                    toast({
+                      title: res.message,
+                      status: 'error',
+                      duration: 2000,
+                      isClosable: true,
+                    })
                   }else{
-                    window.location='/login'
-                    alert(res.message)
+                    toast({
+                      title: 'Registration Successful!',
+                      status: 'success',
+                      duration: 2000,
+                      isClosable: true,
+                    })
+                    setTimeout(() => {
+                      window.location='/'
+                    }, 2000);
                   }
                 })
               }
@@ -146,6 +173,7 @@ const Register = () => {
         </div>
       </div>
     </div>
+    </ChakraProvider>
   )
 }
 

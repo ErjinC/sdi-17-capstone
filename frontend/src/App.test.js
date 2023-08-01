@@ -1,15 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import userEvent from '@testing-library/user-event' 
-
-beforeAll(() => {
-  // render(
-  //   <BrowserRouter>
-  //     <App />
-  //   </BrowserRouter>
-  // );
-})
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
 test('renders the header when not logged in', () => {
   render(
@@ -44,9 +35,30 @@ test('renders the hamburger menu when not logged in', async () => {
   const homeElement = screen.getByText('Home');
   const loginElement = screen.getByText('Login');
   const registerElement = screen.getByText('Register');
+  // const test = screen.getByAltText('test')
 
-  await userEvent.click(screen.getByRole('button'))
+  // await userEvent.click(screen.getByRole('button'))
   expect(homeElement).toBeInTheDocument();
   expect(loginElement).toBeInTheDocument();
   expect(registerElement).toBeInTheDocument();
+});
+
+test('login router routes', async () => {
+  render(
+    <MemoryRouter initialEntries={['/login']}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(screen.getByText('Lemon Drop Login')).toBeInTheDocument();
+});
+
+test('register router routes', async () => {
+  render(
+    <MemoryRouter initialEntries={['/register']}>
+      <App />
+    </MemoryRouter>
+  );
+
+  expect(screen.getByText('Lemon Drop User Registration')).toBeInTheDocument();
 });
