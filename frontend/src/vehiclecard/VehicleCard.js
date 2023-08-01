@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './VehicleCard.css'
 import { ParentContext } from '../App'
+import { ChakraProvider, Tooltip } from '@chakra-ui/react'
 
 const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   const [favorited, setFavorited] = useState(false)
@@ -10,6 +11,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   const currentUser = JSON.parse(sessionStorage.getItem('CurrentUser'))
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [vehicleIdType, setVehicleIdType] = useState();
+  const [deleted, setDeleted] = useState(false)
   
   //if userFavorites.contains(vehicle.listingId) => render the gold heart, otherwise render heart add
 
@@ -48,15 +50,15 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
     }
   }
 
-  const handleVehicleIdType = (event) => {
-    setVehicleIdType(event.target.value)
-    console.log(event);
-    console.log(vehicleIdType);
-  }
+  // const handleVehicleIdType = (event) => {
+  //   setVehicleIdType(event.target.value)
+  //   console.log(event);
+  //   console.log(vehicleIdType);
+  // }
 
   if (sessionStorage.getItem('CurrentUser') == null) {
     return(
-      <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
+      <div data-testid='detailView' id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
       <img id='vehiclecardimage' alt='Vehicle' src={vehicle.image}></img>
       <div><strong>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</strong></div>
       <div>Cost: {'$'+vehicle.price}</div>
@@ -66,6 +68,8 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   }
 
   return (
+    <ChakraProvider>
+    {deleted ? <></> :
       <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle,favorited:favorited})}}>
         { linkRoute === '' ?
           //Display favorite icons toggle on home page
@@ -76,7 +80,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
           //otherwise check if we are in profile
           linkRoute === ('profile') ? 
           //if we are in profile, display remove icons instead
-          <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span> 
+          <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); setDeleted(!deleted)}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span> 
           :
           //anywhere else we won't display favorite icons
           <></>
@@ -86,6 +90,8 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
         <div>Cost: {'$'+vehicle.price}</div>
         <div>Location: {vehicle.location}</div>
       </div>
+    }
+    </ChakraProvider>
   )
 }
 

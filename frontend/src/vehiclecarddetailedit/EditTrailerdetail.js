@@ -3,12 +3,13 @@ import './VehicleCardDetailEdit.css'
 import { ParentContext } from '../App'
 // import { ToastContainer, toast } from 'react-toastify';
 import { Select, useToast } from '@chakra-ui/react'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Tooltip } from '@chakra-ui/react'
 
 const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
   const [favorite, setFavorite] = React.useState(favorited)
   const [soldStatus, setSoldStatus] = useState(vehicle.sold)
+  const [soldStatusChanged, setSoldStatusChanged] = useState(false)
   const [editToggle, setEditToggle] = useState(false)
   const [editYear, setEditYear] = useState(vehicle.year)
   const [editMake, setEditMake] = useState(vehicle.make)
@@ -52,6 +53,7 @@ const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) =>
   const handleSell = () => {
     console.log('Sold')
     setSoldStatus(true);
+    setSoldStatusChanged(!soldStatusChanged);
     fetch(`http://localhost:3001/sold/${vehicle.trailer_id}`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
@@ -65,6 +67,7 @@ const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) =>
   const handleRelist = () => {
     console.log('Relisting')
     setSoldStatus(false);
+    setSoldStatusChanged(!soldStatusChanged);
     fetch(`http://localhost:3001/sold/${vehicle.trailer_id}`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
@@ -162,7 +165,7 @@ const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) =>
         <div id="detailsContainer">
           <div class='detailButtons'>
             <div id='returnButtonContainer'>
-              {linkRoute === 'listings' ? <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>:
+              {soldStatusChanged ? <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>:
               <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>}
             </div>
             { linkRoute === '' && sessionStorage.getItem('CurrentUser') != null  ?
@@ -179,10 +182,16 @@ const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) =>
               linkRoute === 'listings' ?
               //if we are not in profile, check if we're in listings
               <>
-              {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
+              {soldStatus?
+              <>
+              <button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" style={{visibility: "hidden"}} onClick={() => handleListingRemove()}><Tooltip openDelay={500} hasArrow label="Remove listing">delete</Tooltip></span>
+              </>
               :
-              <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
-              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={() => handleListingRemove()}>delete</span>
+              <>
+              <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={() => handleListingRemove()}><Tooltip openDelay={500} hasArrow label="Remove listing">delete</Tooltip></span>
+              </>}
               </>
             :
               //otherwise display nothing

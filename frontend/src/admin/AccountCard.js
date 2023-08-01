@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './Admin.css'
 import { ToastContainer, toast } from 'react-toastify';
+import { ChakraProvider, Tooltip } from '@chakra-ui/react';
 
 const AccountCard = ({user}) => {
     const [adminStatus, setAdminStatus] = useState(user.admin)
@@ -37,7 +38,7 @@ const AccountCard = ({user}) => {
     }
 
     return (
-        <>
+        <ChakraProvider>
             {deleted ? <></> : 
                 <div className='accountContainer'>
                     <div className='accountInfoLeftContainer'>
@@ -54,13 +55,13 @@ const AccountCard = ({user}) => {
                             if (window.confirm('Are you sure you want to delete this account?')) {
                                 handleDelete()
                             }
-                        }}>delete</span>
-                        {adminStatus?<span id="adminModeratorRemove" className="material-symbols-outlined" onClick={()=>{handleAdminRemove()}}>remove_moderator</span>
-                        :<span id="adminModeratorAdd" className="material-symbols-outlined" onClick={()=>{handleAdminAdd()}}>add_moderator</span>}
+                        }}><Tooltip openDelay={500} hasArrow label="Delete Account">delete</Tooltip></span>
+                        {adminStatus?<span id="adminModeratorRemove" className="material-symbols-outlined" onClick={()=>{handleAdminRemove()}}><Tooltip openDelay={500} hasArrow label="Remove Admin Status">remove_moderator</Tooltip></span>
+                        :<span id="adminModeratorAdd" className="material-symbols-outlined" onClick={()=>{handleAdminAdd()}}><Tooltip openDelay={500} hasArrow label="Grant Admin Status">add_moderator</Tooltip></span>}
                     </div>
                 </div>
             }
-        </>
+        </ChakraProvider>
     )
 }
 

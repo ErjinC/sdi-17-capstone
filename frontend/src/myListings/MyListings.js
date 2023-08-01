@@ -30,7 +30,7 @@ const MyListings = () => {
         .then(res => res.json())
         .then(data => setMyListings(data))
 
-        fetch('http://localhost:3001/bases')
+        fetch('http://localhost:3001/bases')     //     THIS FETCH IS ALREADY MADE IN APP.JS  -  USE CONTEXT FOR THIS
         .then((res) => res.json())
         .then((data) => {
             // console.log(data)
@@ -72,7 +72,7 @@ const MyListings = () => {
                         <>
                             <div id='detailedViewContainerOverlay'>
                                 <div id='detailedViewContainer'>
-                                    {(detailedView.vehicle?.type === 'car'||detailedView.vehicle?.type === 'coupe'||detailedView.vehicle?.type === 'truck')?<EditCarDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
+                                    {(detailedView.vehicle?.type === 'car'||detailedView.vehicle?.type === 'coupe'||detailedView.vehicle?.type === 'truck')? <EditCarDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
                                     {(detailedView.vehicle.type === 'boat'||detailedView.vehicle?.type === 'jet ski')?<EditBoatDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
                                     {(detailedView.vehicle.type === 'Street Bike'||detailedView.vehicle?.type === 'Dirt Bike'||detailedView.vehicle?.type === 'Cruiser'||detailedView.vehicle?.type === "Sport Bike"||detailedView.vehicle?.type === "Touring Bike"||detailedView.vehicle?.type === "Adventure Bike"||detailedView.vehicle?.type === "Dual Sport")?<EditMotoDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}
                                     {(detailedView.vehicle.type === 'motorized'||detailedView.vehicle.type === 'towable')?<EditRvDetail locations={locations} setDetailedView={setDetailedView} vehicle={detailedView.vehicle}/>:<></>}

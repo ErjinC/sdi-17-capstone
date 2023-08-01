@@ -241,7 +241,7 @@ exports.seed = async function (knex) {
             mileage: 40000,
             color: "red",
             transmission: "automatic",
-            image: "https://placekitten.com/500/300",
+            image: "https://i.imgur.com/mMljXcQ.jpg",
             condition: "excellent",
             location: "Hanscom AFB",
             description: "Low mileage, well kept, runs like new."
@@ -257,7 +257,7 @@ exports.seed = async function (knex) {
             mileage: 20000,
             color: "yellow",
             transmission: "automatic",
-            image: "https://placekitten.com/500/300",
+            image: "https://i.imgur.com/x94v2Mo.jpg",
             condition: "excellent",
             location: "Hill AFB",
             description: "Well kept, low mileage, runs like new."
@@ -273,7 +273,7 @@ exports.seed = async function (knex) {
             mileage: 30000,
             color: "white",
             transmission: "automatic",
-            image: "https://placekitten.com/500/300",
+            image: "https://i.imgur.com/xaqKEbr.jpg",
             condition: "excellent",
             location: "Holloman AFB",
             description: "Clean car, low mileage, full service history."
@@ -289,7 +289,7 @@ exports.seed = async function (knex) {
             mileage: 45000,
             color: "silver",
             transmission: "automatic",
-            image: "https://placekitten.com/500/300",
+            image: "https://i.imgur.com/GXDjCgd.jpg",
             condition: "excellent",
             location: "Keesler AFB",
             description: "Excellent condition, low mileage, runs smooth."
@@ -305,7 +305,7 @@ exports.seed = async function (knex) {
             mileage: 10000,
             color: "blue",
             transmission: "manual",
-            image: "https://placekitten.com/500/300",
+            image: "https://i.imgur.com/ZaPDXji.jpg",
             condition: "excellent",
             location: "Kirtland AFB",
             description: "Like new, low mileage, well maintained."
@@ -321,7 +321,7 @@ exports.seed = async function (knex) {
             mileage: 15000,
             color: "black",
             transmission: "automatic",
-            image: "https://placekitten.com/500/300",
+            image: "https://i.imgur.com/Z2g8lVp.jpg",
             condition: "excellent",
             location: "Lackland AFB",
             description: "Excellent condition, low mileage, like new."

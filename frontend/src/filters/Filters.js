@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Slider from '@mui/material/Slider'
 import '../frontpage/FrontPage.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
+import { ParentContext } from '../App';
 
 const theme = createTheme({
   palette: {
@@ -17,7 +18,6 @@ const theme = createTheme({
 });
 
 
-
 let beforeChange = null;
 
 const Filters = ({filterText, listings, setListings, detailedView, setDetailedView, originalListings}) => {
@@ -28,7 +28,10 @@ const Filters = ({filterText, listings, setListings, detailedView, setDetailedVi
   const [value, setValue] = useState([0, 200000]);
 
   const [yearRange, setYearRange] = useState([1950, new Date().getFullYear()+1])
-  const [yearRangeMax, setYearRangeMax] = useState('')
+  const [yearRangeMax, setYearRangeMax]= useState('')
+  const maxYear = new Date().getFullYear()+1
+
+  const { locations } = useContext(ParentContext)
 
   // useEffect(() => {
 
@@ -276,7 +279,6 @@ const handleSubmit = (e) => {
   var model = []
   var year = []
   var type = []
-  var location = []
 
   return (
     <div>
@@ -301,7 +303,7 @@ const handleSubmit = (e) => {
                 color='primary'
                 step={1}
                 min={1950}
-                max={2023}
+                max={maxYear}
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
@@ -363,11 +365,8 @@ const handleSubmit = (e) => {
               // }}
               >
               <option value='all'>All</option>
-              {originalListings.carListings.map(e => {
-                if (!location.includes(e.location)) {
-                  location.push(e.location)
-                  return <option value={e.location}>{e.location}</option>
-                }
+              {locations.map(e => {
+                  return <option value={e.name}>{e.name}</option>
               })}
             </select>
           </fieldset>
@@ -460,7 +459,7 @@ const handleSubmit = (e) => {
                 color='primary'
                 step={1}
                 min={1950}
-                max={2023}
+                max={maxYear}
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
@@ -519,11 +518,8 @@ const handleSubmit = (e) => {
               // }}
               >
               <option value='all'>All</option>
-              {originalListings.boatListings.map(e => {
-                if (!location.includes(e.location)) {
-                  location.push(e.location)
-                  return <option value={e.location}>{e.location}</option>
-                }
+              {locations.map(e => {
+                  return <option value={e.name}>{e.name}</option>
               })}
             </select>
           </fieldset>
@@ -612,7 +608,7 @@ const handleSubmit = (e) => {
                 color='primary'
                 step={1}
                 min={1950}
-                max={2023}
+                max={maxYear}
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
@@ -668,11 +664,8 @@ const handleSubmit = (e) => {
               defaultValue={sessionStorage.getItem('CurrentUser') ? JSON.parse(sessionStorage.getItem('CurrentUser')).base : 'all'} 
               >
               <option value='all'>All</option>
-              {originalListings.motoListings.map(e => {
-                if (!location.includes(e.location)) {
-                  location.push(e.location)
-                  return <option value={e.location}>{e.location}</option>
-                }
+              {locations.map(e => {
+                  return <option value={e.name}>{e.name}</option>
               })}
             </select>
           </fieldset>
@@ -781,7 +774,7 @@ const handleSubmit = (e) => {
                 color='primary'
                 step={1}
                 min={1950}
-                max={2023}
+                max={maxYear}
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
@@ -841,11 +834,8 @@ const handleSubmit = (e) => {
               // }}
               >
               <option value='all'>All</option>
-              {originalListings.rvListings.map(e => {
-                if (!location.includes(e.location)) {
-                  location.push(e.location)
-                  return <option value={e.location}>{e.location}</option>
-                }
+              {locations.map(e => {
+                  return <option value={e.name}>{e.name}</option>
               })}
             </select>
           </fieldset>
@@ -933,7 +923,7 @@ const handleSubmit = (e) => {
                 color='primary'
                 step={1}
                 min={1950}
-                max={2023}
+                max={maxYear}
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
@@ -992,11 +982,8 @@ const handleSubmit = (e) => {
               // }}
               >
               <option value='all'>All</option>
-              {originalListings.trailerListings.map(e => {
-                if (!location.includes(e.location)) {
-                  location.push(e.location)
-                  return <option value={e.location}>{e.location}</option>
-                }
+              {locations.map(e => {
+                  return <option value={e.name}>{e.name}</option>
               })}
             </select>
           </fieldset>
