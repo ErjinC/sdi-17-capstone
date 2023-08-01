@@ -2,8 +2,8 @@ import React, {useState, useEffect, useContext}  from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 import { Modal } from '@mui/material'
-import { ToastContainer, toast } from 'react-toastify';
-import { Select } from '@chakra-ui/react'
+// import { ToastContainer, toast } from 'react-toastify';
+import { Select, useToast } from '@chakra-ui/react'
 import { ChakraProvider } from '@chakra-ui/react'
 
 const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
@@ -24,6 +24,8 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
+  const toast = useToast()
+
 
   const [listingOwner, setListingOwner] = useState({})
   useEffect(() => {
@@ -89,15 +91,29 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            toast.success('Successfully deleted!', {
-              position: toast.POSITION.BOTTOM_CENTER
+            // toast.success('Successfully deleted!', {
+            //   position: toast.POSITION.BOTTOM_CENTER
+            // })
+            toast({
+              title: 'Successfully deleted listing',
+              // description: "Thank you",
+              status: 'success',
+              duration: 2000,
+              isClosable: true,
             })
             setTimeout(() => {
               window.location='/listings'
             }, 2000);
           } else if (!data.success) {
-            toast.error('Failed to delete!', {
-              position: toast.POSITION.BOTTOM_CENTER
+            // toast.error('Failed to delete!', {
+            //   position: toast.POSITION.BOTTOM_CENTER
+            // })
+            toast({
+              title: 'Failed to delete listing',
+              // description: "Thank you",
+              status: 'error',
+              duration: 2000,
+              isClosable: true,
             })
             setTimeout(() => {
               window.location='/listings'
@@ -231,7 +247,7 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
           {editToggle ? <><button onClick={() => handleEdit()}>Update</button><button onClick={() => setEditToggle(!editToggle)}>Discard</button></> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
         </div>
     </div>
-    <ToastContainer autoClose={1500}/>
+    {/* <ToastContainer autoClose={1500}/> */}
     </ChakraProvider>
   )
 }

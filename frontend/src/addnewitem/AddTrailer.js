@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './add.css'
-import { ToastContainer, toast } from 'react-toastify';
-import { Select } from '@chakra-ui/react';
+// import { ToastContainer, toast } from 'react-toastify';
+import { Select, useToast } from '@chakra-ui/react';
 import { ChakraProvider } from '@chakra-ui/react';
 
 
@@ -16,6 +16,7 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
+    const toast = useToast()
     // const [uniqueLocations, setUniqueLocations] = useState();
 
     const allBases = [
@@ -48,6 +49,7 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
     }, [])
 
     return (
+        <ChakraProvider>
         <div className='car-creation-container'>
             <div className ='additem'>
             <div>
@@ -130,13 +132,20 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
                             .then(window.location = '/listings')
                             .then(alert('Added Successful!'));
                     } else {
-                        toast('Please fill out all fields!')
+                        // toast('Please fill out all fields!')
+                        toast({
+                            title: 'Please fill out all fields',
+                            status: 'warning',
+                            duration: 2000,
+                            isClosable: true,
+                          })
                     }
                 }}
             >Create new Listing</button>
             <button onClick={() => setVehicleType('')}>Go Back</button>
-            <ToastContainer/>
+            {/* <ToastContainer/> */}
         </div>
+        </ChakraProvider>
     );
 
 }

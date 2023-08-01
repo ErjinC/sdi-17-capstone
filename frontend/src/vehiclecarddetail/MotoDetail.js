@@ -1,7 +1,9 @@
 import React, {useState,useEffect} from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
+import { ChakraProvider, useToast, Tooltip } from '@chakra-ui/react'
+
 
 const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
@@ -11,6 +13,8 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
+  const toast = useToast()
+
   
   const [listingOwner, setListingOwner] = useState({})
   useEffect(() => {
@@ -32,19 +36,33 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            toast.success('Successfully deleted!', {
-              position: toast.POSITION.BOTTOM_CENTER
+            // toast.success('Successfully deleted!', {
+            //   position: toast.POSITION.BOTTOM_CENTER
+            // })
+            toast({
+              title: 'Successfully deleted listing',
+              // description: "Thank you",
+              status: 'success',
+              duration: 2000,
+              isClosable: true,
             })
             setTimeout(() => {
               window.location='/listings'
-            }, 2000);  
+            }, 2000);
           } else if (!data.success) {
-            toast.error('Failed to delete!', {
-              position: toast.POSITION.BOTTOM_CENTER
+            // toast.error('Failed to delete!', {
+            //   position: toast.POSITION.BOTTOM_CENTER
+            // })
+            toast({
+              title: 'Failed to delete listing',
+              // description: "Thank you",
+              status: 'error',
+              duration: 2000,
+              isClosable: true,
             })
             setTimeout(() => {
               window.location='/listings'
-            }, 2000);  
+            }, 2000);
           }
         })
     }
@@ -94,10 +112,24 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
 
   const handleReport = () => {
     if(reported) {
-      window.alert('Listing has already been reported')
+      // window.alert('Listing has already been reported')
+      toast({
+        title: 'Listing has already been reported',
+        // description: "Thank you",
+        status: 'warning',
+        duration: 3000,
+        isClosable: true,
+      })
     } else {
       setReported(true);
-      window.alert('Thank you for your report, an admin will review the listing.')
+      // window.alert('Thank you for your report, an admin will review the listing.')
+      toast({
+        title: 'Thank you for your report',
+        description: "An admin will review shortly",
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      })
       fetch(`http://localhost:3001/report/${vehicle.listingId}`, {
         method: 'PATCH',
         headers: {'Content-Type': 'application/json'},
@@ -132,15 +164,28 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
         .then(res => res.json())
         .then(data => {
           if (data.success) {
-            toast.success('Listing successfully removed!', {
-              position: toast.POSITION.BOTTOM_CENTER
+            // toast.success('Listing successfully removed!', {
+            //   position: toast.POSITION.BOTTOM_CENTER
+            // })
+            toast({
+              title: 'Listing removed successfully',
+              status: 'success',
+              duration: 2000,
+              isClosable: true,
             })
             setTimeout(() => {
               window.location='/listings'
             }, 2000);  
           } else if (!data.success) {
-            toast.error('Failed to delete!', {
-              position: toast.POSITION.BOTTOM_CENTER
+            // toast.error('Failed to delete!', {
+            //   position: toast.POSITION.BOTTOM_CENTER
+            // })
+            toast({
+              title: 'Failed to delete listing',
+              description: "Try again later",
+              status: 'error',
+              duration: 2000,
+              isClosable: true,
             })
             setTimeout(() => {
               window.location='/listings'
@@ -151,8 +196,8 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
   }
 
   return (
-    <>
-      <ToastContainer autoClose={1500}/>
+    <ChakraProvider>
+      {/* <ToastContainer autoClose={1500}/> */}
       <div id='detailFlexContainer'>
         {/* <div class='detailHeader'>
 
@@ -168,7 +213,7 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
             { linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
                 //Display favorite icons toggle on home page
                 <>
-                <span  id='report' class="material-symbols-outlined" onClick={() => {handleReport()}}>report</span>
+                <span  id='report' class="material-symbols-outlined" onClick={() => {handleReport()}}><Tooltip openDelay={500} hasArrow label="Report listing">report</Tooltip></span>
                 {favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span>
                 : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span>}
                 </>
@@ -216,7 +261,7 @@ const MotoDetail = ({vehicle, favorited, setDetailedView}) => {
         </div>
     </div>
     
-    </>
+    </ChakraProvider>
   )
 }
 
