@@ -19,7 +19,7 @@ exports.seed = async function(knex) {
       price: 172418,
       length: 29,
       condition: "excellent",
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/2Po3XRf.jpg",
       location: "Beale AFB",
       description: "Like new vehicle, newly refurbished interior and flooring. Equipped with solar panels, Wi-Fi antennas, and two A/C units. Slight scratching present on the exterior, but otherwise in great condition."
     },

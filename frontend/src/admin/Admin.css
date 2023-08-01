@@ -146,3 +146,15 @@
   font-size: x-large;
   font-weight: bold;
 }
+
+#addBaseBack:hover {
+  transform: scale(1.1);
+}
+
+#addBaseSave:hover {
+  transform: scale(1.1);
+}
+
+#addBaseDelete:hover {
+  transform: scale(1.1);
+}

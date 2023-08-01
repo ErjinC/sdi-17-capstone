@@ -15,7 +15,7 @@ exports.seed = async function(knex) {
       year: 2010,
       price: 40000,
       hours: 300,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/uHbvf8Y.jpg",
       condition: "good",
       location: "Beale AFB",
       description: "Bent propeller. Runs well. Needs new canopy."
