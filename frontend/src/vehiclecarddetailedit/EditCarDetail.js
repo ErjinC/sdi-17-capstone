@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext}  from 'react'
-import './VehicleCardDetail.css'
+import './VehicleCardDetailEdit.css'
 import { ParentContext } from '../App'
 import { Modal } from '@mui/material'
 // import { ToastContainer, toast } from 'react-toastify';
