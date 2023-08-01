@@ -221,7 +221,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
               :
               linkRoute === ('profile') ? 
                 //if we are in profile, display remove icons instead
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span>
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span>
               :
                 linkRoute === 'listings' ? 
                 //if we are not in profile, check if we're in listings
@@ -229,7 +229,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
                 {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
                 :
                 <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={()=>{handleListingRemove()}}>delete</span>
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={()=>{handleListingRemove()}}><Tooltip openDelay={500} hasArrow label="Remove listing">delete</Tooltip></span>
                 </>
               :
                 linkRoute === 'admin' ? 

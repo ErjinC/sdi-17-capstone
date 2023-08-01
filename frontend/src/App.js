@@ -7,18 +7,12 @@ import Login from './login/Login';
 import MyListings from './myListings/MyListings';
 import Register from './register/Register.js'
 import FrontPage from './frontpage/FrontPage.js'
-import BoatDetail from './vehiclecarddetail/BoatDetail.js'
 import CreateListing from './myListings/CreateListing';
 import Admin from './admin/Admin';
-import { ChakraProvider } from '@chakra-ui/react'
-// import useAuth from './useAuth.js';
 
 export const ParentContext = createContext();
 
 function App() {
-  // const navigate = useNavigate()
-  // const { setAuth } = useAuth()
-  //set to default api return 
   const [currentUser, setCurrentUser] = useState({success:false});
   const [userFavorites, setUserFavorites] = useState((sessionStorage.getItem('CurrentUser') !== null)?JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item)):[]);
   const [locations, setLocations] = useState([])
@@ -31,7 +25,6 @@ function App() {
     fetch('http://localhost:3001/bases')
         .then((res) => res.json())
         .then((data) => {
-            // console.log(data)
             setLocations(data)
         })
     

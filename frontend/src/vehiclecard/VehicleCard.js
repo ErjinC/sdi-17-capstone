@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './VehicleCard.css'
 import { ParentContext } from '../App'
+import { ChakraProvider, Tooltip } from '@chakra-ui/react'
 
 const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   const [favorited, setFavorited] = useState(false)
@@ -67,7 +68,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   }
 
   return (
-    <>
+    <ChakraProvider>
     {deleted ? <></> :
       <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle,favorited:favorited})}}>
         { linkRoute === '' ?
@@ -79,7 +80,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
           //otherwise check if we are in profile
           linkRoute === ('profile') ? 
           //if we are in profile, display remove icons instead
-          <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); setDeleted(!deleted)}}>delete</span> 
+          <span id='trashIcon' className="material-symbols-outlined favoriteIcon" onClick={(event) => {handleFavoriteRemove(event); setDeleted(!deleted)}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span> 
           :
           //anywhere else we won't display favorite icons
           <></>
@@ -90,7 +91,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
         <div>Location: {vehicle.location}</div>
       </div>
     }
-    </>
+    </ChakraProvider>
   )
 }
 

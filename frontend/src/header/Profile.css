@@ -20,10 +20,6 @@
   display: none;
 }
 
-#user-edit-info-container {
-  display: none;
-}
-
 .centered {
   text-align: center;
 }
@@ -86,4 +82,30 @@
   max-height: 95%;
   overflow-y: auto;
   justify-content: space-evenly;
+}
+
+.modal-edit-submit-button-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+#changePassword {
+  width: 80%;
+  min-width: 80%;
+}
+
+#changePasswordCheck {
+  width: 80%;
+  min-width: 80%;
+}
+
+#changePasswordLabel {
+  width: 80%;
+  min-width: 80%;
+}
+
+#changePasswordCheckLabel {
+  width: 80%;
+  min-width: 80%;
 }

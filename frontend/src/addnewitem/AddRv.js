@@ -23,34 +23,7 @@ const AddRv = ({ locations, currentUser, setVehicleType }) => {
     const toast = useToast()
     // const [uniqueLocations, setUniqueLocations] = useState();
 
-    const allBases = [
-        'Los Angeles SFB',
-        'Edwards AFB',
-        'Vandenberg SFB',
-        'Patrick SFB',
-        'Peterson SFB',
-        'Schriever SFB',
-        'Buckley SFB',
-        'Offutt AFB',
-        'Wright-Patterson AFB',
-        'Eglin AFB',
-        'Kirtland AFB',
-        'Lackland AFB',
-        'Langley AFB',
-        'Travis AFB',
-        'Luke AFB'
-    ];
-
-    // const getUniqueLocations = async () => {
-    //     let request = await fetch('http://localhost:3001/allUniqueLocations');
-    //     let response = await request.json();
-    //     setUniqueLocations(response);
-    // }
-
-    useEffect(() => {
-        // getUniqueLocations();
-    }, [])
-
+   
     return (
         <ChakraProvider>
         <div className='rv-creation-container'>
@@ -104,15 +77,9 @@ const AddRv = ({ locations, currentUser, setVehicleType }) => {
                 </div>
                 <div>
                     <label>Location</label>
-                    <Select variant='filled' type='textbox' id='loction' onChange={(e) => setLocation(e.target.value)}>
-                        <option value=''>Please select a location</option>
-                        {/* {uniqueLocations?.locations.map((location) => {
-                            return <option value={location}>{location}</option>
-                        })} */}
-                        {allBases.map((location) => {
-                            return <option value={location}>{location}</option>
-                        })}
-                    </Select>
+                    <Select variant='filled' defaultValue={currentUser.location} onChange={(e) => setLocation(e.target.value)}>
+                            {locations?.map((location) => <option key={location.baseId} value={location.name}>{location.name}</option>)}
+                        </Select>
                 </div>
                 <div>
                     <label>Description</label>
