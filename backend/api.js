@@ -281,7 +281,7 @@ api.get('/bases', (req, res) => {
         .then(result => {
             res.status(200).json(result)
         })
-        .catch(err => res.send(500).json(err))
+        .catch(err => console.log(err))
 })
 
 //////////        POST REQUESTS        //////////

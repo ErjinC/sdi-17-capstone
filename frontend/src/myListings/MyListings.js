@@ -30,7 +30,7 @@ const MyListings = () => {
         .then(res => res.json())
         .then(data => setMyListings(data))
 
-        fetch('http://localhost:3001/bases')
+        fetch('http://localhost:3001/bases')     //     THIS FETCH IS ALREADY MADE IN APP.JS  -  USE CONTEXT FOR THIS
         .then((res) => res.json())
         .then((data) => {
             // console.log(data)

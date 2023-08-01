@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import './add.css'
 // import { ToastContainer, toast } from 'react-toastify';
-import { Select, useToast } from '@chakra-ui/react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { Select, useToast, Textarea } from '@chakra-ui/react';
+import { ChakraProvider, Button, Input, Stack } from '@chakra-ui/react';
 
 
 const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
@@ -54,42 +54,42 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
             <div className ='additem'>
             <div>
                     <label>Type</label>
-                    <select id='type' onChange={(e) => setType(e.target.value)}>
+                    <Select variant='filled' id='type' onChange={(e) => setType(e.target.value)}>
                         <option value='flatbed'>Flatbed</option>
                         <option value='enclosed'>Enclosed</option>
-                    </select>
+                    </Select>
                 </div>
                 <div>
                     <label>Make</label>
-                    <input type='textbox' id='make' onChange={(e) => setMake(e.target.value)} />
+                    <Input variant='filled' type='textbox' id='make' onChange={(e) => setMake(e.target.value)} />
                 </div>
                 <div>
                     <label>Model</label>
-                    <input type='textbox' id='model' onChange={(e) => setModel(e.target.value)} />
+                    <Input variant='filled' type='textbox' id='model' onChange={(e) => setModel(e.target.value)} />
                 </div>
                 <div>
                     <label>Year</label>
-                    <input type='number' id='year' onChange={(e) => setYear(e.target.value)} />
+                    <Input variant='filled' type='number' id='year' onChange={(e) => setYear(e.target.value)} />
                 </div>
                 <div>
                     <label>Price</label>
-                    <input type='number' id='price' onChange={(e) => setPrice(e.target.value)} />
+                    <Input variant='filled' type='number' id='price' onChange={(e) => setPrice(e.target.value)} />
                 </div>
                 <div>
                     <label>Length</label>
-                    <input type='number' id='length' onChange={(e) => setLength(e.target.value)} />
+                    <Input  variant='filled' type='number' id='length' onChange={(e) => setLength(e.target.value)} />
                 </div>
                 <div>
                     <label>Condition</label>
-                    <select id='condition' onChange={(e) => setCondition(e.target.value)}>
+                    <Select variant='filled' id='condition' onChange={(e) => setCondition(e.target.value)}>
                         <option value='poor'>Poor</option>
                         <option value='good'>Good</option>
                         <option value='excellent'>Excellent</option>
-                    </select>
+                    </Select>
                 </div>
                 <div>
                     <label>Location</label>
-                    <select type='textbox' id='loction' onChange={(e) => setLocation(e.target.value)}>
+                    <Select variant='filled' type='textbox' id='loction' onChange={(e) => setLocation(e.target.value)}>
                         {/* <option value=''>Please select a location</option>
                         {uniqueLocations?.locations.map((location) => {
                             return <option value={location}>{location}</option> */}
@@ -97,15 +97,15 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
                                 return <option value={location}>{location}</option>
                             })}
 
-                    </select>
+                    </Select>
                 </div>
                 <div>
                     <label>Description</label>
-                    <textarea type='textbox' className='description-input' onChange={(e) => setDescription(e.target.value)} />
+                    <Textarea variant='filled' size='sm' type='textbox' className='description-input' onChange={(e) => setDescription(e.target.value) } />
                 </div>
             </div>
-
-            <button
+            <Stack spacing={4} direction='row' >               
+            <Button  colorScheme='gray' size='md'
                 className='addbutton'
                 onClick={() => {
                     if (type && make && model && year && price && length && condition && location && description) {
@@ -141,8 +141,9 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
                           })
                     }
                 }}
-            >Create new Listing</button>
-            <button onClick={() => setVehicleType('')}>Go Back</button>
+            >Create new Listing</Button>
+            <Button  colorScheme='gray' size='md' onClick={() => setVehicleType('')}>Go Back</Button>
+            </Stack>
             {/* <ToastContainer/> */}
         </div>
         </ChakraProvider>

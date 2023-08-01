@@ -204,7 +204,7 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
         <div id="detailsContainer">
           <div class='detailButtons'>
             <div id='returnButtonContainer'> 
-              <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>
+              <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>
             </div>
             { linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
                 //Display favorite icons toggle on home page

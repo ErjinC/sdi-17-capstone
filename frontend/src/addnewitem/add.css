@@ -1,15 +1,31 @@
 .additem {
-        width: fit-content;
-        background: hsla(48, 100%, 62%, 1);
-        margin-top: 2em;
-        border-radius: 10px;
-        padding-bottom: 1em;
-        box-shadow: 1px 1px 10px 1px #4F200D;
-      }
+  width: 20em;
+  background: hsla(48, 100%, 62%, 1);
+  float: left;
+  margin-top: 3em;
+  border-radius: 10px;
+  padding-bottom: 3em;
+  box-shadow: 1px 1px 10px 1px #4F200D;
+  color: black;
+}
 
-.addbutton {
-    font-size: 16px;
-    padding: 2px;
-    padding-left: 10px;
-    padding-right: 10px;
+/* Button {
+font-size: 18px;
+padding: 2px;
+padding-left: 10px;
+padding-right: 10px;
+border-block: black;
+background-color: grey;
+} */
+
+label {
+display: inline-block;
+width:180px;
+clear:left;
+text-align:left;
+padding-right:10px;
+}
+
+input {
+padding: 5px 10px;
 }

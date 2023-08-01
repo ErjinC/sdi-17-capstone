@@ -1,12 +1,14 @@
 #flexcontainerregister {
   padding-top: 2rem;
+  color:black;
 }
 
 #flexcontainerregister > * {
   font-size: 18px
 }
 
-#registerfield > * {
+#registerfield > *
+{
   margin: 10px;
 }
 

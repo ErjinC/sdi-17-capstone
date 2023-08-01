@@ -62,17 +62,4 @@ const CreateListing = () => {
   )
 }
 
-// boatId: 1,
-// sold: false, !!
-// type: "boat", !!
-// make: "Sea Ray", !!
-// model: "Sundancer 260", !!
-// year: 2010, !!
-// price: 40000, !!
-// hours: 300, !!
-// image: "https://placekitten.com/500/300",
-// condition: "good", !!
-// location: "Beale AFB", !!
-// description: "Bent propeller. Runs well. Needs new canopy." !
-
 export default CreateListing;

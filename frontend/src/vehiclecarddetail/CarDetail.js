@@ -207,7 +207,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
         <div id="detailsContainer">
           <div class='detailButtons'>
             <div id='returnButtonContainer'> 
-              <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>
+              <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>
             </div>
             { 
               linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
@@ -221,7 +221,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
               :
               linkRoute === ('profile') ? 
                 //if we are in profile, display remove icons instead
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>delete</span>
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span>
               :
                 linkRoute === 'listings' ? 
                 //if we are not in profile, check if we're in listings

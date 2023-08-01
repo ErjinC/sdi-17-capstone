@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import './add.css'
 // import { ToastContainer, toast } from 'react-toastify';
-import { Select, useToast } from '@chakra-ui/react';
-import { ChakraProvider } from '@chakra-ui/react';
+import { Select, useToast, Textarea} from '@chakra-ui/react';
+import { ChakraProvider, Button } from '@chakra-ui/react';
 
 const AddBoat = ({ locations, currentUser, setVehicleType }) => {
     const [type, setType] = useState('boat');
@@ -71,7 +71,7 @@ const AddBoat = ({ locations, currentUser, setVehicleType }) => {
                     </div>
                 </div>
 
-                <button
+                <Button  colorScheme='gray' size='md'
                     className='addbutton'
                     onClick={() => {
                         if (type && make && model && year && price && hours && condition && location && description) {
@@ -107,8 +107,8 @@ const AddBoat = ({ locations, currentUser, setVehicleType }) => {
                               })
                         }
                     }}
-                >Create new Listing</button>
-                <button onClick={() => setVehicleType('')}>Go Back</button>
+                >Create new Listing</Button>
+                <Button colorScheme='gray' size='md' onClick={() => setVehicleType('')}>Go Back</Button>
                 {/* <ToastContainer /> */}
             </div>
         </ChakraProvider>

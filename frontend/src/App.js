@@ -21,18 +21,29 @@ function App() {
   //set to default api return 
   const [currentUser, setCurrentUser] = useState({success:false});
   const [userFavorites, setUserFavorites] = useState((sessionStorage.getItem('CurrentUser') !== null)?JSON.parse(sessionStorage.getItem('CurrentUser')).favorites.split(',').map(item => parseInt(item)):[]);
-
+  const [locations, setLocations] = useState([])
+  
   useEffect(() => {
     if (sessionStorage.getItem('CurrentUser') !== null) {
       setCurrentUser(JSON.parse(sessionStorage.getItem("CurrentUser")))
     }
+    
+    fetch('http://localhost:3001/bases')
+        .then((res) => res.json())
+        .then((data) => {
+            // console.log(data)
+            setLocations(data)
+        })
+    
   },[])
 
   const contextValues = {
     currentUser, 
     setCurrentUser,
     userFavorites,
-    setUserFavorites
+    setUserFavorites,
+    locations,
+    setLocations
   }
 
   return (
