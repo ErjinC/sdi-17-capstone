@@ -15,7 +15,7 @@ exports.seed = async function(knex) {
       year: 2008,
       price: 1200,
       length: 14,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/uVYPkXk.jpg",
       condition: "good",
       location: "Beale AFB",
       description: "Garage kept. No issues."

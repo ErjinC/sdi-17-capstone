@@ -88,13 +88,17 @@ const Login = () => {
               <input
               type='password'
               placeholder='Password'
+              onKeyDown={(e) => {if(e.key === "Enter") {
+                handleSubmit()
+              }}}
               onChange={e => {
                 setPassword(e.target.value)
               }}
               ></input>
             </div>
 
-            <button id="loginbutton" onClick={handleSubmit}>Login</button>
+            <button id="loginbutton" 
+            onClick={handleSubmit}>Login</button>
           </div>
 
         </div>
@@ -105,4 +109,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Login;

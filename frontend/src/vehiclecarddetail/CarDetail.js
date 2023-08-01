@@ -207,7 +207,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
         <div id="detailsContainer">
           <div class='detailButtons'>
             <div id='returnButtonContainer'> 
-              <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>
+              <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>
             </div>
             { 
               linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
@@ -221,7 +221,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
               :
               linkRoute === ('profile') ? 
                 //if we are in profile, display remove icons instead
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>delete</span>
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span>
               :
                 linkRoute === 'listings' ? 
                 //if we are not in profile, check if we're in listings
@@ -229,13 +229,13 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
                 {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
                 :
                 <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={()=>{handleListingRemove()}}>delete</span>
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={()=>{handleListingRemove()}}><Tooltip openDelay={500} hasArrow label="Remove listing">delete</Tooltip></span>
                 </>
               :
                 linkRoute === 'admin' ? 
                 //if we are not in listings, check if we're in admin
                 <>
-                <span  id='approve' class="material-symbols-outlined" onClick={()=>{handleApproveListing(); window.location.reload();}}>check_circle</span> <span id='deny' className="material-symbols-outlined" onClick={()=>{handleDenyListing(); window.location.reload();}}>remove_circle_outline</span>
+                <span  id='approve' class="material-symbols-outlined" onClick={()=>{handleApproveListing(); window.location.reload();}}><Tooltip openDelay={500} hasArrow label="Approve Listing">check_circle</Tooltip></span> <span id='deny' className="material-symbols-outlined" onClick={()=>{handleDenyListing(); window.location.reload();}}><Tooltip openDelay={500} hasArrow label="Remove Listing">remove_circle_outline</Tooltip></span>
                 </>
               :
                 //otherwise display nothing

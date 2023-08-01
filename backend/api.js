@@ -281,7 +281,7 @@ api.get('/bases', (req, res) => {
         .then(result => {
             res.status(200).json(result)
         })
-        .catch(err => res.send(500).json(err))
+        .catch(err => console.log(err))
 })
 
 //////////        POST REQUESTS        //////////
@@ -527,7 +527,6 @@ api.put('/updateUserInfo/:userId', async (req, res) => {     //     Allows a use
     const query = await knex.select('admin', 'username', 'first_name', 'last_name', 'base').from('users')
         .where({ userId: editUserId })
         .update({
-            admin: newInfo["newAdminStatus"],
             username: newInfo["newUsername"],
             first_name: newInfo["newFirstName"],
             last_name: newInfo["newLastName"],

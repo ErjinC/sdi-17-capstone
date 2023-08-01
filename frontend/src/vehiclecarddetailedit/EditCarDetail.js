@@ -1,15 +1,16 @@
 import React, {useState, useEffect, useContext}  from 'react'
-import './VehicleCardDetail.css'
+import './VehicleCardDetailEdit.css'
 import { ParentContext } from '../App'
 import { Modal } from '@mui/material'
 // import { ToastContainer, toast } from 'react-toastify';
 import { Select, useToast } from '@chakra-ui/react'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Tooltip } from '@chakra-ui/react'
 
 const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
   const {userFavorites, setUserFavorites} = useContext(ParentContext)
   const [favorite, setFavorite] = useState(favorited)
   const [soldStatus, setSoldStatus] = useState(vehicle.sold)
+  const [soldStatusChanged, setSoldStatusChanged] = useState(false)
   const [editToggle, setEditToggle] = useState(false)
   const [editYear, setEditYear] = useState(vehicle.year)
   const [editMake, setEditMake] = useState(vehicle.make)
@@ -57,6 +58,7 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
   const handleSell = () => {
     console.log('Sold')
     setSoldStatus(true);
+    setSoldStatusChanged(!soldStatusChanged);
     fetch(`http://localhost:3001/sold/${vehicle.car_id}`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
@@ -70,6 +72,7 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
   const handleRelist = () => {
     console.log('Relisting')
     setSoldStatus(false);
+    setSoldStatusChanged(!soldStatusChanged);
     fetch(`http://localhost:3001/sold/${vehicle.car_id}`, {
       method: 'PATCH',
       headers: {'Content-Type': 'application/json'},
@@ -168,41 +171,44 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
   return (
     <ChakraProvider>
       <div id='detailFlexContainer'>
-        {/* <div class='detailHeader'>
-
-        </div> */}
         <div id='detailimagecontainer'>
           <img id='detailimage' alt='placeholder' src={vehicle.image}></img>
         </div>
         <div id="detailsContainer">
           <div class='detailButtons'>
             <div id='returnButtonContainer'>
-              {linkRoute === 'listings' ? <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>:
+              {soldStatusChanged ? <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>:
               <span onClick={() => { setDetailedView({ active: false, vehicle: {} })}} class="material-symbols-outlined">arrow_back</span>}
             </div>
-            {
-              linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
-                //Display favorite icons toggle on home page
-                favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span>
-                : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span>
+            { linkRoute === '' && sessionStorage.getItem('CurrentUser') != null  ?
+              //Display favorite icons toggle on home page
+              favorite ? <span id='favoritedIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>favorite</span>
+              : <span id='addFavoriteIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event)=>{handleFavoriteAdd(event)}}>heart_plus</span>
+
+            :
               //otherwise check if we are in profile
+              linkRoute === 'profile' ?
+              //if we are in profile, display remove icons instead
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}>delete</span>
+            :
+              linkRoute === 'listings' ?
+              //if we are not in profile, check if we're in listings
+              <>
+              {soldStatus?
+              <>
+              <button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" style={{visibility: "hidden"}} onClick={() => handleListingRemove()}><Tooltip openDelay={500} hasArrow label="Remove listing">delete</Tooltip></span>
+              </>
               :
-              linkRoute === ('profile') ?
-                //if we are in profile, display remove icons instead
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>delete</span>
-              :
-                linkRoute === 'listings' ?
-                //if we are not in profile, check if we're in listings
-                <>
-                {soldStatus?<button className="relistButton" onClick={()=>{handleRelist()}}>Relist</button>
-                :
-                <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>}
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={()=>{handleListingRemove()}}>delete</span>
-                </>
-              :
-                //otherwise display nothing
-                <></>
-          }
+              <>
+              <button className="soldButton" onClick={()=>{handleSell()}}>Mark as Sold</button>
+              <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={() => handleListingRemove()}><Tooltip openDelay={500} hasArrow label="Remove listing">delete</Tooltip></span>
+              </>}
+              </>
+            :
+              //otherwise display nothing
+              <></>
+            }
           </div>
           {<h1 id='detailheader'>{vehicle.year} {vehicle.make} {vehicle.model}</h1>}
 
@@ -246,8 +252,7 @@ const EditCarDetail = ({vehicle, favorited, setDetailedView, locations}) => {
           {editToggle ? <textarea type="textarea" defaultValue={vehicle.description} onChange={(e) => setEditDescription(e.target.value)}></textarea> : <textarea disabled id="description">{vehicle.description}</textarea>}
           {editToggle ? <><button onClick={() => handleEdit()}>Update</button><button onClick={() => setEditToggle(!editToggle)}>Discard</button></> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
         </div>
-    </div>
-    {/* <ToastContainer autoClose={1500}/> */}
+      </div>
     </ChakraProvider>
   )
 }

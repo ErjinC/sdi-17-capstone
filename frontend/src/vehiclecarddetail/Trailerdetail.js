@@ -219,7 +219,7 @@ const TrailerDetail = ({ vehicle, favorited, setDetailedView }) => {
               :
               linkRoute === ('profile') ? 
                 //if we are in profile, display remove icons instead
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}>delete</span>
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span>
               :
                 linkRoute === 'listings' ? 
                 //if we are not in profile, check if we're in listings
@@ -233,7 +233,7 @@ const TrailerDetail = ({ vehicle, favorited, setDetailedView }) => {
                 linkRoute === 'admin' ? 
                 //if we are not in listings, check if we're in admin
                 <>
-                <span  id='approve' class="material-symbols-outlined" onClick={()=>{handleApproveListing(); window.location.reload();}}>check_circle</span> <span id='deny' className="material-symbols-outlined" onClick={()=>{handleDenyListing(); window.location.reload();}}>remove_circle_outline</span>
+                <span  id='approve' class="material-symbols-outlined" onClick={()=>{handleApproveListing(); window.location.reload();}}><Tooltip openDelay={500} hasArrow label="Approve Listing">check_circle</Tooltip></span> <span id='deny' className="material-symbols-outlined" onClick={()=>{handleDenyListing(); window.location.reload();}}><Tooltip openDelay={500} hasArrow label="Remove Listing">remove_circle_outline</Tooltip></span>
                 </>
               :
                 //otherwise display nothing

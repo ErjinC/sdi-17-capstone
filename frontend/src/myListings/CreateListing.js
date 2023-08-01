@@ -7,6 +7,7 @@ import AddRv from '../addnewitem/AddRv';
 import AddTrailer from '../addnewitem/AddTrailer.js';
 import { useNavigate } from 'react-router-dom';
 import { ParentContext } from '../App';
+import { Button, ChakraProvider} from '@chakra-ui/react';
 
 const CreateListing = () => {
   const {currentUser} = React.useContext(ParentContext)
@@ -43,36 +44,24 @@ const CreateListing = () => {
     <div id='descriptionTextContainer'>
       <h1 id='detailheader'></h1>
       <h3>What vehicle would you like to list?</h3>
-      <button value='car' onClick={assignVehicleHandler}>Car</button>
-      <button value='motorcycles' onClick={assignVehicleHandler}>Motorcycle</button>
-      <button value='rvs' onClick={assignVehicleHandler}>RV</button>
-      <button value='boats' onClick={assignVehicleHandler}>Boat</button>
-      <button value='trailers' onClick={assignVehicleHandler}>Trailer</button>
+      <Button colorScheme='gray' size='md' value='car' onClick={assignVehicleHandler}>Car</Button>
+      <Button colorScheme='gray' size='md' value='motorcycles' onClick={assignVehicleHandler}>Motorcycle</Button>
+      <Button colorScheme='gray' size='md' value='rvs' onClick={assignVehicleHandler}>RV</Button>
+      <Button colorScheme='gray' size='md' value='boats' onClick={assignVehicleHandler}>Boat</Button>
+      <Button colorScheme='gray' size='md' value='trailers' onClick={assignVehicleHandler}>Trailer</Button>
       <p className='centered'> Or go back to...</p>
-      <button onClick={() => navigate('/listings')}>Your Listings</button>
-    </div>
+      <Button colorScheme='gray' size='md'onClick={() => navigate('/listings')}>Your Listings</Button>
+      </div>
+   
   )
 
   return (
-    <>
+    <ChakraProvider>
       <div id='flexcontainerdetail'>
         {vehicleSelected ? renderComponent() : vehicleTypeSelect}
       </div>
-    </>
+    </ChakraProvider>
   )
 }
-
-// boatId: 1,
-// sold: false, !!
-// type: "boat", !!
-// make: "Sea Ray", !!
-// model: "Sundancer 260", !!
-// year: 2010, !!
-// price: 40000, !!
-// hours: 300, !!
-// image: "https://placekitten.com/500/300",
-// condition: "good", !!
-// location: "Beale AFB", !!
-// description: "Bent propeller. Runs well. Needs new canopy." !
 
 export default CreateListing;
