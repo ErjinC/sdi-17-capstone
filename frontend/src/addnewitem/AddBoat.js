@@ -3,6 +3,7 @@ import './add.css'
 // import { ToastContainer, toast } from 'react-toastify';
 import { Select, useToast, Textarea} from '@chakra-ui/react';
 import { ChakraProvider, Button, Input, Stack } from '@chakra-ui/react';
+import { ArrowBackIcon, } from '@chakra-ui/icons'
 
 const AddBoat = ({ locations, currentUser, setVehicleType }) => {
     const [type, setType] = useState('boat');
@@ -108,7 +109,7 @@ const AddBoat = ({ locations, currentUser, setVehicleType }) => {
                         }
                     }}
                 >Create new Listing</Button>
-                <Button colorScheme='gray' size='md' onClick={() => setVehicleType('')}>Go Back</Button>
+                <Button leftIcon={<ArrowBackIcon />} colorScheme='gray' size='md' onClick={() => setVehicleType('')}>Go Back</Button>
                 </Stack>
                 {/* <ToastContainer /> */}
             </div>
