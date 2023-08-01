@@ -47,7 +47,7 @@ const AccountCard = ({user}) => {
                         <div>Admin Status: {user.admin ? <>True</> : <>False</>}</div>
                     </div>
                     <div className='accountInfoRightContainer'>
-                        <div>Phone #: {user.phone}</div>
+                        <div>Phone: {user.phone}</div>
                         <div>Email: {user.email}</div>
                         <div>Location: {user.base}</div>
                         <span id='accountDeleteButton' className="material-symbols-outlined" onClick={(event) => {

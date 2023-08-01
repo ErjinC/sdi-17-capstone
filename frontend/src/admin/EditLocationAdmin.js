@@ -64,8 +64,8 @@ const EditLocationAdmin = () => {
             <span className="material-symbols-outlined  baseIcon" onClick={()=>{handleSave()}}>save</span>
           </div>
           :
-        <div id='addNewBaseContainer'>
-          <span className="material-symbols-outlined  baseIcon" onClick={()=>{setAddingNewItem(true)}}>add</span>
+        <div id='addNewBaseContainer' onClick={()=>{setAddingNewItem(true)}}>
+          <span className="material-symbols-outlined  baseIcon">add</span>
         </div>
         }
         {baseList.map((base)=>{
