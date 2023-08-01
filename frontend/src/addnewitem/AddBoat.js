@@ -3,7 +3,7 @@ import './add.css'
 // import { ToastContainer, toast } from 'react-toastify';
 import { Select, useToast, Textarea} from '@chakra-ui/react';
 import { ChakraProvider, Button, Input, Stack } from '@chakra-ui/react';
-import { ArrowBackIcon, } from '@chakra-ui/icons'
+import { ArrowBackIcon, AddIcon } from '@chakra-ui/icons'
 
 const AddBoat = ({ locations, currentUser, setVehicleType }) => {
     const [type, setType] = useState('boat');
@@ -72,7 +72,7 @@ const AddBoat = ({ locations, currentUser, setVehicleType }) => {
                     </div>
                 </div>
                 <Stack spacing={4} direction='row' > 
-                <Button  colorScheme='gray' size='md'
+                <Button leftIcon={<AddIcon />}  colorScheme='gray' size='md'
                     className='addbutton'
                     onClick={() => {
                         if (type && make && model && year && price && hours && condition && location && description) {

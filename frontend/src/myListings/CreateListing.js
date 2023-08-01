@@ -7,6 +7,7 @@ import AddRv from '../addnewitem/AddRv';
 import AddTrailer from '../addnewitem/AddTrailer.js';
 import { useNavigate } from 'react-router-dom';
 import { ParentContext } from '../App';
+import { ChakraProvider, Button,} from '@chakra-ui/react';
 
 const CreateListing = () => {
   const {currentUser} = React.useContext(ParentContext)
@@ -43,13 +44,13 @@ const CreateListing = () => {
     <div id='descriptionTextContainer'>
       <h1 id='detailheader'></h1>
       <h3>What vehicle would you like to list?</h3>
-      <button value='car' onClick={assignVehicleHandler}>Car</button>
-      <button value='motorcycles' onClick={assignVehicleHandler}>Motorcycle</button>
-      <button value='rvs' onClick={assignVehicleHandler}>RV</button>
-      <button value='boats' onClick={assignVehicleHandler}>Boat</button>
-      <button value='trailers' onClick={assignVehicleHandler}>Trailer</button>
+      <Button colorScheme='gray' size='md'value='car' onClick={assignVehicleHandler}>Car</Button>
+      <Button colorScheme='gray' size='md'value='motorcycles' onClick={assignVehicleHandler}>Motorcycle</Button>
+      <Button colorScheme='gray' size='md'value='rvs' onClick={assignVehicleHandler}>RV</Button>
+      <Button value='boats' onClick={assignVehicleHandler}>Boat</Button>
+      <Button value='trailers' onClick={assignVehicleHandler}>Trailer</Button>
       <p className='centered'> Or go back to...</p>
-      <button onClick={() => navigate('/listings')}>Your Listings</button>
+      <Button onClick={() => navigate('/listings')}>Your Listings</Button>
     </div>
   )
 

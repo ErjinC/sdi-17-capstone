@@ -1,11 +1,13 @@
 import React, { useState, useEffect} from 'react'
 import './Admin.css'
+import { ChakraProvider, Tooltip } from '@chakra-ui/react'
 
 const EditLocationAdmin = () => {
 
   const [baseList, setBaseList] = useState([]);
   const [newBaseText, setNewBaseText] = useState();
   const [renderFlag, setRenderFlag] = useState(false);
+  const [deleted, setDeleted] = useState(false)
   const [addingNewItem, setAddingNewItem] = useState(false)
 
   useEffect(() => {
@@ -49,35 +51,42 @@ const EditLocationAdmin = () => {
     .then(res => res.json())
     .then((data) => {
       setBaseList(data)
-      setRenderFlag(!renderFlag)
+      setRenderFlag(!deleted)
     }))
-    .then(setRenderFlag(!renderFlag))
   }
 
   return (
-    <div id='adminLocationPageWrapper'>
-      <div id='baseListContainer'>
-        {addingNewItem ?
-          <div className='baseItem'>
-            <span className="material-symbols-outlined  baseIcon" onClick={()=>{handleCancel()}}>arrow_back</span>
-            <input id='newBaseTextInput' type='text' value={newBaseText} onChange={(e) => setNewBaseText(e.target.value)} ></input>
-            <span className="material-symbols-outlined  baseIcon" onClick={()=>{handleSave()}}>save</span>
-          </div>
-          :
-        <div id='addNewBaseContainer' onClick={()=>{setAddingNewItem(true)}}>
-          <span className="material-symbols-outlined  baseIcon">add</span>
-        </div>
-        }
-        {baseList.map((base)=>{
-          return(
+    <ChakraProvider>
+     
+      <div id='adminLocationPageWrapper'>
+        <div id='baseListContainer'>
+          {addingNewItem ?
             <div className='baseItem'>
-              {base.name}
-              <span className="material-symbols-outlined baseIcon" onClick={()=>{handleDeleteBase(base)}}>delete</span>
+              <span id="addBaseBack" className="material-symbols-outlined  baseIcon" onClick={()=>{handleCancel()}}>arrow_back</span>
+              <input id='newBaseTextInput' type='text' value={newBaseText} onChange={(e) => setNewBaseText(e.target.value)} ></input>
+              <span id="addBaseSave" className="material-symbols-outlined  baseIcon" onClick={()=>{handleSave()}}>save</span>
             </div>
-          )
-        })}
+            :
+          <div id='addNewBaseContainer' onClick={()=>{setAddingNewItem(true)}}>
+            <span className="material-symbols-outlined  baseIcon"><Tooltip openDelay={500} hasArrow label="Add New Base">add</Tooltip></span>
+          </div>
+          }
+          {baseList.map((base)=>{
+            return(
+              <>
+              {
+                deleted ? <></> :
+                <div className='baseItem'>
+                  {base.name}
+                  <span id="addBaseDelete" className="material-symbols-outlined baseIcon" onClick={()=>{handleDeleteBase(base)}}><Tooltip openDelay={500} hasArrow label="Remove Location">delete</Tooltip></span>
+                </div>
+              }
+              </>
+            )
+          })}
+        </div>
       </div>
-    </div>
+    </ChakraProvider>
   )
 }
 

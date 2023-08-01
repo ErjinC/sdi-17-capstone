@@ -151,7 +151,7 @@ function Profile() {
         <div className='user-info' id='base-container'>
           <h4>Base:</h4><p className='info'>{currentUser.base}</p>
         </div>
-        <div className='user-info' id='rating-container'>
+        {/* <div className='user-info' id='rating-container'>
           <h4 id='rating'>User Rating:</h4>
           <div className='ratinginfo'>
             <span className="material-symbols-outlined">star</span>
@@ -160,7 +160,7 @@ function Profile() {
             <span className="material-symbols-outlined">star</span>
             <span className="material-symbols-outlined">star_half</span>
           </div>
-        </div>
+        </div> */}
         <div className='profile-edit-options'>
           <button id='passwordBtn' onClick={resetPwDisplayHandler}>Change Password</button>
             <div id='user-edit-password-container'>      {/* Being conditionally rendered on line 24*/}
