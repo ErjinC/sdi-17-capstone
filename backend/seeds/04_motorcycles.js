@@ -9,7 +9,7 @@ exports.seed = async function(knex) {
     {
       motorcycleId: 1,
       sold: false,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/J9E68OR.jpg",
       type: "Street Bike",
       make: "Honda",
       model: "CBR1000",
