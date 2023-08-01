@@ -10,7 +10,6 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [base, setBase] = useState('Los Angeles SFB');
-  const toast = useToast()
 
   const { locations } = useContext(ParentContext)
 
@@ -47,100 +46,100 @@ const Register = () => {
   }
 
   return (
-    <ChakraProvider>
-      <div id="page">
-          <div id='registersection'>
-            <div id='registerheader'>Lemon Drop User Registration</div>
-            <div id='flexcontainerregister'>
-              <div id='registerfield'>
-                <div id="firstname">
-                  <span class="material-symbols-outlined loginicon">account_box</span>
-                  <input
-                  type='textbox'
-                  placeholder='First Name'
-                  id='first'
-                  onChange={() => {
-                    setFirst(document.getElementById('first').value)
-                  }}
-                  ></input>
-                </div>
-
-                <div id="lastname">
-                  <span class="material-symbols-outlined loginicon">account_box</span>
-                  <input
-                  type='textbox'
-                  placeholder='Last Name'
-                  id='last'
-                  onChange={() => {
-                    setLast(document.getElementById('last').value)
-                  }}
-                  ></input>
-                </div>
-
-                <div id="base">
-                  <span class="material-symbols-outlined loginicon">home</span>
-                  {/* <select name="base" id='base-value' onChange={() => setBase(document.getElementById('base-value').value)}> */}
-                  <select name="base" id='base-value' value='Los Angeles SFB' onChange={(event) => setBase(event.target.value)}>
-                    <option value="" disabled> --Please choose a base -- </option>
-                    {locations?.map((baseOption) => {
-                      return (
-                        <option value={ baseOption.name }>{ baseOption.name }</option>
-                      )
-                    })}
-                  </select>
-                </div>
-
-                <div id="username">
-                <span class="material-symbols-outlined loginicon">person</span>
-                  <input
-                  type='textbox'
-                  placeholder='Username'
-                  id='username-value'
-                  onChange={() => {
-                    setUsername(document.getElementById('username-value').value)
-                  }}
-                  ></input>
-                </div>
-
-                <div id="password">
-                  <span class="material-symbols-outlined loginicon">lock</span>
-                  <input
-                  type='password'
-                  placeholder='Password'
-                  id='password-value'
-                  onChange={() => {
-                    setPassword(document.getElementById('password-value').value)
-                  }}
-                  ></input>
-                </div>
-
-                <div id="passwordConfirm">
-                  <span class="material-symbols-outlined loginicon">lock</span>
-                  <input
-                  type='password'
-                  placeholder='Confirm Password'
-                  id='passwordConfirm-value'
-                  onKeyDown={(e) => {if(e.key === "Enter") {
-                    handleRegistration()
-                  }}}
-                  onChange={() => {
-                    setPasswordConfirm(document.getElementById('passwordConfirm-value').value)
-                  }}
-                  ></input>
-                </div>
-
-                <button
-                id='registerbutton'
-                onClick={() => {handleRegistration() }}
-                >
-                  Register
-                </button>
-              </div>
+    <div id="page">
+      <div id='registersection'>
+        <div id='registerheader'>Lemon Drop User Registration</div>
+        <div id='flexcontainerregister'>
+          <div id='registerfield'>
+            <div id="firstname">
+              <span class="material-symbols-outlined loginicon">account_box</span>
+              <input
+                type='textbox'
+                placeholder='First Name'
+                id='first'
+                onChange={() => {
+                  setFirst(document.getElementById('first').value)
+                }}
+              ></input>
             </div>
+
+            <div id="lastname">
+              <span class="material-symbols-outlined loginicon">account_box</span>
+              <input
+                type='textbox'
+                placeholder='Last Name'
+                id='last'
+                onChange={() => {
+                  setLast(document.getElementById('last').value)
+                }}
+              ></input>
+            </div>
+
+            <div id="base">
+              <span class="material-symbols-outlined loginicon">home</span>
+              {/* <select name="base" id='base-value' onChange={() => setBase(document.getElementById('base-value').value)}> */}
+              <select name="base" id='base-value' value='Los Angeles SFB' onChange={(event) => setBase(event.target.value)}>
+                <option value="" disabled> --Please choose a base -- </option>
+                {locations?.map((baseOption) => {
+                  return (
+                    <option value={baseOption.name}>{baseOption.name}</option>
+                  )
+                })}
+              </select>
+            </div>
+
+            <div id="username">
+              <span class="material-symbols-outlined loginicon">person</span>
+              <input
+                type='textbox'
+                placeholder='Username'
+                id='username-value'
+                onChange={() => {
+                  setUsername(document.getElementById('username-value').value)
+                }}
+              ></input>
+            </div>
+
+            <div id="password">
+              <span class="material-symbols-outlined loginicon">lock</span>
+              <input
+                type='password'
+                placeholder='Password'
+                id='password-value'
+                onChange={() => {
+                  setPassword(document.getElementById('password-value').value)
+                }}
+              ></input>
+            </div>
+
+            <div id="passwordConfirm">
+              <span class="material-symbols-outlined loginicon">lock</span>
+              <input
+                type='password'
+                placeholder='Confirm Password'
+                id='passwordConfirm-value'
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleRegistration()
+                  }
+                }}
+                onChange={() => {
+                  setPasswordConfirm(document.getElementById('passwordConfirm-value').value)
+                }}
+              ></input>
+            </div>
+
+            <button
+              id='registerbutton'
+              onClick={() => { handleRegistration() }}
+            >
+              Register
+            </button>
           </div>
-        <ToastContainer autoClose={1500}/>
+        </div>
+      </div>
+      <ToastContainer autoClose={1500} />
     </div>
-    </ChakraProvider>
   )
 }
 
