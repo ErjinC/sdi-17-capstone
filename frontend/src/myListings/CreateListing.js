@@ -15,6 +15,19 @@ const CreateListing = () => {
   const [vehicleType, setVehicleType] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (sessionStorage.getItem('CurrentUser') === null) {
+      window.location='/'
+    }
+    
+    fetch('http://localhost:3001/bases')
+        .then((res) => res.json())
+        .then((data) => {
+            // console.log(data)
+            setLocations(data)
+    })
+  })
+
   function assignVehicleHandler(event) {
     setVehicleSelected(true);
     setVehicleType(event.target.value);
