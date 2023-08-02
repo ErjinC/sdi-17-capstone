@@ -5,19 +5,26 @@
 
 #flexcontainerdetail{
   display: flex;
-  flex-direction: row;
+  align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  width:96%;
+  width: 100%;
+  height: 100%;
 }
 
 #descriptionTextContainer{
+  background-color: var(--background-accent);
+  padding: 20px;
+  padding-top: 0;
+  border-radius: 15px;
   display:flex;
   flex-direction:column;
   text-align: center;
-  width: 20%;
-  height: 40%;
-  
+  row-gap: 15px;
+  width: fit-content;
+  height: fit-content;
+  overflow: auto;
+  overflow-x: hidden;
+  font-weight: bold;
 }
 .centered {
   text-align: center;

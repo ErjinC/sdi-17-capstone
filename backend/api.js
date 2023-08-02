@@ -340,7 +340,7 @@ api.post('/addListing/rvs', async (req, res) => {     //     Adds a new rv based
 
     const insertRV = await knex('rvs').insert({
         sold: false,
-        image: 'https://placekitten.com/500/300',
+        image: newListing.image,
         type: newListing.type,
         make: newListing.make,
         model: newListing.model,
@@ -374,7 +374,7 @@ api.post('/addListing/boats', async (req, res) => {     //     Adds a new boat b
 
     const insertBoat = await knex('boats').insert({
         sold: false,
-        image: 'https://placekitten.com/500/300',
+        image: newListing.image,
         type: newListing.type,
         make: newListing.make,
         model: newListing.model,
@@ -405,7 +405,7 @@ api.post('/addListing/trailers', async (req, res) => {     //     Adds a new tra
 
     const insertTrailer = await knex('trailers').insert({
         sold: false,
-        image: 'https://placekitten.com/500/300',
+        image: newListing.image,
         type: newListing.type,
         make: newListing.make,
         model: newListing.model,
@@ -436,7 +436,7 @@ api.post('/addListing/cars', async (req, res) => {     //     Adds a new car bas
 
     const insertCar = await knex('cars').insert({
         sold: false,
-        image: 'https://placekitten.com/500/300',
+        image: newListing.image,
         type: newListing.type,
         make: newListing.make,
         model: newListing.model,
@@ -469,7 +469,7 @@ api.post('/addListing/motorcycles', async (req, res) => {     //     Adds a new 
 
     const insertMotorcycle = await knex('motorcycles').insert({
         sold: false,
-        image: 'https://placekitten.com/500/300',
+        image: newListing.image,
         type: newListing.type,
         make: newListing.make,
         model: newListing.model,
@@ -583,6 +583,7 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             color: req.body.newColor,
             condition: req.body.newCondition,
             location: req.body.newLocation,
+            image: req.body.newUrl
             })
             .then(result => {
                 if (result) {
@@ -621,6 +622,7 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
         description: req.body.newDescription,
         condition: req.body.newCondition,
         location: req.body.newLocation,
+        image: req.body.newUrl
         })
         .then(result => {
             if (result) {
@@ -685,6 +687,7 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             mileage: req.body.newMileage,
             condition: req.body.newCondition,
             location: req.body.newLocation,
+            image: req.body.newUrl
             })
             .then(result => {
                 if (result) {
@@ -724,7 +727,8 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             mileage: req.body.newMileage,
             condition: req.body.newCondition,
             location: req.body.newLocation,
-            weight: req.body.newWeight
+            weight: req.body.newWeight,
+            image: req.body.newUrl
             })
             .then(result => {
                 if (result) {
@@ -765,6 +769,7 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             description: req.body.newDescription,
             condition: req.body.newCondition,
             location: req.body.newLocation,
+            image: req.body.newUrl
             })
             .then(result => {
                 if (result) {

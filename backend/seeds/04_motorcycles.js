@@ -24,7 +24,7 @@ exports.seed = async function(knex) {
     {
       motorcycleId: 2,
       sold: false,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/UcHAR9E.jpg",
       type: "Dirt Bike",
       make: "KTM",
       model: "450 SX-F",
@@ -39,7 +39,7 @@ exports.seed = async function(knex) {
     {
       motorcycleId: 3,
       sold: false,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/4moj4A7.jpg",
       type: "Cruiser",
       make: "Harley-Davidson",
       model: "Softail Deluxe",
@@ -54,7 +54,7 @@ exports.seed = async function(knex) {
     {
       motorcycleId: 4,
       sold: false,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/G5gt0gE.jpg",
       type: "Sport Bike",
       make: "Yamaha",
       model: "YZF-R1",
@@ -69,7 +69,7 @@ exports.seed = async function(knex) {
     {
       motorcycleId: 5,
       sold: false,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/xCposhG.jpg",
       type: "Touring Bike",
       make: "BMW",
       model: "R1250 RT",

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import './VehicleCard.css'
 import { ParentContext } from '../App'
-import { ChakraProvider, Tooltip } from '@chakra-ui/react'
+import { ChakraProvider, Tooltip, Image } from '@chakra-ui/react'
+// import { EditIcon } from '@chakra-ui/icons'
 
 const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   const [favorited, setFavorited] = useState(false)
@@ -59,6 +60,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   if (sessionStorage.getItem('CurrentUser') == null) {
     return(
       <div data-testid='detailView' id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle})}}>
+      {/* <Image id='detailimage' boxSize='100%' alt='EditIcon' src={vehicle.image} fallback={<EditIcon boxSize='10%' />}></Image> */}
       <img id='vehiclecardimage' alt='Vehicle' src={vehicle.image}></img>
       <div><strong>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</strong></div>
       <div>Cost: {'$'+vehicle.price}</div>

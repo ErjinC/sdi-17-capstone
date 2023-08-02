@@ -11,7 +11,9 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [base, setBase] = useState('Los Angeles SFB');
+
   const navigate = useNavigate()
+
   const { locations } = useContext(ParentContext)
 
   const handleRegistration = () => {

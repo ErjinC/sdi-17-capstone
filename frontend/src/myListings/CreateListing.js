@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import './CreateListing.css'
 import AddCar from '../addnewitem/AddCar';
 import AddBoat from '../addnewitem/AddBoat';
@@ -10,10 +10,9 @@ import { ParentContext } from '../App';
 import { Button, ChakraProvider} from '@chakra-ui/react';
 
 const CreateListing = () => {
-  const {currentUser} = React.useContext(ParentContext)
+  const {currentUser, locations} = useContext(ParentContext)
   const [vehicleSelected, setVehicleSelected] = useState(false);
   const [vehicleType, setVehicleType] = useState('');
-  const [locations, setLocations] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +27,7 @@ const CreateListing = () => {
             setLocations(data)
     })
   })
+
   function assignVehicleHandler(event) {
     setVehicleSelected(true);
     setVehicleType(event.target.value);
@@ -47,7 +47,7 @@ const CreateListing = () => {
   const vehicleTypeSelect = (
     <div id='descriptionTextContainer'>
       <h1 id='detailheader'></h1>
-      <h3>What vehicle would you like to list?</h3>
+      <h3>What type of vehicle would you like to list?</h3>
       <Button colorScheme='gray' size='md' value='car' onClick={assignVehicleHandler}>Car</Button>
       <Button colorScheme='gray' size='md' value='motorcycles' onClick={assignVehicleHandler}>Motorcycle</Button>
       <Button colorScheme='gray' size='md' value='rvs' onClick={assignVehicleHandler}>RV</Button>
@@ -55,8 +55,7 @@ const CreateListing = () => {
       <Button colorScheme='gray' size='md' value='trailers' onClick={assignVehicleHandler}>Trailer</Button>
       <p className='centered'> Or go back to...</p>
       <Button colorScheme='gray' size='md'onClick={() => navigate('/listings')}>Your Listings</Button>
-      </div>
-   
+    </div>
   )
 
   return (
