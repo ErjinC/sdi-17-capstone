@@ -30,7 +30,7 @@ const Header = () => {
 
         <div className='userHeader'>
           <div className='avatarHeader' style={{ justifySelf: "center" }} onClick={() => currentUser.success ? window.location = '/profile' : ''}>
-            {currentUser.success ? <div id='welcome'><Avatar size="xs" bg="#ff8400" name={`${currentUser.first_name} ${currentUser.last_name}`} src='https://bit.ly/broken-link' /></div> : <></>}
+            {currentUser.success ? <div id='welcome'><Avatar size="xs" bg="#ff8400" name={`${currentUser.first_name} ${currentUser.last_name}`} /></div> : <></>}
             {currentUser.success ? <div id='welcome'>{`${currentUser.first_name} ${currentUser.last_name}`}</div> : <div id='welcome' onClick={() => window.location = '/login'}>Log in</div>}
           </div>
           <Divider />
