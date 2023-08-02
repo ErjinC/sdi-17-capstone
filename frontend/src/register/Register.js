@@ -2,6 +2,7 @@ import React, {useContext, useState} from 'react'
 import './Register.css'
 import { ToastContainer, toast } from 'react-toastify';
 import { ParentContext } from '../App';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [first, setFirst] = useState('');
@@ -10,7 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [base, setBase] = useState('Los Angeles SFB');
-
+  const navigate = useNavigate()
   const { locations } = useContext(ParentContext)
 
   const handleRegistration = () => {
@@ -39,7 +40,7 @@ const Register = () => {
         if(!res.success){
           toast.error('Account already exists', {position: toast.POSITION.BOTTOM_CENTER})
         }else{
-          toast.success('Registration successful', {position: toast.POSITION.BOTTOM_CENTER, onClose: () => window.location = 'login'})
+          toast.success('Registration successful', {position: toast.POSITION.BOTTOM_CENTER, onClose: () => navigate('/login')})
         }
       })
     }

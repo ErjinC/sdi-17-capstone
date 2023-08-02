@@ -27,7 +27,7 @@
   font-size: 2.5rem;
   width: 80%;
   flex: 1 1 20%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Righteous', cursive;
+  font-family: 'Righteous', cursive;
 }
 
 #title:hover{
