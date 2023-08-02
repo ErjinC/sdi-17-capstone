@@ -3,7 +3,6 @@ import Slider from '@mui/material/Slider'
 import '../frontpage/FrontPage.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
 import { ParentContext } from '../App';
 
 const theme = createTheme({

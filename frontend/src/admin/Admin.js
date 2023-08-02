@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import './Admin.css'
 import ReportAdmin from './ReportAdmin.js'
 import AccountAdmin from './AccountAdmin.js'

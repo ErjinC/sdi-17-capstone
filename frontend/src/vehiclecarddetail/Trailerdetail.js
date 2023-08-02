@@ -2,7 +2,7 @@ import React, {useState,useEffect} from 'react'
 import './VehicleCardDetail.css'
 import { ParentContext } from '../App'
 // import { ToastContainer, toast } from 'react-toastify';
-import { ChakraProvider, useToast, Tooltip } from '@chakra-ui/react'
+import { useToast, Tooltip } from '@chakra-ui/react'
 
 
 const TrailerDetail = ({ vehicle, favorited, setDetailedView }) => {
@@ -195,7 +195,7 @@ const TrailerDetail = ({ vehicle, favorited, setDetailedView }) => {
     }
   }
   return (
-    <ChakraProvider>
+    <>
       <div id='detailFlexContainer'>
         {/* <div class='detailHeader'>
 
@@ -258,7 +258,7 @@ const TrailerDetail = ({ vehicle, favorited, setDetailedView }) => {
         </div>
     </div>
     {/* <ToastContainer autoClose={1500}/> */}
-    </ChakraProvider>
+    </>
   )
 }
 

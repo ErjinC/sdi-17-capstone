@@ -24,6 +24,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
         setFavorited(false)
       }
       sessionStorage.setItem('CurrentUser', JSON.stringify({...currentUser, favorites:userFavorites.toString()}))
+      console.log('fetching favorites')
       fetch(`http://localhost:3001/favorites`, {
         method: 'PATCH',
         headers: {'Content-Type': 'application/json'},
@@ -70,7 +71,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
   }
 
   return (
-    <ChakraProvider>
+    <>
     {deleted ? <></> :
       <div id='individualcard' onClick={()=>{setDetailedView({active:true,vehicle:vehicle,favorited:favorited})}}>
         { linkRoute === '' ?
@@ -93,7 +94,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
         <div>Location: {vehicle.location}</div>
       </div>
     }
-    </ChakraProvider>
+    </>
   )
 }
 

@@ -8,6 +8,7 @@ import RvDetail from '../vehiclecarddetail/RvDetail'
 import TrailerDetail from '../vehiclecarddetail/Trailerdetail'
 import Filters from '../filters/Filters'
 import { ParentContext } from '../App'
+// import { '' } from '@chakra-ui/react'
 
 const FrontPage = () => {
 
@@ -48,6 +49,7 @@ const FrontPage = () => {
   }, [])
 
   return (
+    <>
       <div id='frontPageContainer'>
 
       <div id='resultsfilter'>
@@ -134,6 +136,7 @@ const FrontPage = () => {
 
         </div>
       </div>
+      </>
   )
 }
 

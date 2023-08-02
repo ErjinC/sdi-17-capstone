@@ -26,7 +26,7 @@ const CreateListing = () => {
             // console.log(data)
             setLocations(data)
     })
-  })
+  }, [])
 
   function assignVehicleHandler(event) {
     setVehicleSelected(true);

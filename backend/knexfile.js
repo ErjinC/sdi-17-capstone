@@ -22,6 +22,7 @@ module.exports = {
 
   development: {
     client: 'pg',
+
     connection: 'postgres://postgres:docker@172.20.0.2:5432/capstonedb'
     // connection: 'postgres://postgres:docker@172.21.0.2:5432/capstonedb'
     // connection: 'postgres://postgres:docker@host.docker.internal/capstonedb'
