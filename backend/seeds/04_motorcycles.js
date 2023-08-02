@@ -84,7 +84,7 @@ exports.seed = async function(knex) {
     {
       motorcycleId: 6,
       sold: false,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/G5YA8Sw.jpg",
       type: "Adventure Bike",
       make: "Triumph",
       model: "Tiger 800",
