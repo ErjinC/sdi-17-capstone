@@ -10,7 +10,7 @@ import { ParentContext } from '../App';
 import { Button, ChakraProvider} from '@chakra-ui/react';
 
 const CreateListing = () => {
-  const {currentUser, locations} = useContext(ParentContext)
+  const {currentUser, locations, setLocations} = useContext(ParentContext)
   const [vehicleSelected, setVehicleSelected] = useState(false);
   const [vehicleType, setVehicleType] = useState('');
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const CreateListing = () => {
             // console.log(data)
             setLocations(data)
     })
-  })
+  }, [])
 
   function assignVehicleHandler(event) {
     setVehicleSelected(true);

@@ -196,7 +196,7 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
   }
 
   return (
-    <ChakraProvider>
+    <>
       <div id='detailFlexContainer'>
         {/* <div class='detailHeader'>
          
@@ -262,7 +262,7 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
         </div>
     </div>
     {/* <ToastContainer autoClose={1500}/> */}
-    </ChakraProvider>
+    </>
   )
 }
 
