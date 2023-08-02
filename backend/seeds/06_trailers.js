@@ -29,7 +29,7 @@ exports.seed = async function(knex) {
       year: 2010,
       price: 3000,
       length: 16,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/kjG2Zsm.jpg",
       condition: "excellent",
       location: "Edwards AFB",
       description: "Like new. Barely used."
@@ -43,7 +43,7 @@ exports.seed = async function(knex) {
       year: 2015,
       price: 2500,
       length: 18,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/mEyGbxO.jpg",
       condition: "good",
       location: "Andrews AFB",
       description: "Minor rust. Fully functional."
@@ -57,7 +57,7 @@ exports.seed = async function(knex) {
       year: 2016,
       price: 3500,
       length: 12,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/hm7tY1f.jpg",
       condition: "good",
       location: "Barksdale AFB",
       description: "Minor scratches. Well kept."
@@ -71,7 +71,7 @@ exports.seed = async function(knex) {
       year: 2019,
       price: 3000,
       length: 20,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/KAxLpYO.jpg",
       condition: "excellent",
       location: "Eglin AFB",
       description: "Excellent condition. Barely used."
@@ -85,7 +85,7 @@ exports.seed = async function(knex) {
       year: 2021,
       price: 7000,
       length: 24,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/d5OUM04.jpg",
       condition: "excellent",
       location: "Elmendorf AFB",
       description: "Like new, minimal use."
@@ -99,7 +99,7 @@ exports.seed = async function(knex) {
       year: 2017,
       price: 4000,
       length: 22,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/72Ap5fW.jpg",
       condition: "good",
       location: "Cannon AFB",
       description: "Minor wear and tear. Fully functional."
@@ -113,7 +113,7 @@ exports.seed = async function(knex) {
       year: 2020,
       price: 5000,
       length: 16,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/gE3MAl8.jpg",
       condition: "excellent",
       location: "Davis-Monthan AFB",
       description: "Like new, minimal use."
@@ -127,7 +127,7 @@ exports.seed = async function(knex) {
       year: 2018,
       price: 2000,
       length: 12,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/PDQOoDd.jpg",
       condition: "good",
       location: "Buckley SFB",
       description: "Normal wear for age. Fully functional."
@@ -141,7 +141,7 @@ exports.seed = async function(knex) {
       year: 2021,
       price: 6000,
       length: 20,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/GPjXfKs.jpg",
       condition: "excellent",
       location: "Dover AFB",
       description: "Excellent condition, minimal use."
@@ -155,7 +155,7 @@ exports.seed = async function(knex) {
       year: 2017,
       price: 2500,
       length: 14,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/vq6Z1F1.jpg",
       condition: "excellent",
       location: "Dyess AFB",
       description: "Excellent condition, well maintained."
@@ -169,7 +169,7 @@ exports.seed = async function(knex) {
       year: 2019,
       price: 4500,
       length: 18,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/x2XFDUI.jpg",
       condition: "good",
       location: "Eielson AFB",
       description: "Good condition, regularly serviced."
@@ -183,7 +183,7 @@ exports.seed = async function(knex) {
       year: 2016,
       price: 1500,
       length: 10,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/lkawY7K.jpg",
       condition: "good",
       location: "F.E. Warren AFB",
       description: "Some rust, but fully functional."
@@ -197,7 +197,7 @@ exports.seed = async function(knex) {
       year: 2020,
       price: 5500,
       length: 16,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/9fBIToY.jpg",
       condition: "good",
       location: "Fairchild AFB",
       description: "Regularly serviced, good condition."
@@ -211,7 +211,7 @@ exports.seed = async function(knex) {
       year: 2022,
       price: 5000,
       length: 14,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/XBlNCDe.jpg",
       condition: "excellent",
       location: "Fort George G. Meade",
       description: "Like new, minimal use."
@@ -225,7 +225,7 @@ exports.seed = async function(knex) {
       year: 2018,
       price: 4500,
       length: "20",
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/hxMo5Lb.jpg",
       condition: "good",
       location: "Goodfellow AFB",
       description: "Good condition, regular maintenance."
@@ -239,7 +239,7 @@ exports.seed = async function(knex) {
       year: 2017,
       price: 3500,
       length: 16,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/NMGVwzc.jpg",
       condition: "good",
       location: "Hanscom AFB",
       description: "Good condition, minor wear."
@@ -253,7 +253,7 @@ exports.seed = async function(knex) {
       year: 2021,
       price: 7000,
       length: 12,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/siqPU1a.jpg",
       condition: "excellent",
       location: "Hill AFB",
       description: "Like new, minimal use."
@@ -267,7 +267,7 @@ exports.seed = async function(knex) {
       year: 2019,
       price: 2500,
       length: 20,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/Z1tFuPq.jpg",
       condition: "excellent",
       location: "Holloman AFB",
       description: "Barely used, excellent condition."
@@ -281,7 +281,7 @@ exports.seed = async function(knex) {
       year: 2020,
       price: 6500,
       length: 24,
-      image: "https://placekitten.com/500/300",
+      image: "https://i.imgur.com/5YkeVB7.jpg",
       condition: "excellent",
       location: "Hurlburt Field",
       description: "Like new, minimal use."
