@@ -24,6 +24,9 @@ const MyListings = () => {
 
 
     useEffect(() => {
+        if (sessionStorage.getItem('CurrentUser') === null) {
+            window.location='/'
+        }
         // console.log(JSON.parse(sessionStorage.getItem('CurrentUser')))
         // console.log(`http://localhost:3001/listings/${user.userId}`)
         fetch(`http://localhost:3001/listings/${user.userId}`)

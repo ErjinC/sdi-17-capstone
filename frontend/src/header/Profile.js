@@ -8,12 +8,12 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
   Editable, Select, Stack, Input, Tooltip} from '@chakra-ui/react'
 
 function Profile() {
-  const [editUsername, setEditUsername] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).username)
+  const [editUsername, setEditUsername] = useState('')
   const [editPassword, setEditPassword] = useState('');
   const [editPasswordCheck, setEditPasswordCheck] = useState('');
-  const [editFirstName, setEditFirstName] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).first_name);
-  const [editLastName, setEditLastName] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).last_name); 
-  const [editBase, setEditBase] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).base);
+  const [editFirstName, setEditFirstName] = useState('');
+  const [editLastName, setEditLastName] = useState(''); 
+  const [editBase, setEditBase] = useState('');
   const [show, setShow] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const {currentUser, setCurrentUser} = useContext(ParentContext);
@@ -24,6 +24,7 @@ function Profile() {
   const { locations } = useContext(ParentContext)
 
   useEffect(() => {
+    console.log('current user: ', currentUser)
     if (sessionStorage.getItem('CurrentUser') === null) {
       window.location='/'
     }

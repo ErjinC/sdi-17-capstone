@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Admin.css'
 import ReportAdmin from './ReportAdmin.js'
 import AccountAdmin from './AccountAdmin.js'
@@ -7,6 +7,12 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { ChakraProvider } from '@chakra-ui/react'
 
 const Admin = () => {
+    useEffect(() => {
+        if (sessionStorage.getItem('CurrentUser') === null) {
+            window.location='/'
+        }
+    }, [])
+
     return (
         <ChakraProvider>
             <div id='adminPageWrapper'>
