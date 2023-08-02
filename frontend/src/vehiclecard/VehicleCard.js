@@ -90,8 +90,8 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
         }
         <img id='vehiclecardimage' alt='Vehicle' src={vehicle.image}></img>
         <div><strong>{vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model}</strong></div>
-        <div>Cost: {'$'+vehicle.price}</div>
-        <div>Location: {vehicle.location}</div>
+        <div>{'$'+vehicle.price}</div>
+        <div>{vehicle.location}</div>
       </div>
     }
     </>

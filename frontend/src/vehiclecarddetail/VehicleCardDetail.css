@@ -4,6 +4,9 @@
   min-height: 100%;
   position: relative;
   overflow: auto;
+  background-color: var(--background);
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px 1px black;
 }
 
 #detailimage {
@@ -11,7 +14,7 @@
   width: 85%;
   height: 75%;
   border-radius: 10px;
-  box-shadow: 1px 1px 10px 1px #4F200D;
+  box-shadow: 1px 1px 10px 1px var(--background-accent);
 }
 
 #detailimagecontainer{
@@ -34,7 +37,7 @@ h1{
   display: flex;
   width: 40%;
   flex-direction: column;
-  background: white;
+  background-color: var(--container-color);
   margin-top: 2vh;
   margin-bottom: 2vh;
   margin-right: 1vw;
@@ -42,7 +45,8 @@ h1{
   padding-left: 1vw;
   padding-right: 1vw;
   overflow: auto;
-  box-shadow: 1px 1px 10px 1px #4F200D;
+  color: black;
+  box-shadow: 1px 1px 10px 1px var(--background-accent);
 }
 
 .detailButtons {
@@ -143,7 +147,7 @@ h1{
     sans-serif;
   font-weight: 400;
   font-size: 14px;
-  color: #4F200D;
+  color: black;
   border-style: none;
   background: none;
   overflow: auto;
