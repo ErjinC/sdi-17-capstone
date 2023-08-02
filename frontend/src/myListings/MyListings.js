@@ -1,5 +1,5 @@
 import './MyListings.css'
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import VehicleCard from '../vehiclecard/VehicleCard';
 import BoatDetail from '../vehiclecarddetail/BoatDetail'
 import CarDetail from '../vehiclecarddetail/CarDetail'
@@ -12,15 +12,16 @@ import EditMotoDetail from '../vehiclecarddetailedit/EditMotoDetail'
 import EditRvDetail from '../vehiclecarddetailedit/EditRvDetail'
 import EditTrailerDetail from '../vehiclecarddetailedit/EditTrailerdetail'
 import { useNavigate } from 'react-router-dom';
+import { ParentContext } from '../App';
 
 const MyListings = () => {
     const [myListings, setMyListings] = useState();
     const [detailedView, setDetailedView] = useState({active:false,vehicle:{}});
     const [userFavorites, setUserFavorites ] = useState([]);
     const [soldView, setSoldView] = useState(false)
-    const [locations, setLocations] = useState([])
     const user = JSON.parse(sessionStorage.getItem('CurrentUser'))
     const navigate = useNavigate();
+    const { locations } = useContext(ParentContext)
 
 
     useEffect(() => {
@@ -29,13 +30,6 @@ const MyListings = () => {
         fetch(`http://localhost:3001/listings/${user.userId}`)
         .then(res => res.json())
         .then(data => setMyListings(data))
-
-        fetch('http://localhost:3001/bases')     //     THIS FETCH IS ALREADY MADE IN APP.JS  -  USE CONTEXT FOR THIS
-        .then((res) => res.json())
-        .then((data) => {
-            // console.log(data)
-            setLocations(data)
-        })
 
     }, [])
 
@@ -97,12 +91,12 @@ const MyListings = () => {
                         </>
                         :
                         <>
+                            <div id='addcard' onClick={() => navigate('/createListing')}><p id='addsymbol'>+</p></div>
                             {myListings?.carListings.filter(e=>!e.sold).map(car => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
                             {myListings?.boatListings.filter(e=>!e.sold).map(boat => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
                             {myListings?.rvListings.filter(e=>!e.sold).map(rv => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
                             {myListings?.motoListings.filter(e=>!e.sold).map(moto => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
                             {myListings?.trailerListings.filter(e=>!e.sold).map(trailer => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
-                            <div id='addcard' onClick={() => navigate('/createListing')}><p id='addsymbol'>+</p></div>
                         </>
                     }
                 </>

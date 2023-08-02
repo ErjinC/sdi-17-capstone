@@ -10,7 +10,6 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [base, setBase] = useState('Los Angeles SFB');
-  const toast = useToast()
 
   const { locations } = useContext(ParentContext)
 
@@ -47,7 +46,6 @@ const Register = () => {
   }
 
   return (
-    <ChakraProvider>
       <div id="page">
           <div id='registersection'>
             <div id='registerheader'>Lemon Drop User Registration</div>
@@ -140,7 +138,6 @@ const Register = () => {
           </div>
         <ToastContainer autoClose={1500}/>
     </div>
-    </ChakraProvider>
   )
 }
 

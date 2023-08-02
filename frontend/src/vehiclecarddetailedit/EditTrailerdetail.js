@@ -2,8 +2,9 @@ import React, {useState,useEffect} from 'react'
 import './VehicleCardDetailEdit.css'
 import { ParentContext } from '../App'
 // import { ToastContainer, toast } from 'react-toastify';
-import { Select, useToast } from '@chakra-ui/react'
-import { ChakraProvider, Tooltip } from '@chakra-ui/react'
+import { Select, useToast, Input, Button } from '@chakra-ui/react'
+import { ChakraProvider, Tooltip, Image } from '@chakra-ui/react'
+import { AddIcon, EditIcon } from '@chakra-ui/icons'
 
 const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) => {
   const {userFavorites, setUserFavorites} = React.useContext(ParentContext)
@@ -19,6 +20,9 @@ const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) =>
   const [editCondition, setEditCondition] = useState(vehicle.condition)
   const [editLocation, setEditLocation] = useState(vehicle.location)
   const [editDescription, setEditDescription] = useState(vehicle.description)
+  const [editImageURL, setEditImageURL] = useState(vehicle.image);
+  const [editImageURLText, setEditImageURLText] = useState(vehicle.image);
+
   let link = window.location.href
   let linkArr = link.split('/')
   let linkRoute = linkArr.pop()
@@ -134,6 +138,7 @@ const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) =>
         newDescription: editDescription,
         newCondition: editCondition,
         newLocation: editLocation,
+        newUrl:editImageURLText
       })
     }
     fetch(`http://localhost:3001/updateListing`, patchOptions)
@@ -159,8 +164,17 @@ const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) =>
         {/* <div class='detailHeader'>
 
         </div> */}
-        <div id='detailimagecontainer'>
-          <img id='detailimage' alt='placeholder' src={vehicle.image}></img>
+        <div id='detailimagecontainer' className='editdetailimagecontainer'>
+          {editToggle ? 
+          <>
+            <Image id='detailimage' boxSize='100%' alt='EditIcon' src={editImageURL} fallback={<EditIcon boxSize='10%' />}></Image>
+            <div className='saveImageInputContainer'>
+              <label>Enter a new Image URL</label>
+              <Input variant='filled' type='text' id='imageUrlInput' defaultValue={vehicle.image} onChange={(e) => setEditImageURLText(e.target.value)} />
+              <Button leftIcon={<AddIcon />} colorScheme='gray' size='md' id='previewImageButton' onClick={() => { setEditImageURL(editImageURLText) }}>Preview Image</Button>
+            </div>
+          </> 
+          : <><Image id='detailimage' boxSize='100%' alt='EditIcon' src={vehicle.image} fallback={<EditIcon boxSize='10%'/>}></Image></>}
         </div>
         <div id="detailsContainer">
           <div class='detailButtons'>
@@ -225,7 +239,7 @@ const EditTrailerDetail = ({locations, vehicle, favorited, setDetailedView }) =>
             <strong>Description:</strong>
           </div>
           {editToggle ? <textarea type="textarea" defaultValue={vehicle.description} onChange={(e) => setEditDescription(e.target.value)}></textarea> : <textarea disabled id="description">{vehicle.description}</textarea>}
-          {editToggle ? <><button onClick={() => handleEdit()}>Update</button><button onClick={() => setEditToggle(!editToggle)}>Discard</button></> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
+          {editToggle ? <><button onClick={() => {handleEdit(); window.location.reload()}}>Update</button><button onClick={() => setEditToggle(!editToggle)}>Discard</button></> : <button onClick={() => setEditToggle(!editToggle)}>Edit</button>}
         </div>
     </div>
     {/* <ToastContainer autoClose={1500}/> */}

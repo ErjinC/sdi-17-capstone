@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import './add.css'
 // import { ToastContainer, toast } from 'react-toastify';
 import { Select, useToast, Textarea } from '@chakra-ui/react';
-import { ChakraProvider, Button, Input, Stack } from '@chakra-ui/react';
+import { ChakraProvider, Button, Input, Stack, Image } from '@chakra-ui/react';
 import { ArrowBackIcon, AddIcon } from '@chakra-ui/icons'
 
 
@@ -16,7 +16,9 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
     const [condition , setCondition] = useState('poor');
     const [location, setLocation] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState('');
+    const [imageURL, setImageURL] = useState('');
+    const [imageURLText, setImageURLText] = useState('');
+
     const toast = useToast()
     // const [uniqueLocations, setUniqueLocations] = useState();
 
@@ -25,7 +27,56 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
 
     return (
         <ChakraProvider>
-        <div className='car-creation-container'>
+        <div className='vehicle-creation-container'>
+            
+                {/*------------------------------ Button Div Container ------------------------------*/}
+             <div className='vehicle-creation-button-container'>    
+                <Stack spacing={4} direction='row' >               
+                    <Button leftIcon={<AddIcon />} colorScheme='gray' size='md'
+                className='addbutton'
+                onClick={() => {
+                    if (type && make && model && year && price && length && condition && location && description) {
+                        fetch(`http://localhost:3001/addListing/trailers`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                'type': type,
+                                'description': description,
+                                'make': make,
+                                'model': model,
+                                'year': Number(year),
+                                'price': Number(price),
+                                'length': Number(length),
+                                'condition': condition,
+                                'location': location,
+                                'userId': currentUser.userId,
+                                'image': imageURL,
+                            })
+                        })
+                            .then(data => data.json())
+                            .then(res => console.log(res))
+                            .then(window.location = '/listings')
+                            .then(alert('Added Successful!'));
+                    } else {
+                        // toast('Please fill out all fields!')
+                        toast({
+                            title: 'Please fill out all fields',
+                            status: 'warning',
+                            duration: 2000,
+                            isClosable: true,
+                          })
+                    }
+                }}
+                >Create new Listing</Button>
+                <Button leftIcon={<ArrowBackIcon />}  colorScheme='gray' size='md' onClick={() => setVehicleType('')}>Go Back</Button>
+                </Stack>
+            </div>
+                {/*------------------------------ Vehicle Input Div Container ------------------------------*/}
+
+               
+     <div className='vehicle-creation-content-container'>
             <div className ='additem'>
             <div>
                     <label>Type</label>
@@ -73,47 +124,19 @@ const AddTrailer = ({ locations, currentUser, setVehicleType }) => {
                     <Textarea variant='filled' size='sm' type='textbox' className='description-input' onChange={(e) => setDescription(e.target.value) } />
                 </div>
             </div>
-            <Stack spacing={4} direction='row' >               
-            <Button leftIcon={<AddIcon />} colorScheme='gray' size='md'
-                className='addbutton'
-                onClick={() => {
-                    if (type && make && model && year && price && length && condition && location && description) {
-                        fetch(`http://localhost:3001/addListing/trailers`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                'type': type,
-                                'description': description,
-                                'make': make,
-                                'model': model,
-                                'year': Number(year),
-                                'price': Number(price),
-                                'length': Number(length),
-                                'condition': condition,
-                                'location': location,
-                                'userId': currentUser.userId,
-                            })
-                        })
-                            .then(data => data.json())
-                            .then(res => console.log(res))
-                            .then(window.location = '/listings')
-                            .then(alert('Added Successful!'));
-                    } else {
-                        // toast('Please fill out all fields!')
-                        toast({
-                            title: 'Please fill out all fields',
-                            status: 'warning',
-                            duration: 2000,
-                            isClosable: true,
-                          })
-                    }
-                }}
-            >Create new Listing</Button>
-            <Button leftIcon={<ArrowBackIcon />}  colorScheme='gray' size='md' onClick={() => setVehicleType('')}>Go Back</Button>
-            </Stack>
-            {/* <ToastContainer/> */}
+       {/*------------------------------ New Image Div Container ------------------------------*/} 
+       <div className='vehicle-creation-image-container'>
+                    <div className='newImageContainer'>
+                        {imageURL === '' ? <></>:<></>}
+                    <Image id='new-boat-listing-image' boxSize='90%' alt='New Listing Image' src={imageURL} fallbackSrc='https://www.pulsecarshalton.co.uk/wp-content/uploads/2016/08/jk-placeholder-image.jpg'></Image>  {/* Update the src prop to be dynamic */}
+                    </div>
+                    <div className='saveImageInputContainer'>
+                        <label>Vehicle Image URL</label>
+                        <Input variant='filled' type='text' id='imageUrlInput' onChange={(e) => setImageURLText(e.target.value)} />
+                        <Button leftIcon={<AddIcon />} colorScheme='gray' size='md' id='previewImageButton' onClick={() => {setImageURL(imageURLText)}}>Preview Image</Button>
+                    </div>
+                </div>
+                </div>  
         </div>
         </ChakraProvider>
     );
