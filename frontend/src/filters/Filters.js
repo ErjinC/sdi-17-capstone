@@ -282,8 +282,6 @@ const handleSubmit = (e) => {
   return (
     <div>
 {/* ---------------------------------CAR---------------------------------------- */}
-      <fieldset>
-      <legend>Filters</legend>
       <form className='carFilterForm' onSubmit={handleSubmit} >
         {filterText === 'car' ?
         <>
@@ -1051,7 +1049,6 @@ const handleSubmit = (e) => {
           </div>
         </> : <></>}
       </form>
-      </fieldset>
     </div>
   )
 }

@@ -57,12 +57,13 @@ const MyListings = () => {
     return (
         <div id='frontPageContainer' class='frontPageContainerListings'>
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
-            <div id='flexfrontpagetop'>
+            <div className='listingsPageWrapper'>
+            <div className='toggleListingsButtonContainer'>
                 <input class="tgl tgl-skewed" id="cb3" type="checkbox" checked={!soldView} onClick={() => setSoldView(!soldView)}/>
                 <label class="tgl-btn" data-tg-off="Sold Listings" data-tg-on="Open Listings" for="cb3"></label>
             </div>
-
             <div className='listContainer' id='listingsPageListContainer'>
+                
                 <>
                     {
                         detailedView.active ?
@@ -81,7 +82,7 @@ const MyListings = () => {
 
                     {soldView ?
                         <>
-                            {!findSoldListings() ?'No listings sold!'
+                            {!findSoldListings() ? <div id='noListingsSoldText'>No listings sold!</div>
                             :
                             <>
                             {myListings?.carListings.filter(e=>e.sold).map(car => <VehicleCard userFavorites={userFavorites} setUserFavorites={setUserFavorites} vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView}/>)}
@@ -103,36 +104,8 @@ const MyListings = () => {
                         </>
                     }
                 </>
-            </div>
-
-            {/* <div>
-                <div>Filters</div>
-                <label for="vehicle" id='vehiclefilter'>Vehicle: </label>
-                <select
-                name="vehicle"
-                id="vehicleSelect"
-                value=""
-                onChange={(e) => {
-                    sessionStorage.setItem('vehiclefilter', e.target.value)
-                }}
-                >
-                <option value='' default disabled>Please select an option</option>
-                <option value="car">Car</option>
-                <option value="boat">Boat</option>
-                <option value="motorcycle">Motorcycle</option>
-                <option value="rv">RV</option>
-                <option value="trailer">Trailer</option>
-                </select>
-
-                <div>
-                {document.getElementById('vehicleSelect').value === 'car' ? <>Car selected</>:<></>}
-                {document.getElementById('vehicleSelect').value === 'boat' ? <>Boat selected</>:<></>}
-                {document.getElementById('vehicleSelect').value === 'motorcycle' ? <>Motorcycle selected</>:<></>}
-                {document.getElementById('vehicleSelect').value === 'rv' ? <>RV selected</>:<></>}
-                {document.getElementById('vehicleSelect').value === 'trailer' ? <>Trailer selected</>:<></>}
                 </div>
-            </div> */}
-
+            </div>
         </div>
     )
 }
