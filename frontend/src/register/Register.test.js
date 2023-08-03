@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Register from './Register';
 import App from '../App';
 import { BrowserRouter, MemoryRouter } from 'react-router-dom';
@@ -49,7 +49,7 @@ test('renders register card', async () => {
         <App />
       </MemoryRouter>
     );
-    expect(screen.getByText('Lemon Drop User Registration')).toBeInTheDocument();
+    expect(screen.getByText('Lemon Drop Registration')).toBeInTheDocument();
 
 });
 
@@ -97,9 +97,19 @@ test('clicking register with unmatched passwords gives a warning toast', async (
     );
     let username = screen.getByPlaceholderText('Username')
     let password = screen.getByPlaceholderText('Password')
+    let email = screen.getByPlaceholderText('E-Mail')
+    let phone = screen.getByPlaceholderText('Phone #')
+    // let base = screen.getByPlaceholderText('-- Please choose a base --')
     let passwordConfirm = screen.getByPlaceholderText('Confirm Password')
     let firstName = screen.getByPlaceholderText('First Name')
     let lastName = screen.getByPlaceholderText('Last Name')
+
+    let base = await screen.findAllByTestId('registerSelect')
+    fireEvent.change(base[0], {target: {value: 'Beale AFB'}})
+    userEvent.selectOptions(base[0], ['Beale AFB'])
+
+    userEvent.type(email, 'test@test.com')
+    userEvent.type(phone, '1234567890')
     await userEvent.type(username, 'SecondTestUser')
     await userEvent.type(password, 'unmatchedpassword')
     await userEvent.type(passwordConfirm, 'testPassword')
@@ -123,6 +133,15 @@ test('clicking register with all the correct information gives a successful toas
     let passwordConfirm = screen.getByPlaceholderText('Confirm Password')
     let firstName = screen.getByPlaceholderText('First Name')
     let lastName = screen.getByPlaceholderText('Last Name')
+    let email = screen.getByPlaceholderText('E-Mail')
+    let phone = screen.getByPlaceholderText('Phone #')
+
+    let base = await screen.findAllByTestId('registerSelect')
+    fireEvent.change(base[0], {target: {value: 'Beale AFB'}})
+    userEvent.selectOptions(base[0], ['Beale AFB'])
+
+    userEvent.type(email, 'test@test.com')
+    userEvent.type(phone, '1234567890')
     await userEvent.type(username, 'ThirdTestUser')
     await userEvent.type(password, 'testPassword')
     await userEvent.type(passwordConfirm, 'testPassword')

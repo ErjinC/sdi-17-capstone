@@ -4,8 +4,8 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Technologies_used](#Technologies used)
 - [Setup](#Setup)
+- [Technologies_Used](#Technologies Used)
 - [Developers](#Developers)
 
 ## Description
@@ -18,16 +18,19 @@ vehicle, typically when they PCS in/out. A "lemon lot" is what military members 
 achieve this, but it is not a very well known tool and can quickly die due to not enough
 members knowing about it.
 
+The wireframe and ERD can be located in the ```planningfiles``` folder.
 
 ## Installation
 
-Fork and clone this repository to your local project directory and run `npm i` inside both the frontend and backend folders
+After forking and cloning, run the following command at the project root directory:
 
 ```bash
-npm i
-git add README.md
-git commit -m "Use README Boilerplate"
-git clone https://github.com/YOUR-USERNAME/repository-name
+cd frontend;
+npm i;
+cd ../backend;
+npm i;
+cd ../;
+docker compose up;
 ```
 
 ## Usage
@@ -63,7 +66,7 @@ motorcycle, RV, boat, or trailer.
 - Administrators can view, add, and delete all bases in the database
 - Users who are logged in can log out
 
-## Technologies used:
+## Technologies Used:
 ```bash
 JavaScript
 React

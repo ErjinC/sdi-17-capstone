@@ -100,7 +100,7 @@ const Register = () => {
                 <div id="base">
                   <span class="material-symbols-outlined loginicon">home</span>
                   {/* <select name="base" id='base-value' onChange={() => setBase(document.getElementById('base-value').value)}> */}
-                  <Select name="base" id='base-value' defaultValue='' required onChange={(event) => setBase(event.target.value)}>
+                  <Select data-testid="registerSelect" name="base" id='base-value' defaultValue='' required onChange={(event) => setBase(event.target.value)}>
                     <option value="" disabled> -- Please choose a base -- </option>
                     {locations?.map((baseOption) => {
                       return (

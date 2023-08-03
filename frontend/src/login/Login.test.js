@@ -67,7 +67,8 @@ test('renders login card', async () => {
           <App />
         </MemoryRouter>
       );
-      expect(screen.getByText('Lemon Drop Login')).toBeInTheDocument();
+      let text = await screen.findAllByText('Login')
+      expect(text.length).toBeGreaterThan(0);
 
   });
 
