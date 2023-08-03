@@ -36,7 +36,7 @@ exports.seed = async function(knex) {
       price: 148900,
       length: 32,
       condition: "good",
-      image: "https://i.imgur.com/2Po3XRf.jpg",
+      image: "https://i.imgur.com/whAH3CQ.jpg",
       location: "Edwards AFB",
       description: "Well-maintained motorhome with spacious interior. Slide-outs provide extra living space. Kitchen and bathroom in good condition. Perfect for family trips and camping adventures."
     },

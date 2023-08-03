@@ -129,10 +129,10 @@ test('clicking register with all the correct information gives a successful toas
     await userEvent.type(firstName, 'Fred')
     await userEvent.type(lastName, 'Durst')
     let registerButton = await screen.findAllByRole('button')
-    console.log('before path: ', window.location.pathname)
+    // console.log('before path: ', window.location.pathname)
     // console.log('register button: ', registerButton)
     userEvent.click(registerButton[0])
-    console.log('after path: ', window.location.pathname)
+    // console.log('after path: ', window.location.pathname)
     let toasts = await screen.findAllByText('Registration successful')
     expect(toasts.length).toBeGreaterThan(0);
 });

@@ -4,6 +4,7 @@ import './Login.css'
 import { ChakraProvider, useToast } from '@chakra-ui/react';
 import 'react-toastify/dist/ReactToastify.css';
 import { ParentContext } from '../App';
+import {ArrowForwardIcon} from '@chakra-ui/icons'
 
 async function loginUser(credentials) {
   return fetch('http://localhost:3001/login', {
@@ -48,9 +49,6 @@ const Login = () => {
         })
       } else {
         sessionStorage.setItem('CurrentUser', JSON.stringify(res))
-        //Redirect to homepage
-        // window.location='/'
-        // alert('Login Successful!')
         toast({
           title: 'Login Successful!',
           status: 'success',
@@ -69,7 +67,7 @@ const Login = () => {
     <ChakraProvider>
     <div id='page'>
       <div id="loginsection">
-        <div id='loginheader'>Lemon Drop Login</div>
+        <div id='loginheader'>Login</div>
         <div id='flexcontainerlogin'>
           <div id='loginfield'>
             <div id='username'>
@@ -97,8 +95,12 @@ const Login = () => {
               ></input>
             </div>
 
-            <button id="loginbutton" 
-            onClick={handleSubmit}>Login</button>
+            <div className="loginBtn">
+              <button id="loginbutton" onClick={handleSubmit}>Login <ArrowForwardIcon/></button>
+            </div>
+            <div className="registerLink">
+              Don't have an account? <span onClick={() => window.location = '/register'}>Sign up</span>
+            </div>
           </div>
 
         </div>

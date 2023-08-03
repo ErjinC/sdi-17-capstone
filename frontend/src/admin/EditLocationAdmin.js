@@ -42,7 +42,7 @@ const EditLocationAdmin = () => {
   }
 
   const handleDeleteBase = (base) => {
-    console.log(base.baseId);
+    // console.log(base.baseId);
     fetch(`http://localhost:3001/bases/${base.baseId}`, {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'},
@@ -71,12 +71,12 @@ const EditLocationAdmin = () => {
             <span className="material-symbols-outlined  baseIcon"><Tooltip openDelay={500} hasArrow label="Add New Base">add</Tooltip></span>
           </div>
           }
-          {baseList.map((base)=>{
+          {baseList.map((base, i)=>{
             return(
               <>
               {
                 deleted ? <></> :
-                <div className='baseItem'>
+                <div key={i} className='baseItem'>
                   {base.name}
                   <span id="addBaseDelete" className="material-symbols-outlined baseIcon" onClick={()=>{handleDeleteBase(base)}}><Tooltip openDelay={500} hasArrow label="Remove Location">delete</Tooltip></span>
                 </div>

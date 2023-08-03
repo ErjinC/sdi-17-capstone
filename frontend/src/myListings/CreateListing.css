@@ -12,9 +12,10 @@
 }
 
 #descriptionTextContainer{
-  background-color: var(--background-accent);
+  background-color: var(--container-color);
+  box-shadow: 1px 1px 5px 1px var(--background-accent);
   padding: 20px;
-  padding-top: 0;
+  padding-top: 5px;
   border-radius: 15px;
   display:flex;
   flex-direction:column;
@@ -27,6 +28,9 @@
   font-weight: bold;
 }
 .centered {
+  font-size:x-large;
   text-align: center;
+  padding-bottom: 5px;
+  margin-bottom: 0px;
 }
 

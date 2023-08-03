@@ -22,7 +22,7 @@ const FavoritesDisplay = () => {
             .then((data) => {
                 findFavorites(data)
                 setListings(data)
-                console.log(userFavorites);
+                // console.log(userFavorites);
             })
     }, [])
 
@@ -97,7 +97,7 @@ const FavoritesDisplay = () => {
         if (tempArr.length > 0) {
             tempArr.map(item => favoritesList.push(item))
         }
-        console.log('Favorites', favoritesList)
+        // console.log('Favorites', favoritesList)
         setFavoritesDisplayList(favoritesList)
     }
 

@@ -24,17 +24,26 @@
 }
 
 .additem {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
   width: 20%;
   height: 100%;
-  background: hsla(48, 100%, 62%, 1);
+  background: var(--container-color);
   float: left;
   border-radius: 10px;
+  padding-top: 1em;
   padding-bottom: 3em;
   padding-left: 1em;
   padding-right: 1em;
-  box-shadow: 1px 1px 10px 1px #4F200D;
-  color: black;
+  box-shadow: 1px 1px 5px 1px var(--background-accent);
   overflow: auto;
+  color: #11101d;
+  font-family: "Poppins", sans-serif;
+}
+
+.additem label{
+  font-weight: bold;
 }
 
 .vehicle-creation-image-container{
@@ -51,8 +60,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 85%;
   height: 80%;
+  background: var(--container-color);
+  box-shadow: 1px 1px 5px 1px var(--background-accent);
+  border-radius: 5px;
 }
 
 .saveImageInputContainer{
@@ -63,10 +75,11 @@
   justify-content: center;
   row-gap: 15px;
   flex-wrap: wrap;
+  margin-top: 10px;
 }
 
 #imageUrlInput{
-  color: black;
+  color: #11101d;
 }
 
 /* Button {
@@ -84,6 +97,7 @@ width:180px;
 clear:left;
 text-align:left;
 padding-right:10px;
+color: #11101d;
 }
 
 .additem input {

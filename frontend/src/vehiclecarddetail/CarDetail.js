@@ -22,7 +22,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
     .then(res => res.json())
     .then((data) => {
         setListingOwner(data)
-        console.log(data);
+        // console.log(data);
     })
   },[])
 

@@ -25,7 +25,7 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
   },[])
 
   const handleListingRemove = () => {
-    console.log('vehicle: ', vehicle)
+    // console.log('vehicle: ', vehicle)
     if (window.confirm('Are you sure you want to delete your listing?')) {
       fetch(`http://localhost:3001/listings`, {
         method: 'DELETE',
@@ -84,7 +84,7 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
   }
 
   const handleSell = () => {
-    console.log('Sold',vehicle)
+    // console.log('Sold',vehicle)
     setSoldStatus(true);
     fetch(`http://localhost:3001/sold/${vehicle.boat_id}`, {
       method: 'PATCH',
@@ -97,7 +97,7 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
   }
 
   const handleRelist = () => {
-    console.log('Relisting')
+    // console.log('Relisting')
     setSoldStatus(false);
     fetch(`http://localhost:3001/sold/${vehicle.boat_id}`, {
       method: 'PATCH',
@@ -217,7 +217,7 @@ const BoatDetail = ({ vehicle, favorited,setDetailedView }) => {
               :
               linkRoute === ('profile') ? 
                 //if we are in profile, display remove icons instead
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span>
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span>
               :
                 linkRoute === 'listings' ? 
                 //if we are not in profile, check if we're in listings

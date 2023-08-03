@@ -251,33 +251,8 @@ api.get('/listings/:userid', async (req, res) => {
 })
 
 
-// api.get('/allUniqueLocations', async (req, res) => {     //     Gets all unique locations in the DB & sends them back
-//     let carLocations = await knex('cars').select("location");
-//     let rvLocations = await knex('rvs').select("location")   ;
-//     let motoLocations = await knex('motorcycles').select("location");
-//     let boatLocations = await knex('boats').select("location");
-//     let trailerLocations = await knex('trailers').select("location");
-
-//     let totalLocations = [carLocations, rvLocations, motoLocations, boatLocations, trailerLocations];
-//     let uniqueLocations = [];
-
-//     totalLocations.forEach((vehicleType) => {
-//         vehicleType.forEach((vehicleLocation) => {
-//             if (!uniqueLocations.includes(vehicleLocation.location)) {
-//                 uniqueLocations.push(vehicleLocation.location);
-//             }
-//         });
-//     })
-
-//     res.status(200).send({
-//         locations: uniqueLocations,
-//         success: true
-//     })
-// })
-
-
 api.get('/bases', (req, res) => {
-    knex('bases').select()
+    knex('bases').select().orderBy('name', 'asc')
         .then(result => {
             res.status(200).json(result)
         })
@@ -296,8 +271,7 @@ api.post('/login', async (req, res) => {     //     Allows a user to login
             bcrypt.compare(req.body[0].password, pw, async function (err, result) {
                 if (result) {
                     // authenticate
-                    let user = await knex('users').select('userId', 'username', 'first_name', 'last_name', 'base', 'favorites', 'admin').where({ username: req.body[0].username })
-                    // console.log('user: ', {...user[0], success: true})
+                    let user = await knex('users').select('userId', 'username', 'first_name', 'last_name', 'base', 'favorites', 'admin', 'phone', 'email').where({ username: req.body[0].username })
                     res.status(200).json({ ...user[0], success: true })
                 } else {
                     // error
@@ -327,7 +301,9 @@ api.post('/register', async (req, res) => {     //     User Registration
                 first_name: req.body[0].first_name,
                 last_name: req.body[0].last_name,
                 base: req.body[0].base,
-                favorites: ''
+                favorites: '',
+                phone: req.body[0].phone,
+                email: req.body[0].email
             }
         )
             .then(result => res.status(200).json({ success: true, message: 'Registration Successful!' }))
@@ -524,13 +500,15 @@ api.put('/updateUserInfo/:userId', async (req, res) => {     //     Allows a use
     const editUserId = req.params.userId
     const newInfo = req.body;
 
-    const query = await knex.select('admin', 'username', 'first_name', 'last_name', 'base').from('users')
+    const query = await knex.select('admin', 'username', 'first_name', 'last_name', 'base', 'email', 'password').from('users')
         .where({ userId: editUserId })
         .update({
             username: newInfo["newUsername"],
             first_name: newInfo["newFirstName"],
             last_name: newInfo["newLastName"],
             base: newInfo["newBase"],
+            phone: newInfo["newPhone"],
+            email: newInfo['newEmail']
         })
 
     query ? res.status(200).send({ ...newInfo, success: true }) : res.status(400).send({ success: false });
@@ -728,7 +706,8 @@ api.patch('/updateListing', (req, res) => {     //     Updates a boat/car/motorc
             condition: req.body.newCondition,
             location: req.body.newLocation,
             weight: req.body.newWeight,
-            image: req.body.newUrl
+            length: req.body.newLength,
+            image: req.body.newUrl,
             })
             .then(result => {
                 if (result) {

@@ -1,6 +1,6 @@
 #flexcontainerregister {
   padding-top: 2rem;
-  color:black;
+  color: var(--background);
 }
 
 #flexcontainerregister > * {
@@ -12,11 +12,16 @@
   margin: 10px;
 }
 
+#registerbuttoncontainer {
+  display: flex;
+  justify-content: center;
+}
+
 #registerbutton {
   font-size: 16px;
   padding: 2px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 #registerheader {
@@ -24,8 +29,9 @@
   flex-direction: row;
   justify-content: space-around;
   font-size: 32px;
+  font-family: 'Righteous', cursive;
   font-weight: bolder;
-  margin: 2rem;
+  margin: 0rem 2rem 2rem 2rem;
   margin-bottom: 0;
 }
 
@@ -35,16 +41,21 @@
 }
 
 #registerfield {
-  margin-left: 1.5rem;
+  /* margin-left: 1.5rem; */
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  width: 100%;
 }
 
 #registersection {
   width: fit-content;
-  background: hsla(48, 100%, 62%, 1);
+  align-self: center;
+  background: var(--container-color);
   margin-top: 2em;
   border-radius: 10px;
-  padding-bottom: 1em;
+  padding: 3em 3em 3em 3em;
   box-shadow: 1px 1px 10px 1px #4F200D;
+  height: 85%;
 }
 
 #base {
@@ -59,6 +70,60 @@
   display: flex;
 }
 
+#register-username {
+  padding-right: 0;
+  display: flex;
+}
+
+#register-phone {
+  padding-right: 0;
+  display: flex;
+}
+
+#register-email {
+  padding-right: 0;
+  display: flex;
+}
+
+#register-password {
+  padding-right: 0;
+  display: flex;
+}
+
 #passwordConfirm{
   display: flex;
+}
+
+#registerfield input, select {
+  width: 100%;
+  text-align: center;
+  color: var(--background);
+}
+
+#registerfield button {
+  justify-self: center;
+  text-align: center;
+  font-family: 'Righteous', cursive;
+  background: linear-gradient(45deg, var(--accent-dark), var(--accent-light));
+  color: white;
+  border-radius: 5px;
+}
+
+#registerfield button:hover {
+  opacity: 80%;
+}
+
+#registerfield Select {
+  color: var(--background);
+  background: rgba(2, 48, 71, 0.119);
+  height: 27px;
+  border: inherit;
+}
+
+#registerfield Select:invalid {
+  color: #71807F;
+}
+
+#registerfield Select:hover {
+  cursor: pointer;
 }

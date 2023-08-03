@@ -15,10 +15,12 @@ body {
   --container-color: #8ecae6;
   --accent-light: #ffb703;
   --accent-dark: #fb8500;
+  --dark-text: #11101d;
   background: var(--background);
   background-size: cover;
   overflow: auto;
   color: white;
+  font-family: "Poppins", sans-serif;
 }
 
 html, body, #root {

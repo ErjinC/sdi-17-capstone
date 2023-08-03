@@ -15,32 +15,62 @@
   padding: 2px;
   padding-left: 10px;
   padding-right: 10px;
+  color: white;
+  background: linear-gradient(45deg, var(--accent-dark), var(--accent-light));
+  border-radius: 5px;
+  font-family: 'Righteous', cursive;
 }
-#loginheader {
+
+#loginbutton:hover {
+  opacity: 80%;
+}
+
+.loginBtn {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  font-size: 32px;
+  justify-content: center;
+  padding-top: 1.5rem;
+}
+
+#loginheader {
+  /* display: flex;
+  flex-direction: row; */
+  text-align: center;
+  /* justify-content: space-around; */
+  font-size: 3rem;
   font-weight: bolder;
   margin: 2rem;
   margin-bottom: 0;
+  font-family: 'Righteous', cursive;
 }
 
 #page {
   display: flex;
   justify-content: center;
+  height: 90%;
+}
+
+#page input {
+  background: rgba(2, 48, 71, 0.119);
+  border-radius: 5px;
+  padding-left: .4rem;
 }
 
 #loginsection {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-self: center;
   width: fit-content;
-  background: hsla(48, 100%, 62%, 1);
-  margin-top: 2em;
+  /* background: hsla(48, 100%, 62%, 1); */
+  background: var(--container-color);
+  /* margin-top: 2em; */
   border-radius: 10px;
-  padding-bottom: 1em;
+  padding: 3em 3em 0em 3em;
+  max-height: 50%;
+  aspect-ratio: 1/1;
   box-shadow: 1px 1px 10px 1px #4F200D;
+  min-height: 400px;
+  min-width: 400px;
 }
 
 .loginicon {
@@ -49,8 +79,28 @@
 
 #username {
   display: flex;
+  color: var(--background);
+  padding-right: 15px;
 }
 
 #password {
   display: flex;
+  color: var(--background);
+  padding-right: 15px;
+}
+
+.registerLink {
+  text-align: center;
+  align-self: bottom;
+  font-size: 12px;
+  padding-top: 2em;
+}
+
+.registerLink span {
+  color: var(--accent-dark);
+}
+
+.registerLink span:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

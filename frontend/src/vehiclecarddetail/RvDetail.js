@@ -26,7 +26,7 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
   },[])
 
   const handleListingRemove = () => {
-    console.log('vehicle: ', vehicle)
+    // console.log('vehicle: ', vehicle)
     if (window.confirm('Are you sure you want to delete your listing?')) {
       fetch(`http://localhost:3001/listings`, {
         method: 'DELETE',
@@ -85,7 +85,7 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
   }
 
   const handleSell = () => {
-    console.log('Sold')
+    // console.log('Sold')
     setSoldStatus(true);
     fetch(`http://localhost:3001/sold/${vehicle.rv_id}`, {
       method: 'PATCH',
@@ -98,7 +98,7 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
   }
 
   const handleRelist = () => {
-    console.log('Relisting')
+    // console.log('Relisting')
     setSoldStatus(false);
     fetch(`http://localhost:3001/sold/${vehicle.rv_id}`, {
       method: 'PATCH',
@@ -207,7 +207,7 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
         <div id="detailsContainer">
           <div class='detailButtons'>
             <div id='returnButtonContainer'> 
-              <span onClick={() => { setDetailedView({ active: false, vehicle: {} }); window.location.reload()}} class="material-symbols-outlined">arrow_back</span>
+              <span onClick={() => { setDetailedView({ active: false, vehicle: {} });}} class="material-symbols-outlined">arrow_back</span>
               
             </div>
             { linkRoute === '' && sessionStorage.getItem('CurrentUser') != null ?
@@ -221,7 +221,7 @@ const RvDetail = ({vehicle, favorited, setDetailedView}) => {
               :
               linkRoute === ('profile') ? 
                 //if we are in profile, display remove icons instead
-                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event)}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span>
+                <span id='trashIconDetail' className="material-symbols-outlined favoriteIconDetail" onClick={(event) => {handleFavoriteRemove(event); window.location.reload()}}><Tooltip openDelay={500} hasArrow label="Remove Favorite">delete</Tooltip></span>
               :
                 linkRoute === 'listings' ? 
                 //if we are not in profile, check if we're in listings

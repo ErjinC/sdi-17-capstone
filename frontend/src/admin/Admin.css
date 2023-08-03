@@ -20,13 +20,16 @@
   width: 100%;
   overflow: auto;
   height: 80vh;
+  background: var(--container-color);
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px 1px var(--background-accent);
 }
 
 #flexcontaineraccountlist > * {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border: white solid 1px;
+  border: var(--background) solid 1px;
   flex: 1 1 48%;
   min-width: 450px;
   margin: .5rem;
@@ -41,10 +44,21 @@
 .accountContainer{
   position: relative;
   width: 75%;
+  color: var(--background);
+  background: var(--background);
 }
 
 .accountInfoLeftContainer{
   width: 50%;
+}
+
+.adminAccountsItem {
+  display: flex;
+  color: white
+}
+
+.adminAccountsItem > p {
+  margin-left: 0.5rem;
 }
 
 .accountInfoRightContainer{
@@ -108,6 +122,7 @@
   min-width: 250px;
   height: 85%;
   max-height: 80vh;
+  box-shadow: 1px 1px 5px 1px var(--background-accent);
 }
 
 .baseItem{

@@ -18,9 +18,9 @@ const Admin = () => {
             <div id='adminPageWrapper'>
                 <Tabs>
                 <TabList>
-                    <Tab>Reported Listings</Tab>
-                    <Tab>Account Management</Tab>
-                    <Tab>Base List Management</Tab>
+                    <Tab _selected={{color: '#ffb703'}}>Reported Listings</Tab>
+                    <Tab _selected={{color: '#ffb703'}}>Account Management</Tab>
+                    <Tab _selected={{color: '#ffb703'}}>Base List Management</Tab>
                 </TabList>
 
                 <TabPanels>

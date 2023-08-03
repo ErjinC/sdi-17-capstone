@@ -68,67 +68,104 @@ const FrontPage = () => {
               </div>
             </div>
           </> : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'car' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView} />) : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'boat' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView} />) : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'rv' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView} />) : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'motorcycle' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView} />) : <></>}
-            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'trailer' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? listings.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView} />) : <></>}
+
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'car' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? 
+              listings.carListings.length > 0 ? 
+                listings.carListings.filter(car=>!(car.sold)).map(car => <VehicleCard vehicle={car} detailedView={detailedView} setDetailedView={setDetailedView} />) 
+                :
+                <div className='noResults'><span>No results found</span></div>
+              : 
+              <></>}
+
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'boat' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? 
+              listings.boatListings.length > 0 ? 
+                listings.boatListings.filter(boat=>!(boat.sold)).map(boat => <VehicleCard vehicle={boat} detailedView={detailedView} setDetailedView={setDetailedView} />) 
+                :
+                <div className='noResults'><span>No results found</span></div>
+              : 
+              <></>}
+
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'rv' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? 
+              listings.rvListings.length > 0 ? 
+                listings.rvListings.filter(rv=>!(rv.sold)).map(rv => <VehicleCard vehicle={rv} detailedView={detailedView} setDetailedView={setDetailedView} />) 
+                :
+                <div className='noResults'><span>No results found</span></div>
+              : 
+              <></>}
+
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'motorcycle' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? 
+              listings.motoListings.length > 0 ? 
+                listings.motoListings.filter(moto=>!(moto.sold)).map(moto => <VehicleCard vehicle={moto} detailedView={detailedView} setDetailedView={setDetailedView} />) 
+                :
+                <div className='noResults'><span>No results found</span></div>
+              : 
+              <></>}
+
+            {listings && (vehicleFilterRetrieve('vehiclefilter') === 'trailer' || vehicleFilterRetrieve('vehiclefilter') === 'all') ? 
+              listings.trailerListings.length > 0 ? 
+                listings.trailerListings.filter(trailer=>!(trailer.sold)).map(trailer => <VehicleCard vehicle={trailer} detailedView={detailedView} setDetailedView={setDetailedView} />) 
+                :
+                <div className='noResults'><span>No results found</span></div>
+              : 
+              <></>}
           </>
       </div>
 
       <div id="filterbar">
-        <fieldset>
-          <legend for="vehicle" id='vehiclefilter'>Choose a Vehicle</legend>
-          <select
-            name="vehicle"
-            data-testid="vehicleSelect"
-            id="vehicleSelect"
-            defaultValue={vehicleFilterRetrieve('vehiclefilter')}
-            onChange={(e) => {
-              sessionStorage.setItem('vehiclefilter', e.target.value)
-              setListings(originalListings)
-              switch(e.target.value) {
-                case 'all':
-                  setFilterText('all')
-                  sessionStorage.setItem('vehiclefilter', e.target.value)
-                  break;
-                case 'car':
-                  setFilterText('car')
-                  sessionStorage.setItem('vehiclefilter', e.target.value)
-                  break;
-                case 'boat':
-                  setFilterText('boat')
-                  sessionStorage.setItem('vehiclefilter', e.target.value)
-                  break;
-                case 'motorcycle':
-                  setFilterText('motorcycle')
-                  sessionStorage.setItem('vehiclefilter', e.target.value)
-                  break;
-                case 'rv':
-                  setFilterText('rv')
-                  sessionStorage.setItem('vehiclefilter', e.target.value)
-                  break;
-                case 'trailer':
-                  setFilterText('trailer')
-                  sessionStorage.setItem('vehiclefilter', e.target.value)
-                  break;
-                default:
-                  setFilterText('')
-              }
-            }}
-            > 
-            <option value='' disabled>Please select an option</option>
-            <option value="all" default>All</option>
-            <option value="car">Cars</option>
-            <option value="boat">Boats</option>
-            <option value="motorcycle">Motorcycles</option>
-            <option value="rv">RVs</option>
-            <option value="trailer">Trailers</option>
-          </select>
-        </fieldset>
+        <div>
+          <fieldset>
+            <legend for="vehicle" id='vehiclefilter'>Choose a Vehicle</legend>
+            <select
+              name="vehicle"
+              data-testid="vehicleSelect"
+              id="vehicleSelect"
+              defaultValue={vehicleFilterRetrieve('vehiclefilter')}
+              onChange={(e) => {
+                sessionStorage.setItem('vehiclefilter', e.target.value)
+                setListings(originalListings)
+                switch(e.target.value) {
+                  case 'all':
+                    setFilterText('all')
+                    sessionStorage.setItem('vehiclefilter', e.target.value)
+                    break;
+                  case 'car':
+                    setFilterText('car')
+                    sessionStorage.setItem('vehiclefilter', e.target.value)
+                    break;
+                  case 'boat':
+                    setFilterText('boat')
+                    sessionStorage.setItem('vehiclefilter', e.target.value)
+                    break;
+                  case 'motorcycle':
+                    setFilterText('motorcycle')
+                    sessionStorage.setItem('vehiclefilter', e.target.value)
+                    break;
+                  case 'rv':
+                    setFilterText('rv')
+                    sessionStorage.setItem('vehiclefilter', e.target.value)
+                    break;
+                  case 'trailer':
+                    setFilterText('trailer')
+                    sessionStorage.setItem('vehiclefilter', e.target.value)
+                    break;
+                  default:
+                    setFilterText('')
+                }
+              }}
+              > 
+              <option value='' disabled>Please select an option</option>
+              <option value="all" default>All</option>
+              <option value="car">Cars</option>
+              <option value="boat">Boats</option>
+              <option value="motorcycle">Motorcycles</option>
+              <option value="rv">RVs</option>
+              <option value="trailer">Trailers</option>
+            </select>
+          </fieldset>
+        </div>
         <div>
 
-          {listings && originalListings && filterText !== 'all'? <Filters originalListings={originalListings} filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> : <>Select a vehicle to start filtering!</> }
+          {listings && originalListings && filterText !== 'all'? <Filters originalListings={originalListings} filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> : <div id='filterdefault'>Select a vehicle type to start filtering!</div> }
           {/* <Filters originalListings={originalListings} filterText={filterText} listings={listings} setListings={setListings} detailedView={detailedView} setDetailedView={setDetailedView} /> */}
 
         </div>

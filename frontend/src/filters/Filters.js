@@ -20,7 +20,7 @@ const theme = createTheme({
 let beforeChange = null;
 
 const Filters = ({filterText, listings, setListings, detailedView, setDetailedView, originalListings}) => {
-  const [makeDropDown, setMakeDropDown] = useState('test')
+  const [makeDropDown, setMakeDropDown] = useState('')
   const [maxValue, setMaxValue] = useState('')
   const [update, setUpdate] = useState(false)
 
@@ -68,8 +68,8 @@ const Filters = ({filterText, listings, setListings, detailedView, setDetailedVi
       document.getElementById('adventurebikecheck').checked = false
     } else if (filterText === 'rv') {
       // iterator = originalListings.rvListings
-      document.getElementById('motorized').checked = false
-      document.getElementById('towable').checked = false
+      document.getElementById('motorizedcheck').checked = false
+      document.getElementById('towablecheck').checked = false
     } else if (filterText === 'trailer') {
       // iterator = originalListings.trailerListings
       document.getElementById('flatbedcheck').checked = false
@@ -108,7 +108,7 @@ const handleChangeCommitted = () => {
 const handleSubmit = (e) => {
   e.preventDefault()
   // console.log(listings)
-  console.log('originals: ', originalListings)
+  // console.log('originals: ', originalListings)
   
   let minYear = yearRange[0]
   let maxYear = yearRange[1]
@@ -134,24 +134,24 @@ const handleSubmit = (e) => {
   
   let filtered = iterator.filter(item => {
     if (item.year < yearRange[0] || item.year > yearRange[1]) {
-      console.log(`Year don't match`)
+      // console.log(`Year don't match`)
       return false
     }
     if (make !== 'all') {
       if (item.make !== make) {
-        console.log(`Make don't match`)
+        // console.log(`Make don't match`)
         return false
       }
     }
     if (model !== 'all') {
       if (item.model !== model) {
-        console.log(`Model don't match`)
+        // console.log(`Model don't match`)
         return false
       }
     }
     if (location !== 'all') {
       if (item.location !== location) {
-        console.log(`Location don't match`)
+        // console.log(`Location don't match`)
         return false
       }
     }
@@ -159,108 +159,108 @@ const handleSubmit = (e) => {
     if (filterText === 'car') {
       if (e.target.car.checked || e.target.coupe.checked || e.target.truck.checked) {
         if (!e.target.car.checked && (item.type === e.target.car.value)) {
-          console.log(`Car checked, but not a car`)
+          // console.log(`Car checked, but not a car`)
           return false
         }
         if (!e.target.coupe.checked && (item.type === e.target.coupe.value)) {
-          console.log(`Coupe checked, but not a coupe`)
+          // console.log(`Coupe checked, but not a coupe`)
           return false
         }
         if (!e.target.truck.checked && (item.type === e.target.truck.value)) {
-          console.log(`Truck checked, but not a truck`)
+          // console.log(`Truck checked, but not a truck`)
           return false
         }
       }
     } else if (filterText === 'boat') {
       if (e.target.boat.checked || e.target.jetski.checked) {
         if (!e.target.boat.checked && (item.type === e.target.boat.value)) {
-          console.log(`Boat checked, but not a boat`)
+          // console.log(`Boat checked, but not a boat`)
           return false
         }
         if (!e.target.jetski.checked && (item.type === e.target.jetski.value)) {
-          console.log(`Jet Ski checked, but not a Jet Ski`)
+          // console.log(`Jet Ski checked, but not a Jet Ski`)
           return false
         }
       }
     } else if (filterText === 'motorcycle') {
       if (e.target.streetbike.checked || e.target.dirtbike.checked || e.target.cruiser.checked || e.target.sportbike.checked || e.target.touringbike.checked || e.target.adventurebike.checked) {
         if (!e.target.streetbike.checked && (item.type === e.target.streetbike.value)) {
-          console.log(`Street bike checked, but not a street bike`)
+          // console.log(`Street bike checked, but not a street bike`)
           return false
         }
         if (!e.target.dirtbike.checked && (item.type === e.target.dirtbike.value)) {
-          console.log(`Dirt bike checked, but not a dirt bike`)
+          // console.log(`Dirt bike checked, but not a dirt bike`)
           return false
         }
         if (!e.target.cruiser.checked && (item.type === e.target.cruiser.value)) {
-          console.log(`Cruiser checked, but not a cruiser`)
+          // console.log(`Cruiser checked, but not a cruiser`)
           return false
         }
         if (!e.target.sportbike.checked && (item.type === e.target.sportbike.value)) {
-          console.log(`Sport bike checked, but not a sport bike`)
+          // console.log(`Sport bike checked, but not a sport bike`)
           return false
         }
         if (!e.target.dualsport.checked && (item.type === e.target.dualsport.value)) {
-          console.log(`Dual sport checked, but not a dual sport`)
+          // console.log(`Dual sport checked, but not a dual sport`)
           return false
         }
         if (!e.target.touringbike.checked && (item.type === e.target.touringbike.value)) {
-          console.log(`Touring bike checked, but not a touring bike`)
+          // console.log(`Touring bike checked, but not a touring bike`)
           return false
         }
         if (!e.target.adventurebike.checked && (item.type === e.target.adventurebike.value)) {
-          console.log(`Adventure bike checked, but not an adventure bike`)
+          // console.log(`Adventure bike checked, but not an adventure bike`)
           return false
         }
       }
     } else if (filterText === 'rv') {
       if (e.target.motorized.checked || e.target.towable.checked) {
         if (!e.target.motorized.checked && (item.type === e.target.motorized.value)) {
-          console.log(`Motorized checked, but not a Motorized RV`)
+          // console.log(`Motorized checked, but not a Motorized RV`)
           return false
         }
         if (!e.target.towable.checked && (item.type === e.target.towable.value)) {
-          console.log(`Towable checked, but not a Towable RV`)
+          // console.log(`Towable checked, but not a Towable RV`)
           return false
         }
       }
     } else if (filterText === 'trailer') {
       if (e.target.flatbed.checked || e.target.enclosed.checked) {
         if (!e.target.flatbed.checked && (item.type === e.target.flatbed.value)) {
-          console.log(`Flatbed checked, but not a Flatbed Trailer`)
+          // console.log(`Flatbed checked, but not a Flatbed Trailer`)
           return false
         }
         if (!e.target.enclosed.checked && (item.type === e.target.enclosed.value)) {
-          console.log(`Enclosed checked, but not a Enclosed Trailer`)
+          // console.log(`Enclosed checked, but not a Enclosed Trailer`)
           return false
         }
       }
     }
 
     if (item.price < value[0] || item.price > value[1]) {
-      console.log(`Price outside of the range`)
+      // console.log(`Price outside of the range`)
       return false
     }
 
 
     if (poorcheck || goodcheck || excellentcheck) {
       if (!poorcheck && (item.condition === e.target.poor.value)) {
-        console.log(`Poor checked, but not Poor condition`)
+        // console.log(`Poor checked, but not Poor condition`)
         return false
       }
       if (!goodcheck && (item.condition === e.target.good.value)) {
-        console.log(`Good checked, but not good condition`)
+        // console.log(`Good checked, but not good condition`)
         return false
       }
       if (!excellentcheck && (item.condition === e.target.excellent.value)) {
-        console.log(`Excellent checked, but not excellent condition`)
+        // console.log(`Excellent checked, but not excellent condition`)
         return false
       }
     }
     
     return true
   })
-  console.log(filtered) 
+  // console.log(filtered) 
   if (filterText === 'car') {
     setListings({carListings: filtered})
   } else if (filterText === 'boat') {
@@ -292,6 +292,7 @@ const handleSubmit = (e) => {
               {/* Show vehicles from:<br></br> */}
               <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
             </Typography>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={yearRange} // Math.min(array)
@@ -304,6 +305,7 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
           </fieldset>
 
           <fieldset>
@@ -333,13 +335,14 @@ const handleSubmit = (e) => {
               id='model'
               defaultValue={''}
               onChange={() => {
-                console.log(type)
+                // console.log(type)
                 // document.getElementById('carcheck').checked = !document.getElementById('carcheck').checked
               }}
               >
               <option value='all'>All</option>
               {originalListings.carListings.map(e => {
-                if (e.make === makeDropDown) {
+                // if (e.make === makeDropDown) {
+                if (!model.includes(e.model) && e.make === makeDropDown) {
                   model.push(e.model)
                   type.push({
                     model: e.model,
@@ -386,6 +389,7 @@ const handleSubmit = (e) => {
 
           <fieldset>
             <legend>Price</legend>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={value}
@@ -398,6 +402,8 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
+            <div className='minMaxContainer'>
             <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -405,7 +411,7 @@ const handleSubmit = (e) => {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={value[1]} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -414,6 +420,7 @@ const handleSubmit = (e) => {
                   setMaxValue(e.target.value)
                 }
               }}/>
+              </div>
           </fieldset>
 
           <fieldset>
@@ -448,6 +455,7 @@ const handleSubmit = (e) => {
               {/* Show vehicles from:<br></br> */}
               <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
             </Typography>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={yearRange} // Math.min(array)
@@ -460,6 +468,7 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
           </fieldset>
           <fieldset>
             <legend>Make</legend>
@@ -487,13 +496,13 @@ const handleSubmit = (e) => {
               id='model'
               defaultValue={''}
               onChange={() => {
-                console.log(type)
+                // console.log(type)
                 // document.getElementById('boatcheck').checked = !document.getElementById('boatcheck').checked
               }}
               >
               <option value='all'>All</option>
               {originalListings.boatListings.map(e => {
-                if (e.make === makeDropDown) {
+                if (!model.includes(e.model) && e.make === makeDropDown) {
                   model.push(e.model)
                   type.push({
                     model: e.model,
@@ -535,6 +544,7 @@ const handleSubmit = (e) => {
 
           <fieldset>
             <legend>Price</legend>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={value}
@@ -547,6 +557,8 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
+            <div className='minMaxContainer'>
             <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -554,7 +566,7 @@ const handleSubmit = (e) => {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={value[1]} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -563,6 +575,7 @@ const handleSubmit = (e) => {
                   setMaxValue(e.target.value)
                 }
               }}/>
+              </div>
           </fieldset>
 
           <fieldset>
@@ -597,6 +610,7 @@ const handleSubmit = (e) => {
               {/* Show vehicles from:<br></br> */}
               <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
             </Typography>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={yearRange} // Math.min(array)
@@ -609,6 +623,7 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
           </fieldset>
           <fieldset>
             <legend>Make</legend>
@@ -636,13 +651,13 @@ const handleSubmit = (e) => {
               id='model'
               defaultValue={''}
               onChange={() => {
-                console.log(type)
+                // console.log(type)
                 // document.getElementById('motocheck').checked = !document.getElementById('motocheck').checked
               }}
               >
               <option value='all'>All</option>
               {originalListings.motoListings.map(e => {
-                if (e.make === makeDropDown) {
+                if (!model.includes(e.model) && e.make === makeDropDown) {
                   model.push(e.model)
                   type.push({
                     model: e.model,
@@ -701,6 +716,7 @@ const handleSubmit = (e) => {
 
           <fieldset>
             <legend>Price</legend>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={value}
@@ -713,6 +729,8 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
+            <div className='minMaxContainer'>
             <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -720,7 +738,7 @@ const handleSubmit = (e) => {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={value[1]} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -729,6 +747,7 @@ const handleSubmit = (e) => {
                   setMaxValue(e.target.value)
                 }
               }}/>
+              </div>
           </fieldset>
 
           <fieldset>
@@ -763,6 +782,7 @@ const handleSubmit = (e) => {
               {/* Show vehicles from:<br></br> */}
               <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
             </Typography>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={yearRange} // Math.min(array)
@@ -775,6 +795,7 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
           </fieldset>
           <fieldset>
             <legend>Make</legend>
@@ -802,13 +823,13 @@ const handleSubmit = (e) => {
               id='model'
               defaultValue={''}
               onChange={() => {
-                console.log(type)
+                // console.log(type)
                 // document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
               }}
               >
               <option value='all'>All</option>
               {originalListings.rvListings.map(e => {
-                if (e.make === makeDropDown) {
+                if (!model.includes(e.model) && e.make === makeDropDown) {
                   model.push(e.model)
                   type.push({
                     model: e.model,
@@ -850,6 +871,7 @@ const handleSubmit = (e) => {
 
           <fieldset>
             <legend>Price</legend>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={value}
@@ -862,6 +884,8 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
+            <div className='minMaxContainer'>
             <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -869,7 +893,7 @@ const handleSubmit = (e) => {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={value[1]} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -878,6 +902,7 @@ const handleSubmit = (e) => {
                   setMaxValue(e.target.value)
                 }
               }}/>
+              </div>
           </fieldset>
 
           <fieldset>
@@ -912,6 +937,7 @@ const handleSubmit = (e) => {
               {/* Show vehicles from:<br></br> */}
               <p>{yearRange[0]}</p><p>{yearRange[1]}</p>
             </Typography>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={yearRange} // Math.min(array)
@@ -924,6 +950,7 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
           </fieldset>
           <fieldset>
             <legend>Make</legend>
@@ -951,13 +978,13 @@ const handleSubmit = (e) => {
               id='model'
               defaultValue={''}
               onChange={() => {
-                console.log(type)
+                // console.log(type)
                 // document.getElementById('motorizedcheck').checked = !document.getElementById('motorizedcheck').checked
               }}
               >
               <option value='all'>All</option>
               {originalListings.trailerListings.map(e => {
-                if (e.make === makeDropDown) {
+                if (!model.includes(e.model) && e.make === makeDropDown) {
                   model.push(e.model)
                   type.push({
                     model: e.model,
@@ -998,6 +1025,7 @@ const handleSubmit = (e) => {
 
           <fieldset>
             <legend>Price</legend>
+            <div className='filterSliderWrapper'>
             <ThemeProvider theme={theme}>
               <Slider
                 value={value}
@@ -1010,6 +1038,8 @@ const handleSubmit = (e) => {
                 onChangeCommitted={handleChangeCommitted}
               />
             </ThemeProvider>
+            </div>
+            <div className='minMaxContainer'>
             <input type='number' className='minmax' name='min' value={value[0]} placeholder='min' onChange={(e) => {
               if (e.target.value >= value[1]) {
                 setValue([value[1], value[1]])
@@ -1017,7 +1047,7 @@ const handleSubmit = (e) => {
                 setValue([e.target.value, value[1]])
               }
               }}/>
-            <input type='number' className='minmax' name='max' value={maxValue} placeholder='max' onChange={(e) => {
+            <input type='number' className='minmax' name='max' value={value[1]} placeholder='max' onChange={(e) => {
                 if (e.target.value <= value[0]) {
                   setValue([value[0], value[0]])
                   setMaxValue(e.target.value)
@@ -1026,6 +1056,7 @@ const handleSubmit = (e) => {
                   setMaxValue(e.target.value)
                 }
               }}/>
+              </div>
           </fieldset>
 
           <fieldset>

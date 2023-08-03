@@ -23,11 +23,15 @@
 }
 
 #title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-size: 2.5rem;
   width: 80%;
   flex: 1 1 20%;
   font-family: 'Righteous', cursive;
+  position: relative;
 }
 
 #title:hover{
@@ -65,6 +69,25 @@
   flex-direction: row;
 }
 
+
+#titleLogo{
+  width: 69px;
+  height: 65px;
+  display: block;
+  rotate: 35deg;
+  margin-right: 10px;
+  position: absolute;
+  z-index: 1;
+}
+
+#titleText{
+  position: relative;
+  top: 0px;
+  right: 0;
+  z-index: 2;
+  text-shadow: 0 0 3px black;
+}
+
 #splashImage{
   width: 69px;
   height: 65px;
@@ -78,24 +101,45 @@
 /* TESTING NEW SIDEBAR */
 
 .sidebar {
+  display: flex;
   position: fixed;
   height: 100%;
   width: 260px;
+  /* width: 100%; */
   background: #11101d;
   padding: 15px;
   z-index: 99;
-  transform: translate3d(-80vw, 0, 0);
+  transform: translate3d(-260px, 0, 0);
   transition: transform .6s
   cubic-bezier(0, .52, 0, 1);
 }
 
 .sidebar.hide {
-  transform: translate3d(-80vw, 0, 0);
+  transform: translate3d(-260px, 0, 0);
+  transition: transform 0.8s
 }
- 
+
+.overlay.hide {
+  display: none;
+}
+
 .sidebar.show {
-  transform: translate3d(0vw, 0, 0);
+  transform: translate3d(0, 0, 0);
   overflow: hidden;
+}
+
+.overlay.show {
+  display: block;
+}
+
+#sidebaroverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100%;
+  z-index: 98;
+  overflow: hidden;
+  width: 100%;
+  height: 90%;
 }
 
 .sidebar * {
@@ -170,10 +214,12 @@
 
 .item.hide {
   transform: translate3d(+80vw, 0, 0);
+  transition: transform 0.8s
 }
  
 .item.show {
-  transform: translate3d(0vw, 0, 0);
+  transform: translate3d(+1px, 0, 0);
+  transition: transform 0.6s;
   overflow: hidden;
 }
 

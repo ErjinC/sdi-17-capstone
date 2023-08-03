@@ -24,7 +24,7 @@ const VehicleCard = ({vehicle, detailedView, setDetailedView}) => {
         setFavorited(false)
       }
       sessionStorage.setItem('CurrentUser', JSON.stringify({...currentUser, favorites:userFavorites.toString()}))
-      console.log('fetching favorites')
+      // console.log('fetching favorites')
       fetch(`http://localhost:3001/favorites`, {
         method: 'PATCH',
         headers: {'Content-Type': 'application/json'},

@@ -3,6 +3,7 @@ import './Register.css'
 import { ToastContainer, toast } from 'react-toastify';
 import { ParentContext } from '../App';
 import { useNavigate } from 'react-router-dom';
+import { ChakraProvider, Select } from '@chakra-ui/react'
 
 const Register = () => {
   const [first, setFirst] = useState('');
@@ -11,13 +12,16 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [base, setBase] = useState('Los Angeles SFB');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
   const navigate = useNavigate()
 
   const { locations } = useContext(ParentContext)
 
   const handleRegistration = () => {
-    if (first === '' || last === '' || username === '' || password === '' || base === '') {
+    // console.log(email)
+    if (first === '' || last === '' || username === '' || password === '' || base === '' || phone.length < 10) {
       return toast.error('Please fill in all fields', {position: toast.POSITION.BOTTOM_CENTER})
     } else if (password !== passwordConfirm) {
       return toast.error('Passwords do not match, please try again.', {position: toast.POSITION.BOTTOM_CENTER})
@@ -33,12 +37,14 @@ const Register = () => {
           'last_name': last,
           'username': username,
           'password': password,
-          'base': base
+          'base': base,
+          'email': email,
+          'phone': phone.slice(0,3)+'-'+phone.slice(3,6)+'-'+phone.slice(6),
         }])
       })
       .then((data) => data.json())
       .then(res => {
-        console.log(res)
+        // console.log(res)
         if(!res.success){
           toast.error('Account already exists', {position: toast.POSITION.BOTTOM_CENTER})
         }else{
@@ -50,8 +56,9 @@ const Register = () => {
 
   return (
       <div id="page">
+        <ChakraProvider>
           <div id='registersection'>
-            <div id='registerheader'>Lemon Drop User Registration</div>
+            <div id='registerheader'>Lemon Drop Registration</div>
             <div id='flexcontainerregister'>
               <div id='registerfield'>
                 <div id="firstname">
@@ -78,20 +85,45 @@ const Register = () => {
                   ></input>
                 </div>
 
+                <div id="register-email">
+                <span class="material-symbols-outlined loginicon">email</span>
+                  <input
+                  type='text'
+                  defaultValue={email}
+                  pattern="^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"
+                  placeholder='E-Mail'
+                  id='email-value'
+                  onChange={() => {setEmail(document.getElementById('email-value').value)}}
+                  ></input>
+                </div>
+
                 <div id="base">
                   <span class="material-symbols-outlined loginicon">home</span>
                   {/* <select name="base" id='base-value' onChange={() => setBase(document.getElementById('base-value').value)}> */}
-                  <select name="base" id='base-value' value='Los Angeles SFB' onChange={(event) => setBase(event.target.value)}>
-                    <option value="" disabled> --Please choose a base -- </option>
+                  <Select name="base" id='base-value' defaultValue='' required onChange={(event) => setBase(event.target.value)}>
+                    <option value="" disabled> -- Please choose a base -- </option>
                     {locations?.map((baseOption) => {
                       return (
                         <option value={ baseOption.name }>{ baseOption.name }</option>
                       )
                     })}
-                  </select>
+                  </Select>
                 </div>
 
-                <div id="username">
+                <div id="register-phone">
+                <span class="material-symbols-outlined loginicon">phone</span>
+                  <input
+                  type='text'
+                  defaultValue={phone}
+                  maxLength={10}
+                  pattern="^[0-9]{10}$"
+                  placeholder='Phone #'
+                  id='phone-value'
+                  onChange={() => {setPhone(document.getElementById('phone-value').value)}}
+                  ></input>
+                </div>
+
+                <div id="register-username">
                 <span class="material-symbols-outlined loginicon">person</span>
                   <input
                   type='textbox'
@@ -103,7 +135,7 @@ const Register = () => {
                   ></input>
                 </div>
 
-                <div id="password">
+                <div id="register-password">
                   <span class="material-symbols-outlined loginicon">lock</span>
                   <input
                   type='password'
@@ -130,16 +162,19 @@ const Register = () => {
                   ></input>
                 </div>
 
-                <button
-                id='registerbutton'
-                onClick={() => {handleRegistration() }}
-                >
-                  Register
-                </button>
+                <div id='registerbuttoncontainer'>
+                  <button
+                  id='registerbutton'
+                  onClick={() => {handleRegistration() }}
+                  >
+                    Register
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         <ToastContainer autoClose={1500}/>
+        </ChakraProvider>
     </div>
   )
 }

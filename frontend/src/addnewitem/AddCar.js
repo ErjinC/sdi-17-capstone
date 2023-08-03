@@ -14,7 +14,7 @@ const AddCar = ({ locations, currentUser, setVehicleType }) => {
     const [color, setColor] = useState('');
     const [transmission, setTransmission] = useState('automatic');
     const [condition, setCondition] = useState('poor');
-    const [location, setLocation] = useState('');
+    const [location, setLocation] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).base);
     const [description, setDescription] = useState('');
     const [imageURL, setImageURL] = useState('');
     const [imageURLText, setImageURLText] = useState('');
@@ -28,6 +28,7 @@ const AddCar = ({ locations, currentUser, setVehicleType }) => {
 
                 <div className='vehicle-creation-button-container'>
                     <Stack spacing={4} direction='row' >
+                    <Button leftIcon={<ArrowBackIcon />} colorScheme='gray' size='md' className='vehicle-creation-button' onClick={() => setVehicleType('')}>Go Back</Button>
                         <Button leftIcon={<AddIcon />} colorScheme='gray' size='md'
                             className='vehicle-creation-button'
                             onClick={() => {
@@ -54,7 +55,7 @@ const AddCar = ({ locations, currentUser, setVehicleType }) => {
                                         })
                                     })
                                         .then(data => data.json())
-                                        .then(res => console.log(res))
+                                        // .then(res => console.log(res))
                                         .then(window.location = '/listings')
                                         .then(alert('Added Successful!'));
                                 } else {
@@ -66,8 +67,7 @@ const AddCar = ({ locations, currentUser, setVehicleType }) => {
                                     })
                                 }
                             }}
-                        >Create new Listing</Button>
-                        <Button leftIcon={<ArrowBackIcon />} colorScheme='gray' size='md' className='vehicle-creation-button' onClick={() => setVehicleType('')}>Go Back</Button>
+                        >Post Listing</Button>
                     </Stack>
                 </div>
 
@@ -78,7 +78,7 @@ const AddCar = ({ locations, currentUser, setVehicleType }) => {
                     <div className='additem'>
                         <div>
                             <label>Type</label>
-                            <Select variant='filled' id='type' onChange={(e) => setType(e.target.value)}>
+                            <Select background="white" id='type' onChange={(e) => setType(e.target.value)}>
                                 <option value='car'>Car</option>
                                 <option value='coupe'>Coupe</option>
                                 <option value='truck'>Truck</option>
@@ -86,38 +86,38 @@ const AddCar = ({ locations, currentUser, setVehicleType }) => {
                         </div>
                         <div>
                             <label>Make</label>
-                            <Input variant='filled' type='textbox' id='make' onChange={(e) => setMake(e.target.value)} />
+                            <Input background="white" type='textbox' id='make' onChange={(e) => setMake(e.target.value)} />
                         </div>
                         <div>
                             <label>Model</label>
-                            <Input variant='filled' type='textbox' id='model' onChange={(e) => setModel(e.target.value)} />
+                            <Input background="white" type='textbox' id='model' onChange={(e) => setModel(e.target.value)} />
                         </div>
                         <div>
                             <label>Year</label>
-                            <Input variant='filled' type='number' id='year' onChange={(e) => setYear(e.target.value)} />
+                            <Input background="white" type='number' id='year' onChange={(e) => setYear(e.target.value)} />
                         </div>
                         <div>
                             <label>Price</label>
-                            <Input variant='filled' type='number' id='price' onChange={(e) => setPrice(e.target.value)} />
+                            <Input background="white" type='number' id='price' onChange={(e) => setPrice(e.target.value)} />
                         </div>
                         <div>
                             <label>Mileage</label>
-                            <Input variant='filled' type='number' id='mileage' onChange={(e) => setMileage(e.target.value)} />
+                            <Input background="white" type='number' id='mileage' onChange={(e) => setMileage(e.target.value)} />
                         </div>
                         <div>
                             <label>Color</label>
-                            <Input variant='filled' type='textbox' id='color' onChange={(e) => setColor(e.target.value)} />
+                            <Input background="white" type='textbox' id='color' onChange={(e) => setColor(e.target.value)} />
                         </div>
                         <div>
                             <label>Transmission</label>
-                            <Select variant='filled' id='type' onChange={(e) => setTransmission(e.target.value)}>
+                            <Select background="white" id='type' onChange={(e) => setTransmission(e.target.value)}>
                                 <option value='automatic'>Automatic</option>
                                 <option value='manual'>Manual</option>
                             </Select>
                         </div>
                         <div>
                             <label>Condition</label>
-                            <Select variant='filled' id='condition' onChange={(e) => setCondition(e.target.value)}>
+                            <Select background="white" id='condition' onChange={(e) => setCondition(e.target.value)}>
                                 <option value='poor'>Poor</option>
                                 <option value='good'>Good</option>
                                 <option value='excellent'>Excellent</option>
@@ -125,13 +125,13 @@ const AddCar = ({ locations, currentUser, setVehicleType }) => {
                         </div>
                         <div>
                             <label>Location</label>
-                            <Select variant='filled' defaultValue={currentUser.location} onChange={(e) => setLocation(e.target.value)}>
+                            <Select background="white" defaultValue={JSON.parse(sessionStorage.getItem('CurrentUser')).base} onChange={(e) => setLocation(e.target.value)}>
                                 {locations?.map((location) => <option key={location.baseId} value={location.name}>{location.name}</option>)}
                             </Select>
                         </div>
                         <div>
                             <label>Description</label>
-                            <Textarea variant='filled' size='sm' type='textbox' className='description-input' onChange={(e) => setDescription(e.target.value)} />
+                            <Textarea background="white" size='sm' type='textbox' className='description-input' onChange={(e) => setDescription(e.target.value)} />
                         </div>
                     </div>
 
@@ -145,7 +145,7 @@ const AddCar = ({ locations, currentUser, setVehicleType }) => {
                         </div>
                         <div className='saveImageInputContainer'>
                             <label>Vehicle Image URL</label>
-                            <Input variant='filled' type='text' id='imageUrlInput' onChange={(e) => setImageURLText(e.target.value)} />
+                            <Input background="white" type='text' id='imageUrlInput' onChange={(e) => setImageURLText(e.target.value)} />
                             <Button leftIcon={<AddIcon />} colorScheme='gray' size='md' id='previewImageButton' onClick={() => { setImageURL(imageURLText) }}>Preview Image</Button>
                         </div>
                     </div>

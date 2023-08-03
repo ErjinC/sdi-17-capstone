@@ -4,20 +4,26 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FavoritesDisplay from '../favorites/FavoritesDisplay';
 import { ParentContext } from '../App';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useDisclosure, ChakraProvider,
-  Editable, Select, Stack, Input, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Table, Tr, Td, TableContainer, Divider } from '@chakra-ui/react'
+import {
+  Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useDisclosure, ChakraProvider,
+  Editable, Select, Stack, Input, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Table, Tr, Td, TableContainer, Divider
+} from '@chakra-ui/react'
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
 function Profile() {
-  const [editUsername, setEditUsername] = useState('')
+
+  const [editUsername, setEditUsername] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).username)
   const [editPassword, setEditPassword] = useState('');
   const [editPasswordCheck, setEditPasswordCheck] = useState('');
-  const [editFirstName, setEditFirstName] = useState('');
-  const [editLastName, setEditLastName] = useState(''); 
-  const [editBase, setEditBase] = useState('');
+  const [editFirstName, setEditFirstName] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).first_name);
+  const [editLastName, setEditLastName] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).last_name);
+  const [editBase, setEditBase] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).base);
+  const [editPhone, setEditPhone] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).phone);
+  const [editEmail, setEditEmail] = useState(JSON.parse(sessionStorage.getItem('CurrentUser')).email);
+  const [displayEditPhone, setDisplayEditPhone] = useState()
   const [show, setShow] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
-  const {currentUser, setCurrentUser} = useContext(ParentContext);
+  const { currentUser, setCurrentUser } = useContext(ParentContext);
   // const { isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit } = useDisclosure()
   // const { isOpen: isOpenPassword, onOpen: onOpenPassword, onClose: onClosePassword } = useDisclosure()
   const edit = useDisclosure()
@@ -25,10 +31,11 @@ function Profile() {
   const { locations } = useContext(ParentContext)
 
   useEffect(() => {
-    console.log('current user: ', currentUser)
+    // console.log('current user: ', currentUser)
     if (sessionStorage.getItem('CurrentUser') === null) {
-      window.location='/'
+      window.location = '/'
     }
+    // console.log('Username', )
   }, [])
 
   async function changePwHandler() {     //     Sends request to change user's password. Only if password is new to DB
@@ -37,25 +44,29 @@ function Profile() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ newPassword: editPassword }),
     }
-
-    if (editPassword === editPasswordCheck) {     //     Checks if password fields in frontend match
+    if (editPassword === '' || editPasswordCheck === '') {
+      return toast.error('Password not reset. New password cannot be blank', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        className: 'toast-message'
+      })
+    } else if (editPassword === editPasswordCheck) {     //     Checks if password fields in frontend match
       let request = await fetch(`http://localhost:3001/updateUserPassword/${currentUser.userId}`, putOptions);
       let response = await request.json();
 
-      if(response.success) {     //     Notifies user of their password reset status
+      if (response.success) {     //     Notifies user of their password reset status
         toast.success('Password reset was a success!', {
           position: toast.POSITION.BOTTOM_CENTER,
           className: 'toast-message',
           onClose: () => window.location.reload()
         })
-      } else  {
+      } else {
         toast.error('Error, please try again later', {
           position: toast.POSITION.BOTTOM_CENTER,
           className: 'toast-message'
         })
       }
     } else {
-      return toast.error('Password not set. These passwords don\'t match', {
+      return toast.error('Password not reset. These passwords don\'t match', {
         position: toast.POSITION.BOTTOM_CENTER,
         className: 'toast-message'
       })
@@ -63,15 +74,17 @@ function Profile() {
   }
 
   async function userEditHandler() {    //  Submits user inputted fields
-    
+
     const putOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         newUsername: editUsername,
         newFirstName: editFirstName,
         newLastName: editLastName,
         newBase: editBase,
+        newPhone: editPhone,
+        newEmail: editEmail
       }),
     }
 
@@ -84,21 +97,25 @@ function Profile() {
         username: response.newUsername,
         first_name: response.newFirstName,
         last_name: response.newLastName,
-        base: response.newBase
+        base: response.newBase,
+        phone: response.newPhone,
+        email: response.newEmail
       });
       let oldSession = JSON.parse(sessionStorage.getItem('CurrentUser'))
       // console.log(oldSession)
       sessionStorage.setItem('CurrentUser', JSON.stringify({
         admin: response.newAdminStatus,
-        userId: oldSession.userId,   
+        userId: oldSession.userId,
         username: response.newUsername,
         first_name: response.newFirstName,
         last_name: response.newLastName,
         base: response.newBase,
-        favorites: oldSession.favorites,  
-        success: response.success
+        favorites: oldSession.favorites,
+        success: response.success,
+        phone: response.newPhone,
+        email: response.newEmail
       }));
-      toast.success('Updated user info', {
+      toast.success('Updating user info', {
         position: toast.POSITION.BOTTOM_CENTER,
         className: 'toast-message',
         onClose: () => window.location.reload()
@@ -120,44 +137,23 @@ function Profile() {
       let deleteOperation = await fetch(`http://localhost:3001/deleteUser/${currentUser.userId}`, delOptions);
       let response = await deleteOperation.json();
 
-      if(response.success) {
+      if (response.success) {
         toast.success('Account Deleted. Sorry to see you go :(', {
           position: toast.POSITION.BOTTOM_CENTER,
           onClose: () => {
             sessionStorage.clear();
-            window.location='/'
+            window.location = '/'
           }
         })
       } else toast.error('Delete Account failed, please try again later');
     }
   }
 
-  return(
+  return (
     <ChakraProvider>
-      <div className='breadcrumbs'>
-      <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
-        <BreadcrumbItem>
-          <BreadcrumbLink href='/'>Home</BreadcrumbLink>
-        </BreadcrumbItem>
-
-        <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink href='#'>Profile</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumb>
-      </div>
       <div className='profile-container'>
         <div className='profiledetails'>
-          <h1 className='centered'>Profile Details</h1>
-          {/* <div className='user-info' id='userName-container'>
-            <strong>Username:</strong>
-            <p className='info'> {currentUser.username}</p>
-          </div>
-          <div className='user-info' id='firstName-container'>
-            <strong>Name:</strong><p className='info'>{currentUser.first_name} {currentUser.last_name}</p>
-          </div>
-          <div className='user-info' id='base-container'>
-            <strong>Base:</strong><p className='info'>{currentUser.base}</p>
-          </div> */}
+          <h1 className='centered' id="profileInfoHeader">Profile Details</h1>
           <Table size='sm' variant="unstyled">
             <Tr>
               <Td className="profileInfoHeader">Username</Td>
@@ -172,11 +168,19 @@ function Profile() {
               <Td className="profileInfoHeader">Base</Td>
               <Td>{currentUser.base}</Td>
             </Tr>
+            <Tr>
+              <Td className="profileInfoHeader">Email</Td>
+              <Td>{currentUser.email}</Td>
+            </Tr>
+            <Tr>
+              <Td className="profileInfoHeader">Phone</Td>
+              <Td>{currentUser.phone}</Td>
+            </Tr>
           </Table>
           <Stack className='profileInfoBtnGroup'>
-            <Button onClick={changePass.onOpen}>Change Password</Button>
-            <Button onClick={edit.onOpen}>Edit Information</Button>
-            <Button id='deleteBtn' onClick={deleteUserHandler}>Delete Account</Button>
+            <Button background='#023047' colorScheme='blue' onClick={changePass.onOpen}>Change Password</Button>
+            <Button background='#023047' colorScheme='blue'  onClick={edit.onOpen}>Edit Information</Button>
+            <Button id='deleteBtn' background='#023047' colorScheme='blue' onClick={deleteUserHandler}>Delete Account</Button>
           </Stack>
           <div className='profile-edit-options'>
             {/* -------------------- Change Password -------------------- */}
@@ -204,13 +208,13 @@ function Profile() {
                 <ModalFooter>
                   <div className='modal-edit-submit-button-container'>
                     <Button className='modal-edit-submit-button' colorScheme='blue' mr={0} onClick={changePass.onClose}> Close </Button>
-                    <Button className='modal-edit-submit-button' variant='ghost' id='edit-submit-button' onClick={changePwHandler}> Submit Changes </Button>
+                    <Button className='modal-edit-submit-button' variant='ghost' id='edit-submit-button' onClick={() => changePwHandler()}> Submit Changes </Button>
                   </div>
                 </ModalFooter>
               </ModalContent>
             </Modal>
             {/* -------------------- End of Change Password -------------------- */}
-          
+
             {/* -------------------- Edit Information -------------------- */}
             <Modal isOpen={edit.isOpen} onClose={edit.onClose}>
               <ModalOverlay />
@@ -241,6 +245,19 @@ function Profile() {
                         {locations?.map((baseOption) => <option value={baseOption.name}>{baseOption.name}</option>)}
                       </Select>
                     </div>
+                    <div className='user-edit-info'>
+                      <label>Email: </label>
+                      <Editable >
+                        <Input defaultValue={currentUser.email} onChange={(e) => setEditEmail(e.target.value)} />
+                      </Editable>
+                    </div>
+                    <div className='user-edit-info'>
+                      <label>Phone: </label>
+                      <Editable >
+                        <Input type='number' defaultValue={currentUser.phone} onChange={(e) => {setEditPhone(e.target.value)}} />
+                        <small id="editPhoneHint">Format: 1234567890</small>
+                      </Editable>
+                    </div>
                   </div>
                 </ModalBody>
 
@@ -255,7 +272,7 @@ function Profile() {
             {/* -------------------- End of Edit Information -------------------- */}
           </div>
         </div>
-        <ToastContainer autoClose={1500}/>
+        <ToastContainer autoClose={1500} />
         <div id='favoriteListContainer'>
           <div id='favoriteTitle'>Favorites</div>
           <div id='favoriteList'>

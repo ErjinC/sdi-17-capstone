@@ -25,9 +25,9 @@ const AccountAdmin = () => {
     <div>
       <div id='flexcontaineraccountlist'>
         {/* Map and iterate the following div */}
-        {userList.map(item => {
+        {userList.map((item, i) => {
           return(
-            <AccountCard user={item}/>
+            <AccountCard key={i} user={item}/>
           )
         })}
       </div>

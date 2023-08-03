@@ -4,9 +4,9 @@
   min-height: 100%;
   position: relative;
   overflow: auto;
-  background-color: var(--background);
+  background-color: var(--container-color);
   border-radius: 10px;
-  box-shadow: 1px 1px 5px 1px black;
+  box-shadow: 1px 1px 10px 1px var(--background);
 }
 
 #detailimage {
@@ -14,7 +14,7 @@
   width: 85%;
   height: 75%;
   border-radius: 10px;
-  box-shadow: 1px 1px 10px 1px var(--background-accent);
+  box-shadow: 1px 1px 10px 1px var(--background);
 }
 
 #detailimagecontainer{
@@ -37,7 +37,8 @@ h1{
   display: flex;
   width: 40%;
   flex-direction: column;
-  background-color: var(--container-color);
+  background-color: white;
+  color: #11101d;
   margin-top: 2vh;
   margin-bottom: 2vh;
   margin-right: 1vw;
@@ -45,13 +46,15 @@ h1{
   padding-left: 1vw;
   padding-right: 1vw;
   overflow: auto;
-  color: black;
-  box-shadow: 1px 1px 10px 1px var(--background-accent);
+  box-shadow: 1px 1px 10px 1px var(--background);
+      
+  overflow-x: hidden;
 }
 
 .detailButtons {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-top: 1vh;
 }
 
@@ -138,7 +141,7 @@ h1{
 } */
 
 #description {
-  min-height: 20%;
+  min-height: 15%;
   max-height: 20%;
   max-width: 95%;
   min-width: 95%;
@@ -156,7 +159,6 @@ h1{
   margin-bottom: 1vh;
 }
 
-/* NEW */
 .soldButton {
   display: flex;
   align-items: center;
@@ -165,6 +167,8 @@ h1{
   font-size: 16px;
   color: white;
   background: #ad5389;
+  height: 85%;
+  min-height: 40px;
   background: linear-gradient(0deg, rgba(20,167,62,1) 0%, rgba(102,247,113,1) 100%);
   border: none;
   box-shadow: 0 0em 1.5em -0.5em #14a73e98;
@@ -175,6 +179,8 @@ h1{
   -webkit-user-select: none;
   touch-action: manipulation;
   max-width: 40%;
+  width: 40%;
+  min-width: 130px;
   justify-content: center;
 }
 
@@ -190,6 +196,7 @@ h1{
   font-size: 16px;
   color: white;
   background: #ad5389;
+  height: 85%;
   background: linear-gradient(0deg, rgb(167, 20, 20) 0%, rgb(247, 102, 102) 100%);
   border: none;
   box-shadow: 0 0em 1.5em -0.5em #a7141498;
@@ -200,6 +207,7 @@ h1{
   -webkit-user-select: none;
   touch-action: manipulation;
   max-width: 40%;
+  width: 40%;
   justify-content: center;
 }
 
@@ -236,3 +244,4 @@ h1{
   transform: scale(1.1);
   cursor: pointer;
 }
+

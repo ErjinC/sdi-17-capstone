@@ -42,15 +42,14 @@ const AccountCard = ({user}) => {
             {deleted ? <></> : 
                 <div className='accountContainer'>
                     <div className='accountInfoLeftContainer'>
-                        <div>Username: {user.username}</div>
-                        <div>First Name: {user.first_name}</div>
-                        <div>Last Name: {user.last_name}</div>
-                        <div>Admin Status: {user.admin ? <>True</> : <>False</>}</div>
+                        <div class="adminAccountsItem"><strong>Username:</strong><p>{user.username}</p></div>
+                        <div class="adminAccountsItem"><strong>First Name:</strong><p>{user.first_name}</p></div>
+                        <div class="adminAccountsItem"><strong>Last Name:</strong><p>{user.last_name}</p></div>
                     </div>
                     <div className='accountInfoRightContainer'>
-                        <div>Phone: {user.phone}</div>
-                        <div>Email: {user.email}</div>
-                        <div>Location: {user.base}</div>
+                        <div class="adminAccountsItem"><strong>Phone:</strong><p>{user.phone}</p></div>
+                        <div class="adminAccountsItem"><strong>Email:</strong><p>{user.email}</p></div>
+                        <div class="adminAccountsItem"><strong>Location:</strong><p>{user.base}</p></div>
                         <span id='accountDeleteButton' className="material-symbols-outlined" onClick={(event) => {
                             if (window.confirm('Are you sure you want to delete this account?')) {
                                 handleDelete()
