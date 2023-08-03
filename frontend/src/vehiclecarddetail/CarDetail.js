@@ -263,7 +263,7 @@ const CarDetail = ({vehicle, favorited, setDetailedView}) => {
     </div>
     {/* <ToastContainer autoClose={1500}/> */}
     </>
-  )
+    )
 }
 
 // carId: 1,

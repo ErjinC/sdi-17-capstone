@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import FavoritesDisplay from '../favorites/FavoritesDisplay';
 import { ParentContext } from '../App';
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, useDisclosure, ChakraProvider,
-  Editable, Select, Stack, Input, Tooltip} from '@chakra-ui/react'
+  Editable, Select, Stack, Input, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Table, Tr, Td, TableContainer, Divider } from '@chakra-ui/react'
+import { ChevronRightIcon } from '@chakra-ui/icons';
 
 function Profile() {
   const [editUsername, setEditUsername] = useState('')
@@ -133,22 +134,46 @@ function Profile() {
 
   return(
     <ChakraProvider>
+      <div className='breadcrumbs'>
+      <Breadcrumb spacing='8px' separator={<ChevronRightIcon color='gray.500' />}>
+        <BreadcrumbItem>
+          <BreadcrumbLink href='/'>Home</BreadcrumbLink>
+        </BreadcrumbItem>
+
+        <BreadcrumbItem isCurrentPage>
+          <BreadcrumbLink href='#'>Profile</BreadcrumbLink>
+        </BreadcrumbItem>
+      </Breadcrumb>
+      </div>
       <div className='profile-container'>
         <div className='profiledetails'>
-          <h1 className='centered'>Welcome to your Profile Page, {currentUser.first_name}</h1>
-          <div className='user-info' id='userName-container'>
-            <h4>Username:</h4><p className='info'> {currentUser.username}</p>
+          <h1 className='centered'>Profile Details</h1>
+          {/* <div className='user-info' id='userName-container'>
+            <strong>Username:</strong>
+            <p className='info'> {currentUser.username}</p>
           </div>
           <div className='user-info' id='firstName-container'>
-            <h4>First Name:</h4><p className='info'> {currentUser.first_name}</p>
-          </div>
-          <div className='user-info' id='lastName-container'>
-            <h4>Last Name:</h4><p className='info'>{currentUser.last_name}</p>
+            <strong>Name:</strong><p className='info'>{currentUser.first_name} {currentUser.last_name}</p>
           </div>
           <div className='user-info' id='base-container'>
-            <h4>Base:</h4><p className='info'>{currentUser.base}</p>
-          </div>
-          <Stack>
+            <strong>Base:</strong><p className='info'>{currentUser.base}</p>
+          </div> */}
+          <Table size='sm' variant="unstyled">
+            <Tr>
+              <Td className="profileInfoHeader">Username</Td>
+              <Td>{currentUser.username}</Td>
+              <Td></Td>
+            </Tr>
+            <Tr>
+              <Td className="profileInfoHeader">Name</Td>
+              <Td>{currentUser.first_name} {currentUser.last_name}</Td>
+            </Tr>
+            <Tr>
+              <Td className="profileInfoHeader">Base</Td>
+              <Td>{currentUser.base}</Td>
+            </Tr>
+          </Table>
+          <Stack className='profileInfoBtnGroup'>
             <Button onClick={changePass.onOpen}>Change Password</Button>
             <Button onClick={edit.onOpen}>Edit Information</Button>
             <Button id='deleteBtn' onClick={deleteUserHandler}>Delete Account</Button>
@@ -165,14 +190,14 @@ function Profile() {
                     <label id='changePasswordLabel'>New Password: </label>
                     <Editable>
                       <Input id='changePassword' type={show ? 'text' : 'password'} onChange={(e) => setEditPassword(e.target.value)} />
-                      <Button h='1.75rem' size='sm' onClick={() => setShow(!show)}>{show ? 'Hide' : 'Show'}</Button>
+                      <Button id='showPass' h='1.75rem' size='sm' onClick={() => setShow(!show)}>{show ? 'Hide' : 'Show'}</Button>
                     </Editable>
                   </div>
                   <div className='user-edit-password'>
                     <label id="changePasswordCheckLabel">Confirm New Password: </label>
                     <Editable>
                       <Input id='changePasswordCheck' type={showConfirm ? 'text' : 'password'} onChange={(e) => setEditPasswordCheck(e.target.value)} />
-                      <Button h='1.75rem' size='sm' onClick={() => setShowConfirm(!showConfirm)}>{showConfirm ? 'Hide' : 'Show'}</Button>
+                      <Button id='showPassCheck' h='1.75rem' size='sm' onClick={() => setShowConfirm(!showConfirm)}>{showConfirm ? 'Hide' : 'Show'}</Button>
                     </Editable>
                   </div>
                 </ModalBody>
@@ -232,7 +257,7 @@ function Profile() {
         </div>
         <ToastContainer autoClose={1500}/>
         <div id='favoriteListContainer'>
-          <div id='favoriteTitle'>Your Favorited Listings:</div>
+          <div id='favoriteTitle'>Favorites</div>
           <div id='favoriteList'>
             <FavoritesDisplay />
           </div>
